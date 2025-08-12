@@ -15,6 +15,8 @@
   stylix.icons.dark = "Papirus-Dark";
   stylix.icons.light = "Papirus-Light";
 
+  stylix.targets.vscode.enable = false;
+
   # Sops
   sops = {
     defaultSopsFile = ./secrets/secrets.yaml;
@@ -63,7 +65,7 @@
   wayland.windowManager.hyprland.xwayland.enable = true;
 
   # Niri
-  # --> programs.niriswitcher.enable = true;
+  programs.niriswitcher.enable = true;
 
   # XDG
   xdg.autostart.enable = true;
@@ -184,9 +186,13 @@
     };
   };
 
+  home.shell.enableZshIntegration = true;
+
   # starship - an customizable prompt for any shell
   programs.starship = {
     enable = true;
+    enableZshIntegration = true;
+    enableFishIntegration = true;
     settings = {
       add_newline = false;
       aws.disabled = true;
@@ -200,10 +206,31 @@
   programs.zsh.enable = true;
   programs.fish.enable = true;
 
+  programs.nix-your-shell.enable = true;
+  programs.nix-your-shell.enableFishIntegration = true;
+  programs.nix-your-shell.enableZshIntegration = true;
+
+  programs.zsh.autosuggestion.enable = true;
+  programs.zsh.autosuggestion.strategy = [ "completion" "history" ];
+  programs.zsh.enableCompletion = true;
+  programs.zsh.historySubstringSearch.enable = true;
+  programs.zsh.oh-my-zsh.enable = true;
+  programs.zsh.oh-my-zsh.plugins = ["common-aliases" "sudo" "alias-finder" "colored-man-pages" "colorize" "copybuffer" "copyfile" "copypath" "eza" "git" "gh"];
+  programs.zsh.syntaxHighlighting.enable = true;
+
+  programs.zoxide.enable = true;
+  programs.zoxide.enableZshIntegration = true;
+
   programs.nix-index.enable = true;
   programs.nix-index.enableBashIntegration = true;
   programs.nix-index.enableZshIntegration = true;
   programs.nix-index.enableFishIntegration = true;
+
+  programs.eza.enable = true;
+  programs.eza.enableZshIntegration = true;
+
+  programs.gh.enable = true;
+  programs.gh.gitCredentialHelper.enable = true;
 
   programs.command-not-found.enable = false;
 

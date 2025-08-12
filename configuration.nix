@@ -29,6 +29,10 @@
   programs.hyprland.xwayland.enable = true;
   programs.hyprland.withUWSM = true;
 
+  # Hyprpanel (temporary)
+  programs.hyprpanel.enable = true;
+  programs.hyprpanel.systemd.enable = true;
+
   # Niri
   programs.niri.enable = true;
 
@@ -179,12 +183,17 @@
   };
 
   # Enable the X11 windowing system.
-  services.xserver.enable = true;
+  # services.xserver.enable = true;
   programs.xwayland.enable = true;
 
   # Enable the Cinnamon Desktop Environment.
-  services.xserver.displayManager.lightdm.enable = true;
-  services.xserver.desktopManager.cinnamon.enable = true;
+  # services.xserver.displayManager.lightdm.enable = true;
+  # services.xserver.desktopManager.cinnamon.enable = true;
+
+  # Use Cosmic as a fallback to Hyprland or Niri
+  services.displayManager.cosmic-greeter.enable = true;
+  services.desktopManager.cosmic.enable = true;
+  services.desktopManager.cosmic.xwayland.enable = true;
 
   # Configure keymap in X11
   services.xserver.xkb = {
@@ -221,9 +230,11 @@
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.gabz = {
     isNormalUser = true;
+    #TODO: Choose between Zsh and Fish
+    shell = pkgs.zsh;
     #---> hashedPasswordFile = config.sops.secrets."initial_hashed_password".path;
     description = "Gabriel";
-    extraGroups = ["networkmanager" "wheel"];
+    extraGroups = ["networkmanager" "wheel" "podman"];
     #packages = with pkgs; [
     #  #  thunderbird
     #];
@@ -254,6 +265,26 @@
   nix.optimise.automatic = true;
   nix.optimise.persistent = true;
   nix.optimise.dates = ["19:00"];
+
+  #TODO: Learn to decide when something
+      # is defined on NixOS and when on Home-Manager
+
+  # Zsh setup
+  programs.zsh.syntaxHighlighting.highlighters = ["main"];
+  programs.zsh.enableCompletion = true;
+  programs.zsh.zsh-autoenv.enable = true;
+  programs.zsh.ohMyZsh.enable = true;
+  programs.zsh.autosuggestions.enable = true;
+  programs.zsh.autosuggestions.strategy = [ "completion" "history" ];
+  programs.zsh.syntaxHighlighting.enable = true;
+
+  programs.zsh.ohMyZsh.plugins = ["common-aliases" "sudo" "alias-finder" "colored-man-pages" "colorize" "copybuffer" "copyfile" "copypath" "eza" "git" "gh"];
+  programs.zsh.enableLsColors = true;
+
+  # Zoxide
+  programs.zoxide.enable = true;
+  programs.zoxide.enableZshIntegration = true;
+  programs.zoxide.enableFishIntegration = true;
 
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
@@ -313,8 +344,14 @@
   xdg.icons.enable = true;
   xdg.autostart.enable = true;
 
+  virtualisation.podman = {
+    enable = true;
+    dockerCompat = true;
+  };
+
   environment.systemPackages = with pkgs; [
     apparmor-profiles
+    distrobox
     app2unit
     wget
     vscodium-fhs
@@ -358,7 +395,7 @@
     enableFishIntegration = true;
   };
 
-  environment.pathsToLink = ["/share/fish"];
+  environment.pathsToLink = ["/share/fish" "/share/zsh"];
 
   networking.firewall.enable = true;
   services.syncthing.openDefaultPorts = true;
