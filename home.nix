@@ -85,9 +85,9 @@
   programs.direnv = {
     enable = true;
     nix-direnv.enable = true;
-    enableBashIntegration = lib.mkForce true;
-    enableZshIntegration = lib.mkForce true;
-    enableFishIntegration = lib.mkForce true;
+    enableBashIntegration = true;
+    enableZshIntegration = true;
+    #---> enableFishIntegration = true;
   };
 
   # Syncthing
@@ -201,9 +201,9 @@
   programs.fish.enable = true;
 
   programs.nix-index.enable = true;
-  programs.nix-index.enableBashIntegration = lib.mkForce true;
-  programs.nix-index.enableZshIntegration = lib.mkForce true;
-  programs.nix-index.enableFishIntegration = lib.mkForce true;
+  programs.nix-index.enableBashIntegration = true;
+  programs.nix-index.enableZshIntegration = true;
+  programs.nix-index.enableFishIntegration = true;
 
   programs.command-not-found.enable = false;
 
@@ -211,10 +211,10 @@
 
   # Terminal
   programs.kitty.enable = true;
-  programs.kitty.enableGitIntegration = lib.mkForce true;
-  programs.kitty.shellIntegration.enableZshIntegration = lib.mkForce true;
-  programs.kitty.shellIntegration.enableBashIntegration = lib.mkForce true;
-  programs.kitty.shellIntegration.enableFishIntegration = lib.mkForce true;
+  programs.kitty.enableGitIntegration = true;
+  programs.kitty.shellIntegration.enableZshIntegration = true;
+  programs.kitty.shellIntegration.enableBashIntegration = true;
+  programs.kitty.shellIntegration.enableFishIntegration = true;
 
   home.stateVersion = "25.05";
 }
