@@ -19,6 +19,10 @@
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
     nixos-facter-modules.url = "github:numtide/nixos-facter-modules";
     chaotic.url = "github:chaotic-cx/nyx/nyxpkgs-unstable";
+    nix4nvchad = {
+      url = "github:nix-community/nix4nvchad";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = {
@@ -68,6 +72,7 @@
           home-manager.sharedModules = [
             inputs.sops-nix.homeManagerModules.sops
             inputs.chaotic.homeManagerModules.default
+            inputs.nix4nvchad.homeManagerModule
             ({system, ...}: {
               home.packages = with inputs.nix-alien.packages.${system}; [
                 nix-alien

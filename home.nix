@@ -182,7 +182,29 @@
     ethtool
     pciutils # lspci
     usbutils # lsusb
+
+    # Neovim
+    nvchad
   ];
+
+  # Neovim
+  pprograms.nvchad = {
+    enable = true;
+    extraPackages = with pkgs; [
+      nodePackages.bash-language-server
+      docker-compose-language-service
+      dockerfile-language-server-nodejs
+      emmet-language-server
+      nixd
+      (python3.withPackages (ps:
+        with ps; [
+          python-lsp-server
+          flake8
+        ]))
+    ];
+    hm-activation = true;
+    backup = true;
+  };
 
   # Git
   programs.git = {
@@ -220,7 +242,7 @@
   programs.nix-your-shell.enableZshIntegration = true;
 
   programs.zsh.autosuggestion.enable = true;
-  programs.zsh.autosuggestion.strategy = [ "completion" "history" ];
+  programs.zsh.autosuggestion.strategy = ["completion" "history"];
   programs.zsh.enableCompletion = true;
   programs.zsh.historySubstringSearch.enable = true;
   programs.zsh.oh-my-zsh.enable = true;

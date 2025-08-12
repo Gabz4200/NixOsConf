@@ -144,6 +144,18 @@
   services.auto-cpufreq.enable = true;
 
   # Undervolt
+  services.undervolt.enable = true;
+  services.undervolt.uncoreOffset = -80;
+  services.undervolt.turbo = 0;
+  services.undervolt.tempBat = 85;
+  services.undervolt.tempAc = 95;
+  services.undervolt.p2.window = 1;
+  services.undervolt.p2.limit = 40;
+  services.undervolt.p1.window = 28;
+  services.undervolt.p1.limit = 30;
+  services.undervolt.gpuOffset = -40;
+  services.undervolt.coreOffset = -80;
+  services.undervolt.analogioOffset = -40;
 
   hardware.graphics.package = pkgs.mesa_git;
   hardware.graphics.package32 = pkgs.mesa32_git;
@@ -217,9 +229,19 @@
   # services.xserver.desktopManager.cinnamon.enable = true;
 
   # Use Cosmic as a fallback to Hyprland or Niri
-  services.displayManager.cosmic-greeter.enable = true;
   services.desktopManager.cosmic.enable = true;
   services.desktopManager.cosmic.xwayland.enable = true;
+
+  # SDDM
+  services.displayManager.sddm.wayland.enable = true;
+  services.displayManager.sddm.package = pkgs.kdePackages.sddm;
+  services.displayManager.sddm.enable = true;
+  services.displayManager.sddm.enableHidpi = true;
+  services.displayManager.sddm.wayland.compositor = "kwin";
+  services.displayManager.sddm.extraPackages = [
+    (pkgs.sddm-astronaut.override { embeddedTheme = "black_hole";})
+  ];
+  services.displayManager.sddm.theme = "sddm-astronaut-theme";
 
   # Configure keymap in X11
   services.xserver.xkb = {
@@ -291,6 +313,15 @@
   nix.optimise.automatic = true;
   nix.optimise.persistent = true;
   nix.optimise.dates = ["19:00"];
+
+  # NvChad
+  # nixpkgs = {
+  #   overlays = [
+  #     (final: prev: {
+  #       nvchad = inputs.nix4nvchad.packages."${pkgs.system}".nvchad;
+  #     })
+  #   ];
+  # };
 
   #TODO: Learn to decide when something
   # is defined on NixOS and when on Home-Manager
@@ -389,6 +420,7 @@
     nixd
     alejandra
     neovim
+    #--> nvchad
     sops
     easyeffects
     cachix
