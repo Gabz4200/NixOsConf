@@ -200,6 +200,7 @@
 
   # Install firefox.
   programs.firefox.enable = true;
+  programs.firefox.package = pkgs.firefox-bin;
 
   # NH
   programs.nh.enable = true;
@@ -236,6 +237,8 @@
     binfmt = true;
   };
 
+  services.gnome.gnome-keyring.enable = true;
+
   # Nix-Ld
   programs.nix-index.enable = true;
   programs.nix-index.enableBashIntegration = true;
@@ -265,6 +268,7 @@
     glibc
     bash
     pkg-config
+    libsecret
   ];
 
   # XDG
@@ -289,6 +293,7 @@
     sops
     easyeffects
     cachix
+    libsecret
   ];
 
   # Git
