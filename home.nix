@@ -48,7 +48,7 @@
   # set cursor size and dpi for 1920x1080 monitor
   xresources.properties = {
     "Xcursor.size" = 24;
-    "Xft.dpi" = 124;
+    "Xft.dpi" = 141.21;
   };
 
   # Easyeffects
@@ -72,6 +72,24 @@
   xdg.portal.enable = true;
   xdg.userDirs.enable = true;
   xdg.userDirs.createDirectories = true;
+
+  # VsCodium
+  programs.vscode = {
+    enable = true;
+    package = pkgs.vscodium-fhs;
+    mutableExtensionsDir = true;
+  };
+
+  # Direnv
+  programs.direnv = {
+    enable = true;
+    nix-direnv.enable = true;
+    enableBashIntegration = true;
+    enableZshIntegration = true;
+    enableFishIntegration = true;
+  };
+
+  environment.pathsToLink = [ "/share/fish" ];
 
   # Syncthing
 
@@ -125,6 +143,7 @@
     blender
     obs-studio
     krita
+    krita-plugin-gmic
     gimp3-with-plugins
 
     # pessoal
@@ -186,7 +205,7 @@
   programs.nix-index.enableBashIntegration = true;
   programs.nix-index.enableZshIntegration = true;
   programs.nix-index.enableFishIntegration = true;
-  
+
   programs.command-not-found.enable = false;
 
   #TODO: Set default shell for user

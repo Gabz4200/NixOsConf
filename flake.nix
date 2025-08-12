@@ -16,6 +16,8 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     nix-alien.url = "github:thiagokokada/nix-alien";
+    nixos-hardware.url = "github:NixOS/nixos-hardware/master";
+    nixos-facter-modules.url = "github:numtide/nixos-facter-modules";
   };
 
   outputs = {
@@ -28,6 +30,17 @@
       specialArgs = {inherit inputs system;};
       modules = [
         inputs.sops-nix.nixosModules.sops
+
+        inputs.nixos-hardware.nixosModules.asus-battery
+        inputs.nixos-hardware.nixosModules.common-cpu-intel
+        inputs.nixos-hardware.nixosModules.common-gpu-intel
+        inputs.nixos-hardware.nixosModules.common-pc-laptop
+        inputs.nixos-hardware.nixosModules.common-pc-laptop-ssd
+        inputs.nixos-hardware.nixosModules.common-hidpi
+
+        inputs.nixos-facter-modules.nixosModules.facter
+        {config.facter.reportPath = ./facter.json;}
+
         inputs.stylix.nixosModules.stylix
 
         ({system, ...}: {

@@ -99,6 +99,37 @@
   hardware.cpu.intel.updateMicrocode = true;
   services.fwupd.enable = true;
 
+  # Asus
+  services.asusd.enable = true;
+
+  # KabyLake GPU
+  boot.kernelParams = [
+    "i915.enable_guc=2"
+    "i915.enable_fbc=1"
+    "i915.enable_psr=2"
+    "pcie_aspm=off"
+  ];
+
+  hardware.intel-gpu-tools.enable = true;
+
+  hardware.graphics.enable = true;
+  hardware.graphics.enable32Bit = true;
+
+  hardware.graphics.package = pkgs.mesa;
+  hardware.graphics.package32 = pkgs.driversi686Linux.mesa;
+
+  hardware.graphics.extraPackages = with pkgs; [
+    intel-media-driver
+    intel-ocl
+    vulkan-loader
+  ];
+
+  hardware.graphics.extraPackages32 = with pkgs.pkgsi686Linux; [
+    intel-media-driver
+    intel-vaapi-driver
+    vulkan-loader
+  ];
+
   # Dconf
   programs.dconf.enable = true;
 
@@ -284,7 +315,7 @@
 
   environment.systemPackages = with pkgs; [
     apparmor-profiles
-    #--> app2unit
+    app2unit
     wget
     vscodium-fhs
     nixd
@@ -316,6 +347,16 @@
   };
 
   #---> programs.ssh.startAgent = true;
+
+  # Direnv
+  programs.direnv = {
+    enable = true;
+    nix-direnv.enable = true;
+    loadInNixShell = true;
+    enableBashIntegration = true;
+    enableZshIntegration = true;
+    enableFishIntegration = true;
+  };
 
   networking.firewall.enable = true;
   services.syncthing.openDefaultPorts = true;
