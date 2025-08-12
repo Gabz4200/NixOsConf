@@ -137,7 +137,13 @@
   # Scx
   services.scx.enable = true;
   services.scx.package = pkgs.scx_git.full;
-  services.scx.scheduler = "scx_bpfland";
+  services.scx.scheduler = "scx_lavd";
+  services.scx.extraArgs = ["--autopilot"];
+
+  # Auto Cpu Freq
+  services.auto-cpufreq.enable = true;
+
+  # Undervolt
 
   hardware.graphics.package = pkgs.mesa_git;
   hardware.graphics.package32 = pkgs.mesa32_git;
