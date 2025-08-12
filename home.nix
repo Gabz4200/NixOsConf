@@ -60,6 +60,10 @@
   services.syncthing.enable = true;
   services.syncthing.tray.enable = true;
 
+  # Hyprpanel (temporary)
+  programs.hyprpanel.enable = true;
+  programs.hyprpanel.systemd.enable = true;
+
   # Hyprland
   wayland.windowManager.hyprland.enable = true;
   wayland.windowManager.hyprland.xwayland.enable = true;

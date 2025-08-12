@@ -29,10 +29,6 @@
   programs.hyprland.xwayland.enable = true;
   programs.hyprland.withUWSM = true;
 
-  # Hyprpanel (temporary)
-  programs.hyprpanel.enable = true;
-  programs.hyprpanel.systemd.enable = true;
-
   # Niri
   programs.niri.enable = true;
 
