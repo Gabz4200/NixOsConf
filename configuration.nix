@@ -358,6 +358,8 @@
     enableFishIntegration = true;
   };
 
+  environment.pathsToLink = ["/share/fish"];
+
   networking.firewall.enable = true;
   services.syncthing.openDefaultPorts = true;
 

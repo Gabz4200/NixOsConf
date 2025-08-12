@@ -89,8 +89,6 @@
     enableFishIntegration = true;
   };
 
-  environment.pathsToLink = [ "/share/fish" ];
-
   # Syncthing
 
   services.syncthing.settings.devices."celular" = {
