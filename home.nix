@@ -54,6 +54,11 @@
     "Xft.dpi" = 141.21;
   };
 
+  # home
+  chaotic.nyx.overlay.enable = true;
+  chaotic.nyx.cache.enable = true;
+  chaotic.nyx.nixPath.enable = true;
+
   # Easyeffects
   services.easyeffects.enable = true;
 

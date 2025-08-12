@@ -18,6 +18,7 @@
     nix-alien.url = "github:thiagokokada/nix-alien";
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
     nixos-facter-modules.url = "github:numtide/nixos-facter-modules";
+    chaotic.url = "github:chaotic-cx/nyx/nyxpkgs-unstable";
   };
 
   outputs = {
@@ -27,7 +28,7 @@
   } @ inputs: {
     nixosConfigurations.nixos = nixpkgs.lib.nixosSystem rec {
       system = "x86_64-linux";
-      specialArgs = {inherit inputs system;};
+      specialArgs = {inherit inputs self system;};
       modules = [
         inputs.sops-nix.nixosModules.sops
 
@@ -42,6 +43,8 @@
         {config.facter.reportPath = ./facter.json;}
 
         inputs.stylix.nixosModules.stylix
+
+        inputs.chaotic.nixosModules.default
 
         ({system, ...}: {
           environment.systemPackages = with inputs.nix-alien.packages.${system}; [
@@ -58,11 +61,13 @@
           home-manager.useGlobalPkgs = true;
           home-manager.useUserPackages = true;
           home-manager.extraSpecialArgs = {
+            inherit inputs self;
             system = "x86_64-linux";
           };
 
           home-manager.sharedModules = [
             inputs.sops-nix.homeManagerModules.sops
+            inputs.chaotic.homeManagerModules.default
             ({system, ...}: {
               home.packages = with inputs.nix-alien.packages.${system}; [
                 nix-alien

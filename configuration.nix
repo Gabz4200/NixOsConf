@@ -5,6 +5,7 @@
   config,
   pkgs,
   lib,
+  inputs,
   ...
 }: {
   imports = [
@@ -22,7 +23,7 @@
   programs.uwsm.enable = true;
 
   # Wayland
-  programs.waybar.enable = true;
+  #---> programs.waybar.enable = true;
 
   # Hyprland
   programs.hyprland.enable = true;
@@ -31,6 +32,7 @@
 
   # Niri
   programs.niri.enable = true;
+  programs.niri.package = pkgs.niri_git;
 
   # Apparmor
   services.dbus.apparmor = "enabled";
@@ -69,7 +71,7 @@
   };
   stylix.autoEnable = true;
   stylix.cursor.package = pkgs.bibata-cursors;
-  stylix.cursor.name = "Bibata Modern Ice";
+  stylix.cursor.name = "Bibata-Modern-Ice";
   stylix.cursor.size = 24;
   stylix.homeManagerIntegration.autoImport = true;
   stylix.homeManagerIntegration.followSystem = true;
@@ -115,8 +117,30 @@
   hardware.graphics.enable = true;
   hardware.graphics.enable32Bit = true;
 
-  hardware.graphics.package = pkgs.mesa;
-  hardware.graphics.package32 = pkgs.driversi686Linux.mesa;
+  chaotic.nyx.cache.enable = true;
+  chaotic.nyx.nixPath.enable = true;
+  chaotic.nyx.overlay.enable = true;
+
+  chaotic.mesa-git.enable = true;
+  chaotic.mesa-git.extraPackages = with pkgs; [
+    mesa_git.opencl
+    intel-media-driver
+    intel-ocl
+    vaapiIntel
+  ];
+  chaotic.mesa-git.extraPackages32 = with pkgs.pkgsi686Linux; [
+    pkgs.mesa32_git.opencl
+    intel-media-driver
+    vaapiIntel
+  ];
+
+  # Scx
+  services.scx.enable = true;
+  services.scx.package = pkgs.scx_git.full;
+  services.scx.scheduler = "scx_bpfland";
+
+  hardware.graphics.package = pkgs.mesa_git;
+  hardware.graphics.package32 = pkgs.mesa32_git;
 
   hardware.graphics.extraPackages = with pkgs; [
     intel-media-driver
@@ -263,7 +287,7 @@
   nix.optimise.dates = ["19:00"];
 
   #TODO: Learn to decide when something
-      # is defined on NixOS and when on Home-Manager
+  # is defined on NixOS and when on Home-Manager
 
   # Zsh setup
   programs.zsh.syntaxHighlighting.highlighters = ["main"];
@@ -271,7 +295,7 @@
   programs.zsh.zsh-autoenv.enable = true;
   programs.zsh.ohMyZsh.enable = true;
   programs.zsh.autosuggestions.enable = true;
-  programs.zsh.autosuggestions.strategy = [ "completion" "history" ];
+  programs.zsh.autosuggestions.strategy = ["completion" "history"];
   programs.zsh.syntaxHighlighting.enable = true;
 
   programs.zsh.ohMyZsh.plugins = ["common-aliases" "sudo" "alias-finder" "colored-man-pages" "colorize" "copybuffer" "copyfile" "copypath" "eza" "git" "gh"];
@@ -327,7 +351,11 @@
     bash
     pkg-config
     libsecret
+    python313Packages.pygments
+    lan-mouse_git
   ];
+
+  nix.nixPath = ["nixpkgs=${inputs.nixpkgs}"];
 
   # XDG
   xdg.terminal-exec.enable = true;
@@ -347,6 +375,7 @@
 
   environment.systemPackages = with pkgs; [
     apparmor-profiles
+    python313Packages.pygments
     distrobox
     app2unit
     wget
