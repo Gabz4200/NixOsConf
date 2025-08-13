@@ -112,6 +112,15 @@
   # Asus
   services.asusd.enable = true;
 
+  # Zram
+  zramSwap.enable = true;
+  zramSwap.priority = 200;
+  zramSwap.memoryPercent = 100;
+  zramSwap.algorithm = "zstd";
+
+  # Preload
+  services.preload.enable = true;
+
   # KabyLake GPU
   boot.kernelParams = [
     "i915.enable_guc=2"
@@ -150,6 +159,24 @@
 
   # Auto Cpu Freq
   services.auto-cpufreq.enable = true;
+  services.auto-cpufreq.settings = {
+    charger = {
+      governor = "performance";
+      energy_performance_preference = "balance_performance";
+      energy_perf_bias = "balance_performance";
+      scaling_min_freq = 800000;
+      scaling_max_freq = 3200000;
+      turbo = "auto";
+    };
+    battery = {
+      governor = "powersave";
+      energy_performance_preference = "power";
+      energy_perf_bias = "balance_power";
+      scaling_min_freq = 800000;
+      scaling_max_freq = 1600000;
+      turbo = "auto";
+    };
+  };
   services.power-profiles-daemon.enable = false;
 
   # Undervolt
@@ -183,6 +210,9 @@
 
   # Dconf
   programs.dconf.enable = true;
+
+  # Hibernate
+  powerManagement.enable = true;
 
   # Bootloader.
   boot.loader = {
