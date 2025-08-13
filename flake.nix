@@ -3,6 +3,7 @@
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+    nixpkgs-stable.url = "github:NixOS/nixpkgs/nixos-25.05";
     sops-nix = {
       url = "github:Mic92/sops-nix";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -33,7 +34,13 @@
   } @ inputs: {
     nixosConfigurations.nixos = nixpkgs.lib.nixosSystem rec {
       system = "x86_64-linux";
-      specialArgs = {inherit inputs self system;};
+      specialArgs = {
+        inherit inputs self system;
+        pkgs-stable = import inputs.nixpkgs-stable {
+          inherit system;
+          config.allowUnfree = true;
+        };
+      };
       modules = [
         inputs.sops-nix.nixosModules.sops
 
@@ -69,6 +76,10 @@
           home-manager.extraSpecialArgs = {
             inherit inputs self;
             system = "x86_64-linux";
+            pkgs-stable = import inputs.nixpkgs-stable {
+              inherit system;
+              config.allowUnfree = true;
+            };
           };
 
           home-manager.sharedModules = [
