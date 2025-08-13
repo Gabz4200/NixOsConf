@@ -42,6 +42,14 @@
 
   security.polkit.enable = true;
 
+  # Catppuccin Mocha
+  # catppuccin.enable = true;
+  # catppuccin.flavor = "mocha";
+  # catppuccin.accent = "pink";
+  # catppuccin.cache.enable = true;
+
+  # catppuccin.sddm.enable = false;
+
   # Stylix
   stylix.enable = true;
   stylix.base16Scheme = "${pkgs.base16-schemes}/share/themes/catppuccin-mocha.yaml";
@@ -238,8 +246,8 @@
   services.displayManager.sddm.wayland.enable = true;
   services.displayManager.sddm.package = pkgs.kdePackages.sddm;
   services.displayManager.sddm.enable = true;
-  services.displayManager.sddm.enableHidpi = true;
-  services.displayManager.sddm.wayland.compositor = "kwin";
+  #services.displayManager.sddm.enableHidpi = true;
+  #services.displayManager.sddm.wayland.compositor = "kwin";
   services.displayManager.sddm.extraPackages = [
     pkgs.kdePackages.qtsvg
     pkgs.kdePackages.qtmultimedia
@@ -295,7 +303,7 @@
 
   # Install firefox.
   programs.firefox.enable = true;
-  programs.firefox.package = pkgs.firefox-bin;
+  programs.firefox.package = pkgs.firedragon;
 
   # NH
   programs.nh.enable = true;
@@ -419,7 +427,7 @@
     cosmic-session
   ];
 
-  xdg.portal.xdgOpenUsePortal = false;
+  xdg.portal.xdgOpenUsePortal = true;
 
   xdg.sounds.enable = true;
   xdg.mime.enable = true;
@@ -427,7 +435,7 @@
   xdg.icons.enable = true;
   xdg.autostart.enable = true;
 
-  environment.pathsToLink = ["/share/fish" "/share/zsh" "/share/xdg-desktop-portal" "/share/applications"];
+  environment.pathsToLink = ["/share/fish" "/share/zsh" "/share/xdg-desktop-portal" "/share/applications" "/share"];
 
   virtualisation.podman = {
     enable = true;
@@ -435,6 +443,7 @@
   };
 
   environment.systemPackages = with pkgs; [
+    (pkgs.sddm-astronaut.override {embeddedTheme = "black_hole";})
     apparmor-profiles
     python313Packages.pygments
     distrobox

@@ -7,6 +7,12 @@
   home.username = "gabz";
   home.homeDirectory = "/home/gabz";
 
+  # Catppuccin Mocha
+  # catppuccin.enable = true;
+  # catppuccin.flavor = "mocha";
+  # catppuccin.accent = "pink";
+  # catppuccin.cache.enable = true;
+
   # Stylix
   stylix.enable = true;
   stylix.autoEnable = true;
@@ -81,7 +87,7 @@
   xdg.mime.enable = true;
   xdg.mimeApps.enable = true;
 
-  xdg.portal.xdgOpenUsePortal = false;
+  xdg.portal.xdgOpenUsePortal = true;
 
   xdg.portal.enable = true;
   xdg.portal.extraPortals = with pkgs; [
@@ -164,6 +170,8 @@
 
     # job
     davinci-resolve
+    ffmpeg
+    kdePackages.kdenlive
     blender
     obs-studio
     krita

@@ -23,6 +23,7 @@
       url = "github:nix-community/nix4nvchad";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    catppuccin.url = "github:catppuccin/nix";
   };
 
   outputs = {
@@ -47,6 +48,7 @@
         {config.facter.reportPath = ./facter.json;}
 
         inputs.stylix.nixosModules.stylix
+        inputs.catppuccin.nixosModules.catppuccin
 
         inputs.chaotic.nixosModules.default
 
@@ -79,6 +81,7 @@
               ];
             })
             #---> inputs.stylix.homeModules.stylix
+            inputs.catppuccin.homeModules.catppuccin
           ];
 
           home-manager.backupFileExtension = "bak";
