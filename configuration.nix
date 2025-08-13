@@ -142,6 +142,7 @@
 
   # Auto Cpu Freq
   services.auto-cpufreq.enable = true;
+  services.power-profiles-daemon.enable = false;
 
   # Undervolt
   services.undervolt.enable = true;
@@ -230,6 +231,7 @@
 
   # Use Cosmic as a fallback to Hyprland or Niri
   services.desktopManager.cosmic.enable = true;
+  services.displayManager.cosmic-greeter.enable = false;
   services.desktopManager.cosmic.xwayland.enable = true;
 
   # SDDM
@@ -239,7 +241,7 @@
   services.displayManager.sddm.enableHidpi = true;
   services.displayManager.sddm.wayland.compositor = "kwin";
   services.displayManager.sddm.extraPackages = [
-    (pkgs.sddm-astronaut.override { embeddedTheme = "black_hole";})
+    (pkgs.sddm-astronaut.override {embeddedTheme = "black_hole";})
   ];
   services.displayManager.sddm.theme = "sddm-astronaut-theme";
 
@@ -398,12 +400,27 @@
   xdg.terminal-exec.enable = true;
   #---> xdg.enable = true;
   xdg.portal.enable = true;
-  xdg.portal.xdgOpenUsePortal = true;
+  xdg.portal.extraPortals = with pkgs; [
+    xdg-desktop-portal-cosmic
+    xdg-desktop-portal-gtk
+    xdg-desktop-portal-hyprland
+    xdg-desktop-portal-gnome
+  ];
+  xdg.portal.configPackages = with pkgs; [
+    niri
+    hyprland
+    cosmic-session
+  ];
+
+  xdg.portal.xdgOpenUsePortal = false;
+
   xdg.sounds.enable = true;
   xdg.mime.enable = true;
   xdg.menus.enable = true;
   xdg.icons.enable = true;
   xdg.autostart.enable = true;
+
+  environment.pathsToLink = ["/share/fish" "/share/zsh" "/share/xdg-desktop-portal" "/share/applications"];
 
   virtualisation.podman = {
     enable = true;
@@ -457,8 +474,6 @@
     enableZshIntegration = true;
     enableFishIntegration = true;
   };
-
-  environment.pathsToLink = ["/share/fish" "/share/zsh"];
 
   networking.firewall.enable = true;
   services.syncthing.openDefaultPorts = true;

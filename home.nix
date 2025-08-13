@@ -80,8 +80,22 @@
   xdg.autostart.enable = true;
   xdg.mime.enable = true;
   xdg.mimeApps.enable = true;
-  xdg.portal.xdgOpenUsePortal = true;
+
+  xdg.portal.xdgOpenUsePortal = false;
+
   xdg.portal.enable = true;
+  xdg.portal.extraPortals = with pkgs; [
+    xdg-desktop-portal-cosmic
+    xdg-desktop-portal-gtk
+    xdg-desktop-portal-hyprland
+    xdg-desktop-portal-gnome
+  ];
+  xdg.portal.configPackages = with pkgs; [
+    niri
+    hyprland
+    cosmic-session
+  ];
+
   xdg.userDirs.enable = true;
   xdg.userDirs.createDirectories = true;
 
@@ -182,19 +196,17 @@
     ethtool
     pciutils # lspci
     usbutils # lsusb
-
-    # Neovim
-    nvchad
   ];
 
   # Neovim
-  pprograms.nvchad = {
+  programs.nvchad = {
     enable = true;
     extraPackages = with pkgs; [
-      nodePackages.bash-language-server
-      docker-compose-language-service
-      dockerfile-language-server-nodejs
-      emmet-language-server
+      bash-language-server
+      fish-lsp
+      hyprls
+      kdlfmt
+      alejandra
       nixd
       (python3.withPackages (ps:
         with ps; [
@@ -203,7 +215,7 @@
         ]))
     ];
     hm-activation = true;
-    backup = true;
+    backup = false;
   };
 
   # Git
@@ -264,8 +276,6 @@
   programs.gh.gitCredentialHelper.enable = true;
 
   programs.command-not-found.enable = false;
-
-  #TODO: Set default shell for user
 
   # Terminal
   programs.kitty.enable = true;
