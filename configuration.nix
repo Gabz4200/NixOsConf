@@ -223,13 +223,13 @@
 
   #FIXME: The kernel is downgraded to stable due to rtl8821ce breaking.
   # Kernel
-  boot.kernelPackages = lib.mkBefore pkgs-stable.linuxKernel.packages.linux_zen;
+  boot.kernelPackages = pkgs.linuxKernel.packages.linux_zen;
 
   # Wifi driver
   boot.kernelModules = ["8821ce"];
-  boot.extraModulePackages = with config.boot.kernelPackages; [
-    rtl8821ce
-  ];
+  #boot.extraModulePackages = [
+  #  # pkgs-stable.linuxKernel.packages.linux_zen.rtl8821ce
+  #];
 
   # Btrfs
   services.btrfs.autoScrub = {
