@@ -10,6 +10,8 @@
   home.username = "gabz";
   home.homeDirectory = "/home/gabz";
 
+  imports = [./niri.nix];
+
   # Catppuccin Mocha
   # catppuccin.enable = true;
   # catppuccin.flavor = "mocha";
@@ -137,6 +139,7 @@
     fastfetch
     pokeget-rs
     swaybg
+    
 
     # archives
     zip
@@ -258,7 +261,6 @@
 
   programs.fish.enable = true;
   programs.fish.generateCompletions = true;
-  
 
   programs.nix-your-shell.enable = true;
   programs.nix-your-shell.enableFishIntegration = true;

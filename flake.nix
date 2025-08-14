@@ -7,6 +7,7 @@
     nixpkgs-stable.url = "github:NixOS/nixpkgs/nixos-25.05";
 
     niri.url = "github:sodiboo/niri-flake";
+    #--> zen-browser.url = "github:MarceColl/zen-browser-flake";
 
     home-manager = {
       url = "github:nix-community/home-manager";

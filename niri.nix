@@ -41,8 +41,9 @@ with lib; let
     listToAttrs (pairs prefixes (prefix: pairs suffixes (suffix: [(format prefix suffix)])));
 in {
   programs.niri.settings = {
-    input.keyboard.xkb.layout = "no";
-    input.mouse.accel-speed = 1.0;
+    input.keyboard.xkb.layout = "br";
+    input.mouse.accel-speed = 0.3;
+    input.touchpad.accel-speed = 0.5;
     input.touchpad = {
       tap = true;
       dwt = true;
@@ -61,100 +62,64 @@ in {
       struts.right = 64;
       border.width = 4;
       always-center-single-column = true;
-
       empty-workspace-above-first = true;
 
-      # fog of war
       focus-ring = {
-        # enable = true;
         width = 10000;
         active.color = "#00000055";
       };
-      # border.active.gradient = {
-      #   from = "red";
-      #   to = "blue";
-      #   in' = "oklch shorter hue";
-      # };
 
       shadow.enable = true;
-
-      # default-column-display = "tabbed";
+      shadow.radius = 12;
+      shadow.opacity = 0.35;
 
       tab-indicator = {
         position = "top";
         gaps-between-tabs = 10;
-
-        # hide-when-single-tab = true;
-        # place-within-column = true;
-
-        # active.color = "red";
       };
     };
 
-    hotkey-overlay.skip-at-startup = !nixosConfig.is-virtual-machine;
+    hotkey-overlay.skip-at-startup = true;
     clipboard.disable-primary = true;
-
     overview.zoom = 0.5;
-
     screenshot-path = "~/Pictures/Screenshots/%Y-%m-%dT%H:%M:%S.png";
-
-    switch-events = with config.lib.niri.actions; let
-      sh = spawn "sh" "-c";
-    in {
-      tablet-mode-on.action = sh "notify-send tablet-mode-on";
-      tablet-mode-off.action = sh "notify-send tablet-mode-off";
-      lid-open.action = sh "notify-send lid-open";
-      lid-close.action = sh "notify-send lid-close";
-    };
 
     binds = with config.lib.niri.actions; let
       sh = spawn "sh" "-c";
-      # screenshot-area-script = pkgs.writeShellScript "screenshot-area" ''
-      #   grim -o $(niri msg --json focused-output | jq -r .name) - | swayimg --config=info.mode=off --fullscreen - &
-      #   SWAYIMG=$!
-      #   niri msg action do-screen-transition -d 1200
-      #   sleep 1.2
-      #   grim -g "$(slurp)" - | wl-copy -t image/png
-      #   niri msg action do-screen-transition
-      #   kill $SWAYIMG
-      # '';
-      # screenshot-area = spawn "${screenshot-area-script}";
+      screenshot-area-script = pkgs.writeShellScript "screenshot-area" ''
+        grim -o $(niri msg --json focused-output | jq -r .name) - | swayimg --config=info.mode=off --fullscreen - &
+        SWAYIMG=$!
+        niri msg action do-screen-transition -d 1200
+        sleep 1.2
+        grim -g "$(slurp)" - | wl-copy -t image/png && notify-send 'Screenshot' 'Área copiada para o clipboard!'
+        niri msg action do-screen-transition
+        kill $SWAYIMG
+      '';
+      screenshot-area = spawn "${screenshot-area-script}";
     in
       lib.attrsets.mergeAttrsList [
         {
-          "Mod+T".action = spawn "kitty";
+          "Mod+T".action = spawn "app2unit-term-scope";
           "Mod+O".action = show-hotkey-overlay;
           "Mod+D".action = spawn "fuzzel";
-          "Mod+W".action = sh (
-            builtins.concatStringsSep "; " [
-              "systemctl --user restart waybar.service"
-            ]
-          );
+          "Mod+W".action = sh "systemctl --user restart waybar.service";
+          "Mod+L".action = spawn "swaylock";
 
-          "Mod+L".action = spawn "blurred-locker";
-
-          "Mod+Shift+S".action = screenshot;
+          "Mod+Shift+S".action = screenshot-area;
           "Print".action.screenshot-screen = [];
           "Mod+Print".action = screenshot-window;
 
-          "Mod+Insert".action = set-dynamic-cast-window;
-          "Mod+Shift+Insert".action = set-dynamic-cast-monitor;
-          "Mod+Delete".action = clear-dynamic-cast-target;
-
-          "XF86AudioRaiseVolume".action = sh "wpctl set-volume @DEFAULT_AUDIO_SINK@ 0.1+";
-          "XF86AudioLowerVolume".action = sh "wpctl set-volume @DEFAULT_AUDIO_SINK@ 0.1-";
+          "XF86AudioRaiseVolume".action = sh "wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+";
+          "XF86AudioLowerVolume".action = sh "wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-";
           "XF86AudioMute".action = sh "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle";
 
-          "XF86MonBrightnessUp".action = sh "brightnessctl set 10%+";
-          "XF86MonBrightnessDown".action = sh "brightnessctl set 10%-";
+          "XF86MonBrightnessUp".action = sh "brightnessctl set 5%+";
+          "XF86MonBrightnessDown".action = sh "brightnessctl set 5%-";
 
           "Mod+Q".action = close-window;
-
+          "Mod+Ctrl+L".action = sh "playerctl pause; wpctl set-mute @DEFAULT_AUDIO_SINK@ 1; swaylock";
+          "Mod+Grave".action = switch-to-last-workspace;
           "Mod+Space".action = toggle-column-tabbed-display;
-
-          "XF86AudioNext".action = focus-column-right;
-          "XF86AudioPrev".action = focus-column-left;
-
           "Mod+Tab".action = focus-window-down-or-column-right;
           "Mod+Shift+Tab".action = focus-window-up-or-column-left;
         }
@@ -191,34 +156,21 @@ in {
           suffixes = builtins.listToAttrs (
             map (n: {
               name = toString n;
-              value = [
-                "workspace"
-                (n + 1)
-              ]; # workspace 1 is empty; workspace 2 is the logical first.
+              value = ["workspace" (n + 1)];
             }) (range 1 9)
           );
           prefixes."Mod" = "focus";
           prefixes."Mod+Ctrl" = "move-window-to";
         })
         {
-          "Mod+Comma".action = consume-window-into-column;
-          "Mod+Period".action = expel-window-from-column;
-
           "Mod+R".action = switch-preset-column-width;
           "Mod+F".action = maximize-column;
           "Mod+Shift+F".action = fullscreen-window;
           "Mod+C".action = center-column;
-
           "Mod+Minus".action = set-column-width "-10%";
           "Mod+Plus".action = set-column-width "+10%";
-          "Mod+Shift+Minus".action = set-window-height "-10%";
-          "Mod+Shift+Plus".action = set-window-height "+10%";
-
-          "Mod+Shift+Escape".action = toggle-keyboard-shortcuts-inhibit;
           "Mod+Shift+E".action = quit;
           "Mod+Shift+P".action = power-off-monitors;
-
-          "Mod+Shift+Ctrl+T".action = toggle-debug-tint;
         }
       ];
 
@@ -229,14 +181,7 @@ in {
     in [
       {
         draw-border-with-background = false;
-        geometry-corner-radius = let
-          r = 8.0;
-        in {
-          top-left = r;
-          top-right = r;
-          bottom-left = r;
-          bottom-right = r;
-        };
+        geometry-corner-radius.all = 8.0;
         clip-to-geometry = true;
       }
       {
@@ -251,83 +196,60 @@ in {
       {
         matches = [
           {
-            app-id = "^firefox$";
-            title = "Private Browsing";
+            app-id = "^(firefox|floorp|firedragon|zen)$";
+            title = "(Private Browsing|Navegação Privada)";
           }
         ];
         border.active.color = colors.base0E;
       }
-      {
-        matches = [
-          {
-            app-id = "^signal$";
-          }
-        ];
-        block-out-from = "screencast";
-      }
     ];
 
-    gestures.dnd-edge-view-scroll = {
-      trigger-width = 64;
-      delay-ms = 250;
-      max-speed = 12000;
-    };
-
-    layer-rules = [
-      {
-        matches = [{namespace = "^swaync-notification-window$";}];
-
-        block-out-from = "screencast";
-      }
-      {
-        matches = [{namespace = "^swww-daemonoverview$";}];
-
-        place-within-backdrop = true;
-      }
-    ];
     xwayland-satellite.path = "${lib.getExe pkgs.xwayland-satellite-unstable}";
   };
 
   home.packages = with pkgs; [
-    libnotify
-  ];
-  programs.foot = {
-    enable = true;
-    settings.csd.preferred = "none";
-  };
+    # Dependências do sistema e UWSM
+    app2unit
+    uwsm
 
-  programs.alacritty = {
-    enable = true;
-    settings = {
-      window.decorations = "None";
-    };
+    # Ferramentas de screenshot
+    grim
+    slurp
+    swayimg
+    wl-clipboard
+
+    # Utilitários de atalhos
+    libnotify # Para `notify-send`
+    brightnessctl
+    playerctl # Para o atalho de lock
+    jq # Usado no script de screenshot
+    swaylock # Ou outro locker, como 'blurred-locker'
+  ];
+
+  xdg.terminal-exec.enable = true;
+  xdg.terminal-exec.settings = {default = "kitty.desktop";};
+  xdg.mimeApps.defaultApplications = {
+    "x-scheme-handler/terminal" = "kitty.desktop";
+  };
+  home.sessionVariables = {
+    TERMINAL = "kitty";
   };
 
   programs.kitty = {
     enable = true;
     settings = {
       window_border_width = "0px";
-      tab_bar_edge = "top";
-      tab_bar_margin_width = "0.0";
-      tab_bar_style = "fade";
-      placement_strategy = "top-left";
       hide_window_decorations = true;
     };
   };
 
   programs.fuzzel = {
     enable = true;
-    settings.main.launch-prefix = "niri msg action spawn --";
-    settings.main.terminal = "foot";
+    settings.main = {
+      launch-prefix = "niri msg action spawn -- app2unit --fuzzel-compat --";
+      terminal = "app2unit-term-scope";
+    };
   };
 
-  # services.mako = {
-  #   enable = true;
-  #   borderRadius = 8;
-  #   format = "%a\n%s\n%b";
-  # };
-
-  services.swaync = {
-    enable = true;
-  };
+  services.swaync.enable = true;
 }
