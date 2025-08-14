@@ -577,8 +577,6 @@
     "/share/info"
     "/libexec"
     "/share/apparmor"
-    "/bin/niri"
-    "/bin/niri-session"
     "/share/wayland-sessions"
     "/etc/systemd/user"
   ];
