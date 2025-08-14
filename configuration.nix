@@ -268,10 +268,10 @@
   boot.kernelPackages = pkgs.linuxKernel.packages.linux_zen;
 
   # Wifi driver
-  boot.kernelModules = ["rtw88_8821ce"];
-  boot.extraModulePackages = with config.boot.kernelPackages; [
-    rtw88
-  ];
+  # boot.kernelModules = ["8821ce"];
+  # boot.extraModulePackages = with config.boot.kernelPackages; [
+  #   rtl8821ce
+  # ];
 
   # Btrfs
   services.btrfs.autoScrub = {
@@ -580,7 +580,7 @@
     "/bin/niri"
     "/bin/niri-session"
     "/share/wayland-sessions"
-    "/etc/systemd/user/"
+    "/etc/systemd/user"
   ];
 
   # Virtualisation
