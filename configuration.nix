@@ -4,6 +4,7 @@
 {
   config,
   pkgs,
+  self,
   pkgs-stable,
   lib,
   system,
@@ -14,6 +15,16 @@
     # Include the results of the hardware scan.
     ./hardware-configuration.nix
   ];
+
+  home-manager.extraSpecialArgs = {
+    inherit inputs self;
+    nixosConfigurations = config;
+    system = "x86_64-linux";
+    pkgs-stable = import inputs.nixpkgs-stable {
+      inherit system;
+      config.allowUnfree = true;
+    };
+  };
 
   # Dbus
   services.dbus = {
@@ -41,6 +52,13 @@
 
   # UWSM
   programs.uwsm.enable = true;
+  programs.uwsm.waylandCompositors = {
+    niri = {
+      prettyName = "Niri (UWSM)";
+      comment = "Niri compositor managed by UWSM";
+      binPath = "/run/current-system/sw/bin/niri-session";
+    };
+  };
 
   # Niri
   nixpkgs.overlays = [inputs.niri.overlays.niri];
@@ -163,6 +181,7 @@
       intel-ocl
       vaapiIntel
       vulkan-loader
+      vpl-gpu-rt
     ];
 
     extraPackages32 = with pkgs.pkgsi686Linux; [
@@ -170,6 +189,7 @@
       intel-vaapi-driver
       vaapiIntel
       vulkan-loader
+      vpl-gpu-rt
     ];
   };
 
@@ -180,11 +200,13 @@
       intel-media-driver
       intel-ocl
       vaapiIntel
+      vpl-gpu-rt
     ];
     extraPackages32 = with pkgs.pkgsi686Linux; [
       pkgs.mesa32_git.opencl
       intel-media-driver
       vaapiIntel
+      vpl-gpu-rt
     ];
   };
 
