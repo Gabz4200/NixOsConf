@@ -2,6 +2,7 @@
   config,
   pkgs,
   pkgs-stable,
+  system,
   lib,
   ...
 }: {
@@ -21,18 +22,31 @@
   stylix.icons.package = pkgs.papirus-icon-theme;
   stylix.icons.dark = "Papirus-Dark";
   stylix.icons.light = "Papirus-Light";
-
   stylix.targets.vscode.enable = false;
+
+  qt.enable = true;
+  gtk.enable = true;
+  gtk.gtk4.enable = true;
+  gtk.gtk3.enable = true;
+  gtk.gtk2.enable = true;
+
+  # Comp
+  programs.man.generateCaches = true;
+  programs.bash.enableCompletion = true;
+
+  # Direnv
+  programs.direnv = {
+    enable = true;
+    nix-direnv.enable = true;
+    nix-direnv.package = pkgs.nix-direnv-flakes;
+  };
 
   # Sops
   sops = {
     defaultSopsFile = ./secrets/secrets.yaml;
     defaultSopsFormat = "yaml";
 
-    age.sshKeyPaths = ["${config.home.homeDirectory}/.ssh/id_ed25519"];
-
     age.keyFile = "${config.home.homeDirectory}/.config/sops/age/keys.txt";
-    age.generateKey = true;
 
     secrets = {
       "git" = {
@@ -40,20 +54,7 @@
     };
   };
 
-  # link the configuration file in current directory to the specified location in home directory
-  # home.file.".config/i3/wallpaper.jpg".source = ./wallpaper.jpg;
-
-  # link all files in `./scripts` to `~/.config/i3/scripts`
-  # home.file.".config/i3/scripts" = {
-  #   source = ./scripts;
-  #   recursive = true;   # link recursively
-  #   executable = true;  # make all files executable
-  # };
-
-  # encode the file content in nix configuration file directly
-  # home.file.".xxx".text = ''
-  #     xxx
-  # '';
+  sops.secrets."git".neededForUsers = true;
 
   # set cursor size and dpi for 1920x1080 monitor
   xresources.properties = {
@@ -61,46 +62,38 @@
     "Xft.dpi" = 141.21;
   };
 
-  # home
-  chaotic.nyx.overlay.enable = true;
-  chaotic.nyx.cache.enable = true;
-  chaotic.nyx.nixPath.enable = true;
-
   # Easyeffects
   services.easyeffects.enable = true;
-
-  services.syncthing.enable = true;
-  services.syncthing.tray.enable = true;
-
-  # Hyprpanel (temporary)
-  programs.hyprpanel.enable = true;
-  programs.hyprpanel.systemd.enable = true;
-
-  # Hyprland
-  wayland.windowManager.hyprland.enable = true;
-  wayland.windowManager.hyprland.xwayland.enable = true;
 
   # Niri
   programs.niriswitcher.enable = true;
 
+  programs.alacritty.enable = true; # Super+T in the default setting (terminal)
+  programs.fuzzel.enable = true; # Super+D in the default setting (app launcher)
+  programs.swaylock.enable = true; # Super+Alt+L in the default setting (screen locker)
+  programs.waybar.enable = true; # launch on startup in the default setting (bar)
+  services.mako.enable = true; # notification daemon
+  services.swayidle.enable = true; # idle management daemon
+  services.polkit-gnome.enable = true; # polkit
+
   # XDG
+  xdg.enable = true;
+
   xdg.autostart.enable = true;
   xdg.mime.enable = true;
   xdg.mimeApps.enable = true;
+
+  xdg.terminal-exec.enable = true;
 
   xdg.portal.xdgOpenUsePortal = true;
 
   xdg.portal.enable = true;
   xdg.portal.extraPortals = with pkgs; [
-    xdg-desktop-portal-cosmic
-    xdg-desktop-portal-gtk
-    xdg-desktop-portal-hyprland
     xdg-desktop-portal-gnome
+    xdg-desktop-portal-gtk
   ];
   xdg.portal.configPackages = with pkgs; [
-    niri
-    hyprland
-    cosmic-session
+    niri-unstable
   ];
 
   xdg.userDirs.enable = true;
@@ -113,32 +106,36 @@
     mutableExtensionsDir = true;
   };
 
-  # Direnv
-  programs.direnv = {
-    enable = true;
-    nix-direnv.enable = true;
-    enableBashIntegration = true;
-    enableZshIntegration = true;
-    #---> enableFishIntegration = true;
-  };
-
   # Syncthing
+  services.syncthing = {
+    settings = {
+      devices."celular" = {
+        id = "EIDJBPY-QXNRYHF-HC6Q4ER-O5FVG5A-2BZNK4F-Q6DDQC6-744RYJU-4DHZTQR";
+        name = "celular";
+        autoAcceptFolders = true;
+      };
+      folders."sync" = {
+        enable = true;
+        devices = ["celular"];
+        id = "default";
+        path = "~/Sync";
+      };
+    };
 
-  services.syncthing.settings.devices."celular" = {
-    id = "EIDJBPY-QXNRYHF-HC6Q4ER-O5FVG5A-2BZNK4F-Q6DDQC6-744RYJU-4DHZTQR";
-    name = "celular";
-    autoAcceptFolders = true;
-  };
-  services.syncthing.settings.folders."sync" = {
     enable = true;
-    devices = ["celular"];
-    id = "default";
-    path = "~/Sync";
+    tray.enable = true;
+  };
+
+  programs.distrobox = {
+    enable = true;
+    enableSystemdUnit = true;
   };
 
   # Packages that should be installed to the user profile.
   home.packages = with pkgs; [
     fastfetch
+    pokeget-rs
+    swaybg
 
     # archives
     zip
@@ -239,6 +236,7 @@
   };
 
   home.shell.enableZshIntegration = true;
+  home.shell.enableFishIntegration = true;
 
   # starship - an customizable prompt for any shell
   programs.starship = {
@@ -272,19 +270,21 @@
 
   programs.zoxide.enable = true;
   programs.zoxide.enableZshIntegration = true;
+  programs.zoxide.enableFishIntegration = true;
 
   programs.nix-index.enable = true;
   programs.nix-index.enableBashIntegration = true;
   programs.nix-index.enableZshIntegration = true;
   programs.nix-index.enableFishIntegration = true;
 
+  programs.command-not-found.enable = false;
+
   programs.eza.enable = true;
   programs.eza.enableZshIntegration = true;
+  programs.eza.enableFishIntegration = true;
 
   programs.gh.enable = true;
   programs.gh.gitCredentialHelper.enable = true;
-
-  programs.command-not-found.enable = false;
 
   # Terminal
   programs.kitty.enable = true;
