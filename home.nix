@@ -105,6 +105,25 @@
   xdg.userDirs.enable = true;
   xdg.userDirs.createDirectories = true;
 
+  # Roblox
+  programs.vinegar.enable = true;
+  programs.vinegar.settings = {
+    env = {
+      WINEFSYNC = "1";
+    };
+    studio = {
+      dxvk = true;
+      env = {
+        DXVK_HUD = "0";
+        MANGOHUD = "1";
+      };
+      fflags = {
+        DFIntTaskSchedulerTargetFps = 60;
+      };
+      renderer = "Vulkan";
+    };
+  };
+
   # VsCodium
   programs.vscode = {
     enable = true;
@@ -142,7 +161,6 @@
     fastfetch
     pokeget-rs
     swaybg
-    
 
     # archives
     zip
@@ -172,6 +190,10 @@
     gawk
     zstd
     gnupg
+    dxvk
+
+    # Games
+    atlauncher
 
     # job
     davinci-resolve

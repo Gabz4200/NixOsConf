@@ -260,7 +260,7 @@ in {
   programs.kitty = {
     enable = true;
     settings = {
-      window_border_width = "0px";
+      window_border_width = "8px";
       tab_bar_edge = "top";
       tab_bar_margin_width = "0.0";
       tab_bar_style = "fade";

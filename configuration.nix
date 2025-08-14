@@ -258,6 +258,11 @@
   # Hibernate
   powerManagement.enable = true;
 
+  # Minecraft
+  programs.java.enable = true;
+  programs.java.package = pkgs.jdk21;
+  programs.java.binfmt = true;
+
   # Bootloader.
   boot.loader = {
     systemd-boot.enable = true;
