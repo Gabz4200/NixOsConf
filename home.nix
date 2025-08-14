@@ -57,7 +57,7 @@
     };
   };
 
-  sops.secrets."git".neededForUsers = true;
+  # sops.secrets."git".neededForUsers = true;
 
   # set cursor size and dpi for 1920x1080 monitor
   xresources.properties = {

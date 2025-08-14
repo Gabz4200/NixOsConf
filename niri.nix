@@ -70,8 +70,9 @@ in {
       };
 
       shadow.enable = true;
-      shadow.radius = 12;
-      shadow.opacity = 0.35;
+      
+      #shadow.radius = 12;
+      #shadow.opacity = 0.35;
 
       tab-indicator = {
         position = "top";
@@ -118,7 +119,7 @@ in {
 
           "Mod+Q".action = close-window;
           "Mod+Ctrl+L".action = sh "playerctl pause; wpctl set-mute @DEFAULT_AUDIO_SINK@ 1; swaylock";
-          "Mod+Grave".action = switch-to-last-workspace;
+          #c"Mod+Grave".action = switch-to-last-workspace;
           "Mod+Space".action = toggle-column-tabbed-display;
           "Mod+Tab".action = focus-window-down-or-column-right;
           "Mod+Shift+Tab".action = focus-window-up-or-column-left;
@@ -181,7 +182,7 @@ in {
     in [
       {
         draw-border-with-background = false;
-        geometry-corner-radius.all = 8.0;
+        #geometry-corner-radius.all = 8.0;
         clip-to-geometry = true;
       }
       {
@@ -227,7 +228,7 @@ in {
   ];
 
   xdg.terminal-exec.enable = true;
-  xdg.terminal-exec.settings = {default = "kitty.desktop";};
+  xdg.terminal-exec.settings = {default = ["kitty.desktop"];};
   xdg.mimeApps.defaultApplications = {
     "x-scheme-handler/terminal" = "kitty.desktop";
   };

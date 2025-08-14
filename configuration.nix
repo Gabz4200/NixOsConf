@@ -66,7 +66,6 @@
     enable = true;
     package = pkgs.niri-unstable;
   };
-  
 
   # XDG
   xdg.icons.enable = true;
@@ -189,7 +188,6 @@
       intel-vaapi-driver
       vaapiIntel
       vulkan-loader
-      vpl-gpu-rt
     ];
   };
 
@@ -206,7 +204,6 @@
       pkgs.mesa32_git.opencl
       intel-media-driver
       vaapiIntel
-      vpl-gpu-rt
     ];
   };
 
@@ -596,7 +593,7 @@
   virtualisation.kvmgt.enable = true;
   virtualisation.libvirtd = {
     enable = true;
-    enableKVM = true;
+    qemu.package = pkgs.qemu_kvm;
   };
   virtualisation.waydroid.enable = true;
 
