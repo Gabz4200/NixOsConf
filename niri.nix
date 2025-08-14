@@ -251,7 +251,5 @@ in {
     };
   };
 
-  niri-flake.cache.enable = true;
-
   services.swaync.enable = true;
 }
