@@ -65,8 +65,10 @@ in {
       empty-workspace-above-first = true;
 
       focus-ring = {
-        width = 10000;
-        active.color = "#00000055";
+        enable = true;
+        width = 2;
+        active.color = config.lib.stylix.colors.withHashtag.base0E;
+        inactive.color = config.lib.stylix.colors.withHashtag.base00;
       };
 
       shadow.enable = true;
@@ -119,7 +121,6 @@ in {
 
           "Mod+Q".action = close-window;
           "Mod+Ctrl+L".action = sh "playerctl pause; wpctl set-mute @DEFAULT_AUDIO_SINK@ 1; swaylock";
-          #c"Mod+Grave".action = switch-to-last-workspace;
           "Mod+Space".action = toggle-column-tabbed-display;
           "Mod+Tab".action = focus-window-down-or-column-right;
           "Mod+Shift+Tab".action = focus-window-up-or-column-left;
@@ -175,14 +176,13 @@ in {
         }
       ];
 
-    #animations.window-resize.custom-shader = builtins.readFile ./resize.glsl;
+    animations.window-resize.custom-shader = builtins.readFile ./resize.glsl;
 
     window-rules = let
       colors = config.lib.stylix.colors.withHashtag;
     in [
       {
         draw-border-with-background = false;
-        #geometry-corner-radius.all = 8.0;
         clip-to-geometry = true;
       }
       {
@@ -204,6 +204,26 @@ in {
         border.active.color = colors.base0E;
       }
     ];
+    gestures.dnd-edge-view-scroll = {
+      trigger-width = 64;
+      delay-ms = 250;
+      max-speed = 12000;
+    };
+
+    layer-rules = [
+      {
+        matches = [{namespace = "^swaync-notification-window$";}];
+
+        block-out-from = "screencast";
+      }
+      {
+        matches = [{namespace = "^swww-daemonoverview$";}];
+
+        place-within-backdrop = true;
+      }
+    ];
+    xwayland-satellite.enable = true;
+    xwayland-satellite.path = "${lib.getExe pkgs.xwayland-satellite-unstable}";
   };
 
   #TODO: programs.niri.xwayland-satellite.path = "${lib.getExe pkgs.xwayland-satellite-unstable}";
@@ -213,6 +233,7 @@ in {
     # Dependências do sistema e UWSM
     app2unit
     uwsm
+    xwayland-satellite-unstable
 
     # Ferramentas de screenshot
     grim
@@ -241,6 +262,10 @@ in {
     enable = true;
     settings = {
       window_border_width = "0px";
+      tab_bar_edge = "top";
+      tab_bar_margin_width = "0.0";
+      tab_bar_style = "fade";
+      placement_strategy = "top-left";
       hide_window_decorations = true;
     };
   };

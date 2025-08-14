@@ -54,7 +54,7 @@
   programs.uwsm.enable = true;
   programs.uwsm.waylandCompositors = {
     niri = {
-      prettyName = "Niri (UWSM)";
+      prettyName = "Niri";
       comment = "Niri compositor managed by UWSM";
       binPath = "/run/current-system/sw/bin/niri-session";
     };
@@ -97,18 +97,18 @@
   #TODO: Use my beloved Nerd Fonts like Fira and Caskadya
   stylix.fonts = {
     serif = {
-      package = pkgs.nerd-fonts.hack;
-      name = "Hack Nerd Font";
+      package = pkgs.nerd-fonts.caskaydia-cove;
+      name = "Cascadia Code";
     };
 
     sansSerif = {
-      package = pkgs.nerd-fonts.aurulent-sans-mono;
-      name = "Aurulent Sans Mono Nerd Font";
+      package = pkgs.nerd-fonts.dejavu-sans-mono;
+      name = "DejaVu Sans Mono";
     };
 
     monospace = {
       package = pkgs.nerd-fonts.caskaydia-mono;
-      name = "Caskaydia Mono Nerd Font";
+      name = "Cascadia Mono";
     };
 
     emoji = {

@@ -27,6 +27,8 @@
   stylix.icons.light = "Papirus-Light";
   stylix.targets.vscode.enable = false;
 
+  services.swww.enable = true;
+
   qt.enable = true;
   gtk.enable = true;
   gtk.gtk4.enable = true;
