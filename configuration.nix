@@ -98,17 +98,17 @@
   stylix.fonts = {
     serif = {
       package = pkgs.nerd-fonts.caskaydia-cove;
-      name = "Cascadia Code";
+      name = "Cascadia Code Nerd Font";
     };
 
     sansSerif = {
       package = pkgs.nerd-fonts.dejavu-sans-mono;
-      name = "DejaVu Sans Mono";
+      name = "DejaVu Sans Mono Nerd Font";
     };
 
     monospace = {
       package = pkgs.nerd-fonts.caskaydia-mono;
-      name = "Cascadia Mono";
+      name = "Cascadia Mono Nerd Font";
     };
 
     emoji = {
@@ -140,6 +140,15 @@
   };
 
   services.fwupd.enable = true;
+
+  # Fonts
+  fonts.packages = with pkgs; [
+    nerd-fonts.caskaydia-mono
+    nerd-fonts.dejavu-sans-mono
+    nerd-fonts.caskaydia-cove
+    nerd-fonts.jetbrains-mono
+    font-awesome
+  ];
 
   # Zram
   zramSwap = {
