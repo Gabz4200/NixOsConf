@@ -175,7 +175,7 @@ in {
         }
       ];
 
-    #animations.window-resize.custom-shader = builtins.readFile ./resize.glsl;
+    animations.window-resize.custom-shader = builtins.readFile ./resize.glsl;
 
     window-rules = let
       colors = config.lib.stylix.colors.withHashtag;
@@ -204,9 +204,10 @@ in {
         border.active.color = colors.base0E;
       }
     ];
-
-    xwayland-satellite.path = "${lib.getExe pkgs.xwayland-satellite-unstable}";
   };
+
+  programs.niri.xwayland-satellite.path = "${lib.getExe pkgs.xwayland-satellite-unstable}";
+  programs.niriswitcher.enable = true;
 
   home.packages = with pkgs; [
     # Dependências do sistema e UWSM
