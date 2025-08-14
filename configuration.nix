@@ -97,18 +97,18 @@
   #TODO: Use my beloved Nerd Fonts like Fira and Caskadya
   stylix.fonts = {
     serif = {
-      package = pkgs.dejavu_fonts;
-      name = "DejaVu Serif";
+      package = pkgs.nerd-fonts.hack;
+      name = "Hack Nerd Font";
     };
 
     sansSerif = {
-      package = pkgs.dejavu_fonts;
-      name = "DejaVu Sans";
+      package = pkgs.nerd-fonts.aurulent-sans-mono;
+      name = "Aurulent Sans Mono Nerd Font";
     };
 
     monospace = {
-      package = pkgs.dejavu_fonts;
-      name = "DejaVu Sans Mono";
+      package = pkgs.nerd-fonts.caskaydia-mono;
+      name = "Caskaydia Mono Nerd Font";
     };
 
     emoji = {

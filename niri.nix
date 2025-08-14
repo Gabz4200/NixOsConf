@@ -92,7 +92,7 @@ in {
         SWAYIMG=$!
         niri msg action do-screen-transition -d 1200
         sleep 1.2
-        grim -g "$(slurp)" - | wl-copy -t image/png && notify-send 'Screenshot' 'Área copiada para o clipboard!'
+        grim -g "$(slurp)" - | wl-copy -t image/png && notify-send 'Screenshot' 'Copy to clipboard!'
         niri msg action do-screen-transition
         kill $SWAYIMG
       '';
@@ -175,7 +175,7 @@ in {
         }
       ];
 
-    animations.window-resize.custom-shader = builtins.readFile ./resize.glsl;
+    #animations.window-resize.custom-shader = builtins.readFile ./resize.glsl;
 
     window-rules = let
       colors = config.lib.stylix.colors.withHashtag;
@@ -206,7 +206,7 @@ in {
     ];
   };
 
-  programs.niri.xwayland-satellite.path = "${lib.getExe pkgs.xwayland-satellite-unstable}";
+  #TODO: programs.niri.xwayland-satellite.path = "${lib.getExe pkgs.xwayland-satellite-unstable}";
   programs.niriswitcher.enable = true;
 
   home.packages = with pkgs; [
