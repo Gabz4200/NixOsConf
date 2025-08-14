@@ -223,10 +223,9 @@ in {
       }
     ];
     xwayland-satellite.enable = true;
-    xwayland-satellite.path = "${lib.getExe pkgs.xwayland-satellite-unstable}";
   };
 
-  #TODO: programs.niri.xwayland-satellite.path = "${lib.getExe pkgs.xwayland-satellite-unstable}";
+  #TODO: xwayland-satellite.path = "${lib.getExe pkgs.xwayland-satellite-unstable}";
   programs.niriswitcher.enable = true;
 
   home.packages = with pkgs; [
