@@ -2,6 +2,7 @@
   config,
   pkgs,
   pkgs-stable,
+  nixosConfigurations,
   system,
   lib,
   ...
@@ -254,7 +255,10 @@
   # Shell
   programs.bash.enable = true;
   programs.zsh.enable = true;
+
   programs.fish.enable = true;
+  programs.fish.generateCompletions = true;
+  
 
   programs.nix-your-shell.enable = true;
   programs.nix-your-shell.enableFishIntegration = true;

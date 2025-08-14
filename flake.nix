@@ -69,30 +69,32 @@
 
         ./configuration.nix
 
-        inputs.home-manager.nixosModules.home-manager
-        {
-          home-manager.useGlobalPkgs = true;
-          home-manager.useUserPackages = true;
-          home-manager.extraSpecialArgs = {
-            inherit inputs self;
-            system = "x86_64-linux";
-            pkgs-stable = import inputs.nixpkgs-stable {
-              inherit system;
-              config.allowUnfree = true;
+        ({config, ...}:
+          inputs.home-manager.nixosModules.home-manager
+          {
+            home-manager.useGlobalPkgs = true;
+            home-manager.useUserPackages = true;
+            home-manager.extraSpecialArgs = {
+              inherit inputs self;
+              nixosConfigurations = config;
+              system = "x86_64-linux";
+              pkgs-stable = import inputs.nixpkgs-stable {
+                inherit system;
+                config.allowUnfree = true;
+              };
             };
-          };
 
-          home-manager.sharedModules = [
-            inputs.sops-nix.homeManagerModules.sops
-            inputs.nix4nvchad.homeManagerModule
-            inputs.catppuccin.homeModules.catppuccin
-            inputs.niri.homeModules.niri
-          ];
+            home-manager.sharedModules = [
+              inputs.sops-nix.homeManagerModules.sops
+              inputs.nix4nvchad.homeManagerModule
+              inputs.catppuccin.homeModules.catppuccin
+              inputs.niri.homeModules.niri
+            ];
 
-          home-manager.backupFileExtension = "bak";
+            home-manager.backupFileExtension = "bak";
 
-          home-manager.users.gabz = import ./home.nix;
-        }
+            home-manager.users.gabz = import ./home.nix;
+          })
       ];
     };
   };

@@ -589,6 +589,13 @@
     libsecret
     nix-your-shell
 
+    wl-clipboard
+    wayland-utils
+    libsecret
+    cage
+    gamescope
+    xwayland-satellite-unstable
+
     inputs.nix-alien.packages.${system}.nix-alien
   ];
 
