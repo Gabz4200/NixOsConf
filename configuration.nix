@@ -66,7 +66,7 @@
     enable = true;
     package = pkgs.niri-unstable;
   };
-  niri-flake.cache.enable = true;
+  
 
   # XDG
   xdg.icons.enable = true;
@@ -580,6 +580,10 @@
     "/share/info"
     "/libexec"
     "/share/apparmor"
+    "/bin/niri"
+    "/bin/niri-session"
+    "/share/wayland-sessions"
+    "/etc/systemd/user/"
   ];
 
   # Virtualisation

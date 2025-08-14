@@ -66,7 +66,7 @@
         inputs.stylix.nixosModules.stylix
 
         inputs.chaotic.nixosModules.default
-        inputs.niri.nixosModules.niri
+        #inputs.niri.nixosModules.niri
 
         ./configuration.nix
 
