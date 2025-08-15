@@ -271,9 +271,13 @@ in {
 
   programs.fuzzel = {
     enable = true;
-    settings.main = {
-      launch-prefix = "niri msg action spawn -- app2unit --fuzzel-compat --";
-      terminal = "app2unit-term-scope";
+    settings = {
+      main = {
+        launch-prefix = "niri msg action spawn -- app2unit --fuzzel-compat --";
+        terminal = "${pkgs.app2unit}/bin/app2unit-term-scope";
+        layer = "overlay";
+      };
+      colors.background = "ffffffff";
     };
   };
 

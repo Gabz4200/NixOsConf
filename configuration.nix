@@ -148,6 +148,7 @@
     nerd-fonts.caskaydia-cove
     nerd-fonts.jetbrains-mono
     font-awesome
+    dejavu_fonts
   ];
 
   # Zram

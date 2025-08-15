@@ -161,6 +161,7 @@
     fastfetch
     pokeget-rs
     swaybg
+    dejavu_fonts
 
     # archives
     zip
