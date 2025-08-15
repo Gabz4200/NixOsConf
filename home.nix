@@ -39,6 +39,7 @@
   # Comp
   programs.man.generateCaches = true;
   programs.bash.enableCompletion = true;
+  programs.fish.generateCompletions = true;
 
   # Direnv
   programs.direnv = {
@@ -287,8 +288,7 @@
   programs.zsh.enable = true;
 
   programs.fish.enable = true;
-  programs.fish.generateCompletions = true;
-
+  
   programs.nix-your-shell.enable = true;
   programs.nix-your-shell.enableFishIntegration = true;
   programs.nix-your-shell.enableZshIntegration = true;

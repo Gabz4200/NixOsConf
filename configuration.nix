@@ -186,7 +186,7 @@
     package32 = pkgs.driversi686Linux.mesa;
 
     extraPackages = with pkgs; [
-      rocmPackages.clr.icd
+      khronos-ocl-icd-loader
       intel-compute-runtime
       mesa.opencl
       intel-media-driver
@@ -198,6 +198,7 @@
 
     extraPackages32 = with pkgs.pkgsi686Linux; [
       mesa.opencl
+      khronos-ocl-icd-loader
       intel-media-driver
       intel-vaapi-driver
       vaapiIntel

@@ -273,9 +273,7 @@ in {
     wallpaper_setter = {
       Unit = {
         Description = "Sets my wallpaper";
-        PartOf = "graphical-session.target";
         After = "graphical-session.target";
-        Requisite = "graphical-session.target";
       };
       Service = {
         ExecStart = "swww img ${config.stylix.image}";
