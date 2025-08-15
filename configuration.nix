@@ -98,17 +98,17 @@
   stylix.fonts = {
     serif = {
       package = pkgs.nerd-fonts.caskaydia-cove;
-      name = "Cascadia Code Nerd Font";
+      name = "CaskaydiaCove Nerd Font";
     };
 
     sansSerif = {
       package = pkgs.nerd-fonts.dejavu-sans-mono;
-      name = "DejaVu Sans Mono Nerd Font";
+      name = "DejaVuSansMono Nerd Font";
     };
 
     monospace = {
       package = pkgs.nerd-fonts.caskaydia-mono;
-      name = "Cascadia Mono Nerd Font";
+      name = "CaskaydiaMono Nerd Font";
     };
 
     emoji = {

@@ -90,7 +90,7 @@
             inputs.niri.homeModules.niri
           ];
 
-          home-manager.backupFileExtension = "backup";
+          home-manager.backupFileExtension = "bak";
 
           home-manager.users.gabz = import ./home.nix;
         }
