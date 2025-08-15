@@ -199,7 +199,6 @@
     extraPackages32 = with pkgs.pkgsi686Linux; [
       mesa.opencl
       intel-media-driver
-      intel-compute-runtime
       intel-vaapi-driver
       vaapiIntel
       vulkan-loader
