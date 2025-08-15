@@ -169,8 +169,8 @@ in {
           "Mod+F".action = maximize-column;
           "Mod+Shift+F".action = fullscreen-window;
           "Mod+C".action = center-column;
-          "Mod+Minus".action = set-column-width "-10%";
-          "Mod+Plus".action = set-column-width "+10%";
+          "Mod+Shift+Left".action = set-column-width "-10%";
+          "Mod+Shift+Right".action = set-column-width "+10%";
           "Mod+Shift+E".action = quit;
           "Mod+Shift+P".action = power-off-monitors;
         }
@@ -266,6 +266,22 @@ in {
       tab_bar_style = "fade";
       placement_strategy = "top-left";
       hide_window_decorations = true;
+    };
+  };
+
+  systemd.user.services = {
+    wallpaper_setter = {
+      Unit = {
+        Description = "Sets my wallpaper";
+        PartOf = "graphical-session.target";
+        After = "graphical-session.target";
+        Requisite = "graphical-session.target";
+      };
+      Service = {
+        ExecStart = "swww img ${config.lib.stylix.image}";
+        Type = "oneshot";
+        Restart = "never";
+      };
     };
   };
 

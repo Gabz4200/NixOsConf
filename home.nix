@@ -28,6 +28,7 @@
   stylix.targets.vscode.enable = false;
 
   services.swww.enable = true;
+  services.swww.extraArgs = ["--layer" "bottom"];
 
   qt.enable = true;
   gtk.enable = true;
