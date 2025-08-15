@@ -181,10 +181,13 @@
   hardware.graphics = {
     enable = true;
     enable32Bit = true;
-    package = pkgs.mesa_git;
-    package32 = pkgs.mesa32_git;
+    package = pkgs.mesa;
+    package32 = pkgs.driversi686Linux.mesa;
 
     extraPackages = with pkgs; [
+      mesa.opencl
+      mesa.vulkanDrivers
+      mesa.vulkanLayers
       intel-media-driver
       intel-ocl
       vaapiIntel
@@ -193,6 +196,9 @@
     ];
 
     extraPackages32 = with pkgs.pkgsi686Linux; [
+      driversi686Linux.mesa.opencl
+      driversi686Linux.mesa.vulkanDrivers
+      driversi686Linux.mesa.vulkanLayers
       intel-media-driver
       intel-vaapi-driver
       vaapiIntel
@@ -201,19 +207,19 @@
   };
 
   chaotic.mesa-git = {
-    enable = true;
-    extraPackages = with pkgs; [
-      mesa_git.opencl
-      intel-media-driver
-      intel-ocl
-      vaapiIntel
-      vpl-gpu-rt
-    ];
-    extraPackages32 = with pkgs.pkgsi686Linux; [
-      pkgs.mesa32_git.opencl
-      intel-media-driver
-      vaapiIntel
-    ];
+    enable = false;
+    # extraPackages = with pkgs; [
+    #   mesa_git.opencl
+    #   intel-media-driver
+    #   intel-ocl
+    #   vaapiIntel
+    #   vpl-gpu-rt
+    # ];
+    # extraPackages32 = with pkgs.pkgsi686Linux; [
+    #   pkgs.mesa32_git.opencl
+    #   intel-media-driver
+    #   vaapiIntel
+    # ];
   };
 
   # Scx
