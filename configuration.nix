@@ -186,6 +186,8 @@
     package32 = pkgs.driversi686Linux.mesa;
 
     extraPackages = with pkgs; [
+      rocmPackages.clr.icd
+      intel-compute-runtime
       mesa.opencl
       intel-media-driver
       intel-ocl
@@ -197,11 +199,14 @@
     extraPackages32 = with pkgs.pkgsi686Linux; [
       mesa.opencl
       intel-media-driver
+      intel-compute-runtime
       intel-vaapi-driver
       vaapiIntel
       vulkan-loader
     ];
   };
+
+  # hardware.opengl.enable = true;
 
   # chaotic.mesa-git = {
   #   enable = false;
