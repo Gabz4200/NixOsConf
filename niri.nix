@@ -278,7 +278,7 @@ in {
         Requisite = "graphical-session.target";
       };
       Service = {
-        ExecStart = "swww img ${config.lib.stylix.image}";
+        ExecStart = "swww img ${config.stylix.image}";
         Type = "oneshot";
         Restart = "never";
       };
