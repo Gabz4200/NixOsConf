@@ -116,7 +116,7 @@
       name = "Noto Color Emoji";
     };
   };
-  stylix.autoEnable = true;
+  stylix.autoEnable = false;
   stylix.cursor.package = pkgs.bibata-cursors;
   stylix.cursor.name = "Bibata-Modern-Ice";
   stylix.cursor.size = 24;
@@ -149,6 +149,7 @@
     nerd-fonts.jetbrains-mono
     font-awesome
     dejavu_fonts
+    nerd-fonts.symbols-only
   ];
 
   # Zram
@@ -187,6 +188,7 @@
 
     extraPackages = with pkgs; [
       khronos-ocl-icd-loader
+      ocl-icd
       intel-compute-runtime
       mesa.opencl
       intel-media-driver
@@ -199,6 +201,7 @@
     extraPackages32 = with pkgs.pkgsi686Linux; [
       mesa.opencl
       khronos-ocl-icd-loader
+      ocl-icd
       intel-media-driver
       intel-vaapi-driver
       vaapiIntel
@@ -374,7 +377,7 @@
   # Define a user account.
   users.users.gabz = {
     isNormalUser = true;
-    shell = pkgs.fish;
+    shell = pkgs.zsh;
     description = "Gabriel";
     extraGroups = ["networkmanager" "wheel" "podman"];
     #---> hashedPasswordFile = config.sops.secrets."initial_hashed_password".path;
@@ -475,6 +478,17 @@
       xorg.libXxf86vm
       libelf
       wayland
+
+      # More graphics
+      mesa
+      khronos-ocl-icd-loader
+      ocl-icd
+      intel-compute-runtime
+      mesa.opencl
+      intel-media-driver
+      intel-ocl
+      vaapiIntel
+      vpl-gpu-rt
 
       # Required
       glib
@@ -583,6 +597,7 @@
       # Appimages need fuse, e.g. https://musescore.org/fr/download/musescore-x86_64.AppImage
       fuse
       e2fsprogs
+      libappimage
     ];
   };
 

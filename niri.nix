@@ -108,6 +108,9 @@ in {
           "Mod+W".action = sh "systemctl --user restart waybar.service";
           "Mod+L".action = spawn "swaylock";
 
+          "Alt+Tab".action = spawn "niriswitcherctl show --window";
+          "Alt+Shift+Tab".action = spawn "niriswitcherctl show --workspace";
+
           "Mod+Shift+S".action = screenshot-area;
           "Print".action.screenshot-screen = [];
           "Mod+Print".action = screenshot-window;
@@ -173,6 +176,7 @@ in {
           "Mod+Shift+Right".action = set-column-width "+10%";
           "Mod+Shift+E".action = quit;
           "Mod+Shift+P".action = power-off-monitors;
+          "Mod+V".action = toggle-overview;
         }
       ];
 
@@ -204,6 +208,7 @@ in {
         border.active.color = colors.base0E;
       }
     ];
+
     gestures.dnd-edge-view-scroll = {
       trigger-width = 64;
       delay-ms = 250;
@@ -223,6 +228,7 @@ in {
       }
     ];
     xwayland-satellite.enable = true;
+    xwayland-satellite.path = "/etc/profiles/per-user/gabz/bin/xwayland-satellite";
   };
 
   #TODO: xwayland-satellite.path = "${lib.getExe pkgs.xwayland-satellite-unstable}";
@@ -259,15 +265,9 @@ in {
 
   programs.kitty = {
     enable = true;
-    settings = {
-      window_border_width = "16px";
-      tab_bar_edge = "top";
-      tab_bar_margin_width = "0.0";
-      tab_bar_style = "fade";
-      placement_strategy = "top-left";
-      hide_window_decorations = true;
-    };
   };
+
+  systemd.user.startServices = true;
 
   systemd.user.services = {
     wallpaper_setter = {

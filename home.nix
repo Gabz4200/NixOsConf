@@ -10,22 +10,35 @@
   home.username = "gabz";
   home.homeDirectory = "/home/gabz";
 
+  home.sessionVariables.QT_QPA_PLATFORM = "wayland";
+
   imports = [./niri.nix];
 
   # Catppuccin Mocha
-  # catppuccin.enable = true;
-  # catppuccin.flavor = "mocha";
-  # catppuccin.accent = "pink";
-  # catppuccin.cache.enable = true;
+  catppuccin.enable = true;
+  catppuccin.flavor = "mocha";
+  catppuccin.accent = "pink";
+  catppuccin.cache.enable = true;
+
+  catppuccin.zsh-syntax-highlighting.enable = true;
+  catppuccin.fuzzel.enable = true;
+  catppuccin.gtk.enable = false;
+  catppuccin.kvantum.enable = true;
+  catppuccin.kvantum.apply = true;
+
+  qt.style.name = "kvantum";
 
   # Stylix
   stylix.enable = true;
-  stylix.autoEnable = true;
+  stylix.autoEnable = false;
   stylix.icons.enable = true;
   stylix.icons.package = pkgs.papirus-icon-theme;
   stylix.icons.dark = "Papirus-Dark";
   stylix.icons.light = "Papirus-Light";
   stylix.targets.vscode.enable = false;
+  stylix.targets.gtk.enable = true;
+  stylix.targets.qt.enable = false;
+  stylix.targets.niri.enable = true;
 
   services.swww.enable = true;
   services.swww.extraArgs = ["--layer" "bottom"];
@@ -158,6 +171,9 @@
     enableSystemdUnit = true;
   };
 
+  # OBS
+  programs.obs-studio.enable = true;
+
   # Packages that should be installed to the user profile.
   home.packages = with pkgs; [
     fastfetch
@@ -203,7 +219,7 @@
     ffmpeg
     kdePackages.kdenlive
     blender
-    obs-studio
+
     krita
     krita-plugin-gmic
     gimp3-with-plugins
@@ -288,7 +304,7 @@
   programs.zsh.enable = true;
 
   programs.fish.enable = true;
-  
+
   programs.nix-your-shell.enable = true;
   programs.nix-your-shell.enableFishIntegration = true;
   programs.nix-your-shell.enableZshIntegration = true;
@@ -320,11 +336,42 @@
   programs.gh.gitCredentialHelper.enable = true;
 
   # Terminal
-  programs.kitty.enable = true;
-  programs.kitty.enableGitIntegration = true;
-  programs.kitty.shellIntegration.enableZshIntegration = true;
-  programs.kitty.shellIntegration.enableBashIntegration = true;
-  programs.kitty.shellIntegration.enableFishIntegration = true;
+  programs.kitty = lib.mkForce {
+    enable = true;
+    enableGitIntegration = true;
+    settings = {
+      confirm_os_window_close = 0;
+      dynamic_background_opacity = true;
+      enable_audio_bell = false;
+      mouse_hide_wait = "-1.0";
+      window_padding_width = 10;
+      background_opacity = "0.5";
+      background_blur = 5;
+      symbol_map = let
+        mappings = [
+          "U+23FB-U+23FE"
+          "U+2B58"
+          "U+E200-U+E2A9"
+          "U+E0A0-U+E0A3"
+          "U+E0B0-U+E0BF"
+          "U+E0C0-U+E0C8"
+          "U+E0CC-U+E0CF"
+          "U+E0D0-U+E0D2"
+          "U+E0D4"
+          "U+E700-U+E7C5"
+          "U+F000-U+F2E0"
+          "U+2665"
+          "U+26A1"
+          "U+F400-U+F4A8"
+          "U+F67C"
+          "U+E000-U+E00A"
+          "U+F300-U+F313"
+          "U+E5FA-U+E62B"
+        ];
+      in
+        (builtins.concatStringsSep "," mappings) + " Symbols Nerd Font";
+    };
+  };
 
   home.stateVersion = "25.05";
 }
