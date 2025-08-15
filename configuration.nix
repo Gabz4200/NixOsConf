@@ -186,8 +186,6 @@
 
     extraPackages = with pkgs; [
       mesa.opencl
-      mesa.vulkanDrivers
-      mesa.vulkanLayers
       intel-media-driver
       intel-ocl
       vaapiIntel
@@ -197,8 +195,6 @@
 
     extraPackages32 = with pkgs.pkgsi686Linux; [
       mesa.opencl
-      mesa.vulkanDrivers
-      mesa.vulkanLayers
       intel-media-driver
       intel-vaapi-driver
       vaapiIntel
