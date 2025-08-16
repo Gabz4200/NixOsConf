@@ -25,6 +25,7 @@
   #catppuccin.gtk.enable = false;
   catppuccin.kvantum.enable = true;
   catppuccin.kvantum.apply = true;
+  catppuccin.vscode.enable = false;
 
   qt.platformTheme.name = "kvantum";
   qt.style.name = "kvantum";
