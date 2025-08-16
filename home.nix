@@ -124,7 +124,7 @@
     xdg-desktop-portal-gtk
     xdg-desktop-portal-gnome
     gnome-keyring
-    xdg-desktop-portal-kde
+    kdePackages.xdg-desktop-portal-kde
   ];
   xdg.portal.configPackages = with pkgs; [
     niri-unstable
