@@ -94,11 +94,16 @@
   # Niri
   programs.niriswitcher.enable = true;
 
+  niri-flake.cache.enable = true;
+
   programs.alacritty.enable = true; # Super+T in the default setting (terminal)
   programs.fuzzel.enable = true; # Super+D in the default setting (app launcher)
   programs.swaylock.enable = true; # Super+Alt+L in the default setting (screen locker)
   programs.waybar.enable = true; # launch on startup in the default setting (bar)
   programs.waybar.systemd.enable = true;
+  services.swaync.enable = true;
+  services.swayosd.display = "eDP-1";
+  services.swayosd.enable = true;
   # services.mako.enable = true; # notification daemon
   services.swayidle.enable = true; # idle management daemon
   services.polkit-gnome.enable = true; # polkit
@@ -116,8 +121,10 @@
 
   xdg.portal.enable = true;
   xdg.portal.extraPortals = with pkgs; [
-    xdg-desktop-portal-gnome
     xdg-desktop-portal-gtk
+    xdg-desktop-portal-gnome
+    gnome-keyring
+    xdg-desktop-portal-kde
   ];
   xdg.portal.configPackages = with pkgs; [
     niri-unstable
@@ -216,6 +223,10 @@
 
     # misc
     coreutils-full
+    nautilus
+    kdePackages.dolphin
+    eog
+    kdePackages.okular
     file
     which
     tree
@@ -333,7 +344,19 @@
   programs.zsh.enableCompletion = true;
   programs.zsh.historySubstringSearch.enable = true;
   programs.zsh.oh-my-zsh.enable = true;
-  programs.zsh.oh-my-zsh.plugins = ["common-aliases" "sudo" "alias-finder" "colored-man-pages" "colorize" "copybuffer" "copyfile" "copypath" "eza" "git" "gh"];
+  programs.zsh.oh-my-zsh.plugins = [
+    "common-aliases"
+    "sudo"
+    "alias-finder"
+    "colored-man-pages"
+    "colorize"
+    "copybuffer"
+    "copyfile"
+    "copypath"
+    "eza"
+    "git"
+    "gh"
+  ];
   programs.zsh.syntaxHighlighting.enable = true;
 
   programs.zoxide.enable = true;
@@ -364,8 +387,8 @@
       enable_audio_bell = false;
       mouse_hide_wait = "-1.0";
       window_padding_width = 10;
-      background_opacity = "0.5";
-      background_blur = 5;
+      background_opacity = "0.9";
+      background_blur = 10;
       symbol_map = let
         mappings = [
           "U+23FB-U+23FE"

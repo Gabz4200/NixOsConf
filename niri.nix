@@ -141,7 +141,7 @@ in {
           substitutions."monitor-window" = "monitor";
         })
         {
-          "Mod+V".action = switch-focus-between-floating-and-tiling;
+          "Mod+Alt+V".action = switch-focus-between-floating-and-tiling;
           "Mod+Shift+V".action = toggle-window-floating;
         }
         (binds {
@@ -169,7 +169,8 @@ in {
         })
         {
           "Mod+R".action = switch-preset-column-width;
-          "Mod+F".action = maximize-column;
+          "Mod+Alt+F".action = maximize-column;
+          "Mod+F".action = expand-column-to-available-width;
           "Mod+Shift+F".action = fullscreen-window;
           "Mod+C".action = center-column;
           "Mod+Shift+Left".action = set-column-width "-10%";
@@ -232,11 +233,25 @@ in {
   };
 
   programs.niri.settings.environment."NIXOS_OZONE_WL" = "1";
-  programs.waybar.settings.mainBar.layer = "top";
+  #programs.waybar.settings.mainBar.layer = "top";
   #systemd.user.services.niri-flake-polkit.enable = true;
 
   #TODO: xwayland-satellite.path = "${lib.getExe pkgs.xwayland-satellite-unstable}";
   programs.niriswitcher.enable = true;
+  programs.niriswitcher.settings = {
+    keys = {
+      modifier = "Super";
+      switch = {
+        next = "Tab";
+        prev = "Shift+Tab";
+      };
+    };
+    center_on_focus = true;
+    appearance = {
+      system_theme = "dark";
+      icon_size = 64;
+    };
+  };
 
   home.packages = with pkgs; [
     # Dependências do sistema e UWSM
@@ -275,14 +290,18 @@ in {
 
   systemd.user.services = {
     wallpaper_setter = {
+      path = [pkgs.swww];
       Unit = {
         Description = "Sets my wallpaper";
-        After = "graphical-session.target";
+      };
+      Install = {
+        WantedBy = ["graphical-session.target"];
       };
       Service = {
         ExecStart = "swww img ${config.stylix.image}";
         Type = "oneshot";
-        Restart = "never";
+        Restart = "on-failure";
+        RestartSec = 5;
       };
     };
   };
