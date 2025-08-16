@@ -106,7 +106,7 @@
     intel-media-driver
     intel-ocl
     vaapiIntel
-    vulkanPackages_latest.vulkan-loader
+    vulkan-loader
     vpl-gpu-rt
   ];
   programs.steam.extest.enable = true;
@@ -219,7 +219,7 @@
       intel-media-driver
       intel-ocl
       vaapiIntel
-      vulkanPackages_latest.vulkan-loader
+      vulkan-loader
       vpl-gpu-rt
     ];
 
@@ -230,7 +230,7 @@
       intel-media-driver
       intel-vaapi-driver
       vaapiIntel
-      vulkanPackages_latest.vulkan-loader
+      vulkan-loader
     ];
   };
 
