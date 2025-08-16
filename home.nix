@@ -243,8 +243,9 @@
     dxvk
 
     pixelorama
-    aseprite
+    libresprite
     (pkgs.callPackage (./packages/pixieditor/default.nix) {})
+    tenacity
 
     # Games
     atlauncher
