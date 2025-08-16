@@ -48,7 +48,7 @@
   services.swww.enable = true;
   services.swww.extraArgs = ["--layer" "bottom"];
 
-  qt.style.catppuccin.enable = true;
+  #! qt.style.catppuccin.enable = true;
 
   qt.enable = true;
   gtk.enable = true;
