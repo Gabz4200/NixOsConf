@@ -22,11 +22,12 @@
 
   catppuccin.zsh-syntax-highlighting.enable = true;
   catppuccin.fuzzel.enable = true;
-  catppuccin.gtk.enable = false;
+  #catppuccin.gtk.enable = false;
   catppuccin.kvantum.enable = true;
   catppuccin.kvantum.apply = true;
 
   qt.platformTheme.name = "kvantum";
+  qt.style.name = "kvantum";
 
   # Stylix
   stylix.enable = true;
