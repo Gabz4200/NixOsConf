@@ -99,12 +99,9 @@
   programs.steam.extraPackages = with pkgs; [
     gamescope
     gamemode
-    #khronos-ocl-icd-loader
     ocl-icd
     intel-compute-runtime
-    mesa.opencl
     intel-media-driver
-    intel-ocl
     vaapiIntel
     vulkan-loader
     vpl-gpu-rt
@@ -212,20 +209,15 @@
     package32 = pkgs.driversi686Linux.mesa;
 
     extraPackages = with pkgs; [
-      #khronos-ocl-icd-loader
       ocl-icd
       intel-compute-runtime
-      mesa.opencl
       intel-media-driver
-      intel-ocl
       vaapiIntel
       vulkan-loader
       vpl-gpu-rt
     ];
 
     extraPackages32 = with pkgs.pkgsi686Linux; [
-      mesa.opencl
-      #khronos-ocl-icd-loader
       ocl-icd
       intel-media-driver
       intel-vaapi-driver
@@ -241,7 +233,7 @@
   #   # extraPackages = with pkgs; [
   #   #   mesa_git.opencl
   #   #   intel-media-driver
-  #   #   intel-ocl
+  #   #
   #   #   vaapiIntel
   #   #   vpl-gpu-rt
   #   # ];
@@ -435,9 +427,9 @@
       experimental-features = ["nix-command" "flakes"];
       trusted-users = ["@wheel" "root" "${config.users.users.gabz.name}"];
       auto-optimise-store = true;
-      sandbox = true;
-      substituters = ["https://niri.cachix.org" "https://chaotic-nyx.cachix.org" "https://nix-community.cachix.org" "https://hyprland.cachix.org" "https://numtide.cachix.org" "https://cache.nixos.org/"];
-      trusted-public-keys = ["niri.cachix.org-1:Wv0OmO7PsuocRKzfDoJ3mulSl7Z6oezYhGhR+3W2964=" "chaotic-nyx.cachix.org-1:HfnXSw4pj95iI/n17rIDy40agHj12WfF+Gqk6SonIT8=" "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs=" "hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc=" "numtide.cachix.org-1:2ps1kLBUWjxIneOy1Ik6cQjb41X0iXVXeHigGmycPPE=" "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="];
+      sandbox = lib.mkBefore true;
+      substituters = lib.mkBefore ["https://niri.cachix.org" "https://chaotic-nyx.cachix.org" "https://nix-community.cachix.org" "https://hyprland.cachix.org" "https://numtide.cachix.org" "https://cache.nixos.org/"];
+      trusted-public-keys = lib.mkBefore ["niri.cachix.org-1:Wv0OmO7PsuocRKzfDoJ3mulSl7Z6oezYhGhR+3W2964=" "chaotic-nyx.cachix.org-1:HfnXSw4pj95iI/n17rIDy40agHj12WfF+Gqk6SonIT8=" "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs=" "hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc=" "numtide.cachix.org-1:2ps1kLBUWjxIneOy1Ik6cQjb41X0iXVXeHigGmycPPE=" "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="];
     };
 
     nixPath = ["nixpkgs=${inputs.nixpkgs}"];
@@ -507,12 +499,9 @@
 
       # More graphics
       mesa
-      #khronos-ocl-icd-loader
       ocl-icd
       intel-compute-runtime
-      mesa.opencl
       intel-media-driver
-      intel-ocl
       vaapiIntel
       vpl-gpu-rt
 
@@ -625,7 +614,6 @@
       fuse
       e2fsprogs
       libappimage
-      (pkgs.appimageTools.defaultFhsEnvArgs.targetPkgs pkgs)
     ];
   };
 
@@ -713,6 +701,13 @@
     cage
     gamescope
     xwayland-satellite-unstable
+
+    ocl-icd
+    intel-compute-runtime
+    intel-media-driver
+    vaapiIntel
+    vulkan-loader
+    vpl-gpu-rt
 
     inputs.nix-alien.packages.${system}.nix-alien
   ];
