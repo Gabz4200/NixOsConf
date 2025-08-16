@@ -625,7 +625,7 @@
       fuse
       e2fsprogs
       libappimage
-      appimageTools
+      (pkgs.appimageTools.defaultFhsEnvArgs.targetPkgs pkgs)
     ];
   };
 
@@ -667,8 +667,6 @@
 
     app2unit
     wget
-
-    appimageTools
 
     # Create an FHS environment using the command `fhs`, enabling the execution of non-NixOS packages in NixOS!
     (let
