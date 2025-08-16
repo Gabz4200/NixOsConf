@@ -99,7 +99,7 @@
   programs.steam.extraPackages = with pkgs; [
     gamescope
     gamemode
-    khronos-ocl-icd-loader
+    #khronos-ocl-icd-loader
     ocl-icd
     intel-compute-runtime
     mesa.opencl
@@ -212,7 +212,7 @@
     package32 = pkgs.driversi686Linux.mesa;
 
     extraPackages = with pkgs; [
-      khronos-ocl-icd-loader
+      #khronos-ocl-icd-loader
       ocl-icd
       intel-compute-runtime
       mesa.opencl
@@ -225,7 +225,7 @@
 
     extraPackages32 = with pkgs.pkgsi686Linux; [
       mesa.opencl
-      khronos-ocl-icd-loader
+      #khronos-ocl-icd-loader
       ocl-icd
       intel-media-driver
       intel-vaapi-driver
@@ -506,7 +506,7 @@
 
       # More graphics
       mesa
-      khronos-ocl-icd-loader
+      #khronos-ocl-icd-loader
       ocl-icd
       intel-compute-runtime
       mesa.opencl
