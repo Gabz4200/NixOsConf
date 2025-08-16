@@ -38,10 +38,11 @@
   stylix.targets.vscode.enable = false;
   stylix.targets.gtk.enable = true;
   stylix.targets.qt.enable = false;
-  stylix.targets.niri.enable = true;
 
   services.swww.enable = true;
   services.swww.extraArgs = ["--layer" "bottom"];
+
+  qt.style.catppuccin.enable = true;
 
   qt.enable = true;
   gtk.enable = true;
@@ -171,6 +172,8 @@
     enableSystemdUnit = true;
   };
 
+  programs.lutris.enable = true;
+
   # OBS
   programs.obs-studio.enable = true;
 
@@ -180,6 +183,13 @@
     pokeget-rs
     swaybg
     dejavu_fonts
+
+    kdePackages.qtstyleplugin-kvantum
+    libsForQt5.qtstyleplugin-kvantum
+    kdePackages.qt5compat
+    kdePackages.wayqt
+    libsForQt5.qt5.qtwayland
+    kdePackages.qtwayland
 
     # archives
     zip
@@ -218,8 +228,12 @@
     davinci-resolve
     ffmpeg
     kdePackages.kdenlive
+    shotcut
+    openshot-qt
+    #lightworks
+    flowblade
     blender
-
+    olive-editor
     krita
     krita-plugin-gmic
     gimp3-with-plugins

@@ -231,6 +231,10 @@ in {
     xwayland-satellite.path = "/etc/profiles/per-user/gabz/bin/xwayland-satellite";
   };
 
+  programs.niri.settings.environment."NIXOS_OZONE_WL" = "1";
+  programs.waybar.settings.mainBar.layer = "top";
+  #systemd.user.services.niri-flake-polkit.enable = true;
+
   #TODO: xwayland-satellite.path = "${lib.getExe pkgs.xwayland-satellite-unstable}";
   programs.niriswitcher.enable = true;
 

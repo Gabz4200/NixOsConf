@@ -88,6 +88,31 @@
 
   security.polkit.enable = true;
   services.gnome.gnome-keyring.enable = true;
+  security.pam.services.swaylock = {};
+
+  # Steam
+  programs.steam.enable = true;
+  programs.steam.extraCompatPackages = with pkgs; [
+    proton-ge-custom
+    proton-cachyos_x86_64_v3
+  ];
+  programs.steam.extraPackages = with pkgs; [
+    gamescope
+    gamemode
+    khronos-ocl-icd-loader
+    ocl-icd
+    intel-compute-runtime
+    mesa.opencl
+    intel-media-driver
+    intel-ocl
+    vaapiIntel
+    vulkanPackages_latest.vulkan-loader
+    vpl-gpu-rt
+  ];
+  programs.steam.extest.enable = true;
+  programs.steam.gamescopeSession.enable = true;
+  programs.steam.localNetworkGameTransfers.openFirewall = true;
+  programs.steam.protontricks.enable = true;
 
   # Stylix
   stylix.enable = true;
@@ -194,7 +219,7 @@
       intel-media-driver
       intel-ocl
       vaapiIntel
-      vulkan-loader
+      vulkanPackages_latest.vulkan-loader
       vpl-gpu-rt
     ];
 
@@ -205,7 +230,7 @@
       intel-media-driver
       intel-vaapi-driver
       vaapiIntel
-      vulkan-loader
+      vulkanPackages_latest.vulkan-loader
     ];
   };
 
