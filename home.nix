@@ -24,11 +24,11 @@
   catppuccin.cache.enable = true;
 
   catppuccin.zsh-syntax-highlighting.enable = true;
-  catppuccin.fuzzel.enable = true;
   #catppuccin.gtk.enable = false;
   catppuccin.kvantum.enable = true;
   catppuccin.kvantum.apply = false;
   catppuccin.vscode.enable = false;
+  catppuccin.fuzzel.enable = false;
 
   # Fix that should not be needed
   gtk.iconTheme.package = lib.mkForce pkgs.papirus-icon-theme;
@@ -43,6 +43,7 @@
   stylix.targets.vscode.enable = false;
   stylix.targets.gtk.enable = true;
   stylix.targets.qt.enable = true;
+  stylix.targets.fuzzel.enable = true;
 
   services.swww.enable = true;
   services.swww.extraArgs = ["--layer" "bottom"];
@@ -59,6 +60,7 @@
   programs.man.generateCaches = true;
   #programs.bash.enableCompletion = true;
   programs.fish.generateCompletions = true;
+  programs.nushell.enable = true;
 
   # Direnv
   programs.direnv = {
@@ -239,6 +241,10 @@
     zstd
     gnupg
     dxvk
+
+    pixelorama
+    aseprite
+    (pkgs.callPackage ./packages/pixieditor/default.nix)
 
     # Games
     atlauncher

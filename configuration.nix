@@ -473,6 +473,7 @@
       # List by default
       zlib
       zstd
+      stdenv
       stdenv.cc.cc
       curl
       openssl
@@ -519,6 +520,7 @@
       glib
       gtk2
       pkg-config
+      ncurses
 
       # Inspired by steam
       # https://github.com/NixOS/nixpkgs/blob/master/pkgs/by-name/st/steam/package.nix#L36-L85
@@ -623,6 +625,7 @@
       fuse
       e2fsprogs
       libappimage
+      appimageTools
     ];
   };
 
@@ -665,12 +668,46 @@
     app2unit
     wget
 
+    appimageTools
+
+    # Create an FHS environment using the command `fhs`, enabling the execution of non-NixOS packages in NixOS!
+    (let
+      base = pkgs.appimageTools.defaultFhsEnvArgs;
+    in
+      pkgs.buildFHSUserEnv (base
+        // {
+          name = "fhs";
+          targetPkgs = pkgs:
+            (base.targetPkgs pkgs)
+            ++ (config.nix-ld.libraries)
+            ++ (
+              with pkgs; [
+                bash
+                zsh
+              ]
+            );
+          profile = "export FHS=1";
+          runScript = "zsh";
+          extraOutputsToInstall = ["dev"];
+        }))
+
     nixd
     alejandra
     sops
     cachix
     libsecret
     nix-your-shell
+    nushell
+
+    appimageupdate
+    gearlever
+
+    just
+    justbuild
+    just-lsp
+    just-formatter
+
+    prettier
 
     wl-clipboard
     wayland-utils
