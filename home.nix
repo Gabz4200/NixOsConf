@@ -200,7 +200,8 @@
     fastfetch
     pokeget-rs
     swaybg
-    dejavu_fonts
+
+    vlc-bin
 
     kdePackages.qtstyleplugin-kvantum
     libsForQt5.qtstyleplugin-kvantum
