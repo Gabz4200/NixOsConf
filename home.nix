@@ -26,7 +26,7 @@
   catppuccin.kvantum.enable = true;
   catppuccin.kvantum.apply = true;
 
-  qt.style.name = "kvantum";
+  qt.platformTheme.name = "kvantum";
 
   # Stylix
   stylix.enable = true;
