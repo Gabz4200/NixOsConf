@@ -382,7 +382,7 @@
   programs.kitty = lib.mkForce {
     enable = true;
     enableGitIntegration = true;
-    enableZshIntegration = true;
+    shellIntegration.enableZshIntegration = true;
     settings = {
       confirm_os_window_close = 0;
       dynamic_background_opacity = true;
