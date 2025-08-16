@@ -94,7 +94,7 @@
   # Niri
   programs.niriswitcher.enable = true;
 
-  niri-flake.cache.enable = true;
+  #niri-flake.cache.enable = true;
 
   programs.alacritty.enable = true; # Super+T in the default setting (terminal)
   programs.fuzzel.enable = true; # Super+D in the default setting (app launcher)
