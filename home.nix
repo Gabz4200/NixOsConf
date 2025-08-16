@@ -59,7 +59,8 @@
   # Comp
   programs.man.generateCaches = true;
   #programs.bash.enableCompletion = true;
-  programs.fish.generateCompletions = true;
+  # Fix this TODO;
+  programs.fish.generateCompletions = false;
   programs.nushell.enable = true;
 
   # Direnv
@@ -283,7 +284,7 @@
     shfmt
     shellcheck
     bash-language-server
-    fish-lsp
+    #fish-lsp
     tldr
 
     # system call monitoring
@@ -304,8 +305,8 @@
     enable = true;
     extraPackages = with pkgs; [
       bash-language-server
-      fish-lsp
-      hyprls
+      #fish-lsp
+      #hyprls
       kdlfmt
       alejandra
       nixd
@@ -331,13 +332,13 @@
   };
 
   home.shell.enableZshIntegration = true;
-  home.shell.enableFishIntegration = true;
+  home.shell.enableFishIntegration = false;
 
   # starship - an customizable prompt for any shell
   programs.starship = {
     enable = true;
     enableZshIntegration = true;
-    enableFishIntegration = true;
+    enableFishIntegration = false;
     settings = {
       add_newline = false;
       aws.disabled = true;
@@ -351,7 +352,8 @@
   programs.zsh.enable = true;
 
   #TODO: Maybe remove?
-  programs.fish.enable = true;
+  # Fix by deciding
+  programs.fish.enable = false;
 
   programs.nix-your-shell = {
     enable = lib.mkBefore true;
@@ -380,18 +382,18 @@
 
   programs.zoxide.enable = true;
   programs.zoxide.enableZshIntegration = true;
-  programs.zoxide.enableFishIntegration = true;
+  programs.zoxide.enableFishIntegration = false;
 
   programs.nix-index.enable = true;
   #programs.nix-index.enableBashIntegration = true;
   programs.nix-index.enableZshIntegration = true;
-  programs.nix-index.enableFishIntegration = true;
+  programs.nix-index.enableFishIntegration = false;
 
   programs.command-not-found.enable = false;
 
   programs.eza.enable = true;
   programs.eza.enableZshIntegration = true;
-  programs.eza.enableFishIntegration = true;
+  programs.eza.enableFishIntegration = false;
 
   programs.gh.enable = true;
   programs.gh.gitCredentialHelper.enable = true;

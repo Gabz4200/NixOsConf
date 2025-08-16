@@ -446,7 +446,8 @@
 
   # Shell
   programs.zsh.enable = true;
-  programs.fish.enable = true;
+  # Fix me
+  programs.fish.enable = false;
   #programs.bash.enable = true;
 
   # AppImage
