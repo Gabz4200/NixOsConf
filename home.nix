@@ -25,7 +25,7 @@
 
   catppuccin.zsh-syntax-highlighting.enable = true;
   #catppuccin.gtk.enable = false;
-  catppuccin.kvantum.enable = true;
+  catppuccin.kvantum.enable = false;
   catppuccin.kvantum.apply = false;
   catppuccin.vscode.enable = false;
   catppuccin.fuzzel.enable = false;
