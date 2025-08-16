@@ -335,9 +335,10 @@
 
   programs.fish.enable = true;
 
-  programs.nix-your-shell.enable = true;
-  programs.nix-your-shell.enableFishIntegration = true;
-  programs.nix-your-shell.enableZshIntegration = true;
+  programs.nix-your-shell = lib.mkBefore {
+    enable = true;
+    enableZshIntegration = true;
+  };
 
   programs.zsh.autosuggestion.enable = true;
   programs.zsh.autosuggestion.strategy = ["completion" "history"];
@@ -381,14 +382,15 @@
   programs.kitty = lib.mkForce {
     enable = true;
     enableGitIntegration = true;
+    enableZshIntegration = true;
     settings = {
       confirm_os_window_close = 0;
       dynamic_background_opacity = true;
       enable_audio_bell = false;
       mouse_hide_wait = "-1.0";
-      window_padding_width = 10;
-      background_opacity = "0.9";
-      background_blur = 10;
+      window_padding_width = 12;
+      background_opacity = "1.0";
+      background_blur = 5;
       symbol_map = let
         mappings = [
           "U+23FB-U+23FE"

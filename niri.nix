@@ -58,17 +58,17 @@ in {
 
     layout = {
       gaps = 16;
-      struts.left = 64;
-      struts.right = 64;
+      struts.left = 8;
+      struts.right = 8;
       border.width = 4;
       always-center-single-column = true;
       empty-workspace-above-first = true;
 
       focus-ring = {
         enable = true;
-        width = 2;
+        width = 4;
         active.color = config.lib.stylix.colors.withHashtag.base0E;
-        inactive.color = config.lib.stylix.colors.withHashtag.base00;
+        inactive.color = config.lib.stylix.colors.withHashtag.base02;
       };
 
       shadow.enable = true;
@@ -294,10 +294,10 @@ in {
         Description = "Sets my wallpaper";
       };
       Install = {
-        WantedBy = ["graphical-session.target"];
+        After = ["graphical-session.target"];
       };
       Service = {
-        ExecStart = "swww img ${config.stylix.image}";
+        ExecStart = "${pkgs.swww}/bin/swww img ${config.stylix.image}";
         Type = "oneshot";
         Restart = "on-failure";
         RestartSec = 5;
