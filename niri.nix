@@ -228,7 +228,7 @@ in {
       }
     ];
     xwayland-satellite.enable = true;
-    xwayland-satellite.path = "/etc/profiles/per-user/gabz/bin/xwayland-satellite";
+    #xwayland-satellite.path = "/etc/profiles/per-user/gabz/bin/xwayland-satellite";
   };
 
   programs.niri.settings.environment."NIXOS_OZONE_WL" = "1";
