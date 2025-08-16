@@ -333,11 +333,12 @@
   #programs.bash.enable = true;
   programs.zsh.enable = true;
 
+  #TODO: Maybe remove?
   programs.fish.enable = true;
 
-  programs.nix-your-shell = lib.mkBefore {
-    enable = true;
-    enableZshIntegration = true;
+  programs.nix-your-shell = {
+    enable = lib.mkBefore true;
+    enableZshIntegration = lib.mkBefore true;
   };
 
   programs.zsh.autosuggestion.enable = true;
