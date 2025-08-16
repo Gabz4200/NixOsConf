@@ -244,7 +244,7 @@
 
     pixelorama
     aseprite
-    (pkgs.callPackage ./packages/pixieditor/default.nix)
+    (pkgs.callPackage (./packages/pixieditor/default.nix) {})
 
     # Games
     atlauncher
