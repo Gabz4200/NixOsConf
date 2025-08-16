@@ -290,7 +290,6 @@ in {
 
   systemd.user.services = {
     wallpaper_setter = {
-      path = [pkgs.swww];
       Unit = {
         Description = "Sets my wallpaper";
       };
