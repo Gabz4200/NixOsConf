@@ -677,7 +677,7 @@
           name = "fhs";
           targetPkgs = pkgs:
             (base.targetPkgs pkgs)
-            ++ (config.nix-ld.libraries)
+            ++ (config.programs.nix-ld.libraries)
             ++ (
               with pkgs; [
                 bash
