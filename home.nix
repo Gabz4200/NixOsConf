@@ -29,6 +29,9 @@
   qt.platformTheme.name = "kvantum";
   qt.style.name = "kvantum";
 
+  # Fix that should not be needed
+  gtk.iconTheme.package = lib.mkForce pkgs.papirus-icon-theme;
+
   # Stylix
   stylix.enable = true;
   stylix.autoEnable = false;
