@@ -12,7 +12,10 @@
 
   home.sessionVariables.QT_QPA_PLATFORM = "wayland";
 
-  imports = [./niri.nix];
+  imports = [
+    ./niri.nix
+    ./waybar.nix
+  ];
 
   # Catppuccin Mocha
   catppuccin.enable = true;
@@ -24,11 +27,8 @@
   catppuccin.fuzzel.enable = true;
   #catppuccin.gtk.enable = false;
   catppuccin.kvantum.enable = true;
-  catppuccin.kvantum.apply = true;
+  catppuccin.kvantum.apply = false;
   catppuccin.vscode.enable = false;
-
-  qt.platformTheme.name = "kvantum";
-  qt.style.name = "kvantum";
 
   # Fix that should not be needed
   gtk.iconTheme.package = lib.mkForce pkgs.papirus-icon-theme;
@@ -42,7 +42,7 @@
   stylix.icons.light = "Papirus-Light";
   stylix.targets.vscode.enable = false;
   stylix.targets.gtk.enable = true;
-  stylix.targets.qt.enable = false;
+  stylix.targets.qt.enable = true;
 
   services.swww.enable = true;
   services.swww.extraArgs = ["--layer" "bottom"];
@@ -108,6 +108,9 @@
   services.swayidle.enable = true; # idle management daemon
   services.polkit-gnome.enable = true; # polkit
 
+  # TLDR
+  services.tldr-update.enable = true;
+
   # XDG
   xdg.enable = true;
 
@@ -155,7 +158,7 @@
   # VsCodium
   programs.vscode = {
     enable = true;
-    package = pkgs.vscodium-fhs;
+    package = pkgs.vscodium.fhs;
     mutableExtensionsDir = true;
   };
 
@@ -268,6 +271,13 @@
     btop # replacement of htop/nmon
     iotop # io monitoring
     iftop # network monitoring
+
+    # shell
+    shfmt
+    shellcheck
+    bash-language-server
+    fish-lsp
+    tldr
 
     # system call monitoring
     strace # system call monitoring
