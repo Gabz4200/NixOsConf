@@ -57,7 +57,7 @@
 
   # Comp
   programs.man.generateCaches = true;
-  programs.bash.enableCompletion = true;
+  #programs.bash.enableCompletion = true;
   programs.fish.generateCompletions = true;
 
   # Direnv
@@ -330,7 +330,7 @@
   };
 
   # Shell
-  programs.bash.enable = true;
+  #programs.bash.enable = true;
   programs.zsh.enable = true;
 
   programs.fish.enable = true;
@@ -364,7 +364,7 @@
   programs.zoxide.enableFishIntegration = true;
 
   programs.nix-index.enable = true;
-  programs.nix-index.enableBashIntegration = true;
+  #programs.nix-index.enableBashIntegration = true;
   programs.nix-index.enableZshIntegration = true;
   programs.nix-index.enableFishIntegration = true;
 

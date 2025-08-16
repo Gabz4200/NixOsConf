@@ -455,7 +455,7 @@
   # Shell
   programs.zsh.enable = true;
   programs.fish.enable = true;
-  programs.bash.enable = true;
+  #programs.bash.enable = true;
 
   # AppImage
   programs.appimage = {
