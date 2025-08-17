@@ -201,7 +201,7 @@
     pokeget-rs
     swaybg
 
-    vlc-bin
+    vlc
 
     kdePackages.qtstyleplugin-kvantum
     libsForQt5.qtstyleplugin-kvantum
