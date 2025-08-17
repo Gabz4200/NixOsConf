@@ -244,7 +244,6 @@
     # Games
     atlauncher
     prismlauncher
-    minecraft
 
     # job
     davinci-resolve
