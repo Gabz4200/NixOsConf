@@ -69,6 +69,9 @@
 
   # programs.qt5ct.enable = true;
 
+  # Fix Minecraft
+  services.minecraft-server.openFirewall = true;
+
   # XDG
   xdg.mime.enable = true;
 
