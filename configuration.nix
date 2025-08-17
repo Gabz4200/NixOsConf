@@ -67,7 +67,7 @@
     package = pkgs.niri-unstable;
   };
 
-  programs.qt5ct.enable = true;
+  # programs.qt5ct.enable = true;
 
   # XDG
   xdg.mime.enable = true;
