@@ -72,16 +72,7 @@
   # XDG
   xdg.mime.enable = true;
   xdg.portal.enable = true;
-  xdg.portal.xdgOpenUsePortal = true;
-  xdg.portal.extraPortals = with pkgs; [
-    xdg-desktop-portal-gtk
-    xdg-desktop-portal-gnome
-    gnome-keyring
-    kdePackages.xdg-desktop-portal-kde
-  ];
-  xdg.portal.configPackages = with pkgs; [
-    niri-unstable
-  ];
+
   xdg.terminal-exec.enable = true;
 
   xdg.icons.enable = true;

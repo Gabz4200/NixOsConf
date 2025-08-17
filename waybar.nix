@@ -60,7 +60,7 @@ in {
   programs.waybar = {
     enable = true;
     systemd.enable = true;
-    systemd.target = "niri-session.target";
+    systemd.target = "graphical-session.target";
   };
   programs.waybar.settings.mainBar = {
     layer = "top";
