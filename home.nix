@@ -201,6 +201,14 @@
     pokeget-rs
     swaybg
 
+    nerd-fonts.caskaydia-mono
+    nerd-fonts.dejavu-sans-mono
+    nerd-fonts.caskaydia-cove
+    nerd-fonts.jetbrains-mono
+    font-awesome
+    dejavu_fonts
+    nerd-fonts.symbols-only
+
     vlc
 
     kdePackages.qtstyleplugin-kvantum
