@@ -146,7 +146,7 @@
       WINEFSYNC = "1";
     };
     studio = {
-      dxvk = true;
+      dxvk = false;
       env = {
         DXVK_HUD = "0";
         MANGOHUD = "1";
@@ -266,7 +266,6 @@
     kdePackages.kdenlive
     shotcut
     openshot-qt
-    #lightworks
     flowblade
     blender
     olive-editor
