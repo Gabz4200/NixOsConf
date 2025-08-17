@@ -141,22 +141,6 @@
 
   # Roblox
   programs.vinegar.enable = true;
-  programs.vinegar.settings = {
-    env = {
-      WINEFSYNC = "1";
-    };
-    studio = {
-      dxvk = false;
-      env = {
-        DXVK_HUD = "0";
-        MANGOHUD = "1";
-      };
-      fflags = {
-        DFIntTaskSchedulerTargetFps = 60;
-      };
-      renderer = "Vulkan";
-    };
-  };
 
   # VsCodium
   programs.vscode = {
@@ -259,6 +243,8 @@
 
     # Games
     atlauncher
+    prismlauncher
+    minecraft
 
     # job
     davinci-resolve
