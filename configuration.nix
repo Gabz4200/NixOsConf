@@ -69,9 +69,6 @@
 
   # programs.qt5ct.enable = true;
 
-  # Fix Minecraft
-  services.minecraft-server.openFirewall = true;
-
   # XDG
   xdg.mime.enable = true;
 
@@ -708,8 +705,13 @@
     nix-your-shell
     nushell
 
+    extest
+
     appimageupdate
     gearlever
+
+    gamemode
+    gamescope
 
     just
     justbuild
@@ -741,7 +743,11 @@
     lfs.enable = true;
   };
 
-  services.openssh.enable = true;
+  services.openssh = {
+    enable = true;
+    permitRootLogin = "no";
+    passwordAuthentication = false;
+  };
 
   programs.mtr.enable = true;
   programs.gnupg.agent = {
@@ -763,7 +769,26 @@
   };
 
   networking.firewall.enable = true;
+  networking.firewall.allowPing = false;
+  networking.nftables.enable = true;
+
+  networking.firewall.allowedTCPPorts = [];
+  networking.firewall.allowedUDPPorts = [];
+
+  interfaces."eth0".allowedTCPPorts = [22 25565 443 80];
+
+  networking.enableIPv6 = true;
+
   services.syncthing.openDefaultPorts = true;
+  # Fix Minecraft
+  services.minecraft-server.openFirewall = true;
+
+  services.fail2ban = {
+    enable = true;
+    maxretry = 6;
+    bantime = "1h";
+    jails.sshd.enable = true;
+  };
 
   system.stateVersion = "25.05";
 }
