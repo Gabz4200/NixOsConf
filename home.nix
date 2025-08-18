@@ -260,7 +260,15 @@
     openai-whisper
     # openai-whisper-cpp
     srt
+
     python3
+    uv
+    pipx
+    virtualenv
+    ruff
+
+    sox
+    soxr
 
     pixelorama
     libresprite
