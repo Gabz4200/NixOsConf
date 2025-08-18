@@ -16,7 +16,7 @@
   imports = [
     ./niri.nix
     ./waybar.nix
-    ./kdenlive.nix
+    #./kdenlive.nix
   ];
 
   # Catppuccin Mocha
@@ -254,6 +254,13 @@
     zstd
     gnupg
     dxvk
+
+    kdePackages.breeze
+    kdePackages.kdenlive
+    openai-whisper
+    openai-whisper-cpp
+    srt
+    python3
 
     pixelorama
     libresprite

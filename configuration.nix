@@ -684,7 +684,7 @@
       libGLU # For natron
 
       # Need?
-      python
+      python3
       whisper-cpp-vulkan
 
       # Appimages need fuse, e.g. https://musescore.org/fr/download/musescore-x86_64.AppImage
@@ -780,7 +780,7 @@
     gamescope
 
     openfx
-    python
+    python3
     whisper-cpp-vulkan
 
     openal
@@ -812,7 +812,7 @@
     vulkan-loader
     vpl-gpu-rt
 
-    #natron
+    natron
 
     inputs.nix-alien.packages.${system}.nix-alien
   ];
