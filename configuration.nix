@@ -250,7 +250,7 @@
       vpl-gpu-rt
       nixgl.nixGLIntel
       nixgl.nixVulkanIntel
-      nixgl.nixGLDefault
+      #nixgl.nixGLDefault
     ];
 
     extraPackages32 = with pkgs.pkgsi686Linux; [
@@ -554,7 +554,7 @@
       glfw-wayland-minecraft
       nixgl.nixGLIntel
       nixgl.nixVulkanIntel
-      nixgl.nixGLDefault
+      #nixgl.nixGLDefault
 
       # Required
       glib
@@ -760,7 +760,7 @@
 
     nixgl.nixGLIntel
     nixgl.nixVulkanIntel
-    nixgl.nixGLDefault
+    #nixgl.nixGLDefault
 
     just
     justbuild

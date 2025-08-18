@@ -216,7 +216,7 @@
 
     nixgl.nixGLIntel
     nixgl.nixVulkanIntel
-    nixgl.nixGLDefault
+    #nixgl.nixGLDefault
 
     # archives
     zip
