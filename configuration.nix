@@ -316,7 +316,7 @@
 
   # Minecraft
   programs.java.enable = true;
-  programs.java.package = pkgs.jdk21;
+  programs.java.package = pkgs.zulu17;
   programs.java.binfmt = true;
 
   # Bootloader.
@@ -516,14 +516,18 @@
       xorg.libXxf86vm
       libelf
       wayland
+      xwayland
 
-      # More graphics
+      # More graphics and games
       mesa
       ocl-icd
       intel-compute-runtime
       intel-media-driver
       vaapiIntel
       vpl-gpu-rt
+      jdk17
+      openal
+      glfw-wayland-minecraft
 
       # Required
       glib
@@ -541,7 +545,9 @@
       coreutils
       pciutils
       zenity
-      # glibc_multi.bin # Seems to cause issue in ARM
+      glibc
+      libadwaita
+      # # glibc_multi.bin
 
       # # Without these it silently fails
       xorg.libXinerama
@@ -706,12 +712,23 @@
     nushell
 
     extest
+    glibc
+    glib
+    gsettings-desktop-schemas
+    gtk4
+    gtk3
+    gtk3-x11
+    wine-wayland
+    libadwaita
 
     appimageupdate
     gearlever
 
     gamemode
     gamescope
+
+    openal
+    glfw-wayland-minecraft
 
     just
     justbuild

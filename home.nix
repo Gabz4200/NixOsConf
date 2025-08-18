@@ -243,7 +243,8 @@
 
     # Games
     atlauncher
-    prismlauncher
+    (prismlauncher.override {jdks = [zulu8 zulu17];})
+    bottles
 
     # job
     davinci-resolve
