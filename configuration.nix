@@ -683,6 +683,10 @@
       libxcrypt-legacy # For natron
       libGLU # For natron
 
+      # Need?
+      python
+      whisper-cpp-vulkan
+
       # Appimages need fuse, e.g. https://musescore.org/fr/download/musescore-x86_64.AppImage
       fuse
       e2fsprogs
@@ -776,6 +780,8 @@
     gamescope
 
     openfx
+    python
+    whisper-cpp-vulkan
 
     openal
     glfw-wayland-minecraft
@@ -805,6 +811,8 @@
     vaapiIntel
     vulkan-loader
     vpl-gpu-rt
+
+    natron
 
     inputs.nix-alien.packages.${system}.nix-alien
   ];

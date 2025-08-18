@@ -16,6 +16,7 @@
   imports = [
     ./niri.nix
     ./waybar.nix
+    ./kdenlive.nix
   ];
 
   # Catppuccin Mocha
@@ -267,7 +268,6 @@
     # job
     davinci-resolve
     ffmpeg
-    kdePackages.kdenlive
     shotcut
     openshot-qt
     flowblade
