@@ -775,7 +775,7 @@
   networking.firewall.allowedTCPPorts = [];
   networking.firewall.allowedUDPPorts = [];
 
-  interfaces."eth0".allowedTCPPorts = [22 25565 443 80];
+  networking.interfaces."eth0".allowedTCPPorts = [22 25565 443 80];
 
   networking.enableIPv6 = true;
 
