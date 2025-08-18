@@ -60,8 +60,15 @@
     };
   };
 
+  # Overlays
+  nixpkgs.overlays = [
+    inputs.niri.overlays.niri
+    inputs.nixpkgs-wayland.overlay
+    inputs.chaotic.overlays.default
+    inputs.nixgl.overlay
+  ];
+
   # Niri
-  nixpkgs.overlays = [inputs.niri.overlays.niri];
   programs.niri = {
     enable = true;
     package = pkgs.niri-unstable;
@@ -108,6 +115,13 @@
   security.polkit.enable = true;
   services.gnome.gnome-keyring.enable = true;
   security.pam.services.swaylock = {};
+
+  # Gaming
+  programs.steam.platformOptimizations.enable = true;
+
+  programs.wine.enable = true;
+  programs.wine.binfmt = true;
+  programs.wine.ntsync = true;
 
   # Steam
   programs.steam.enable = true;
@@ -234,6 +248,9 @@
       vaapiIntel
       vulkan-loader
       vpl-gpu-rt
+      nixgl.nixGLIntel
+      nixgl.nixVulkanIntel
+      nixgl.nixGLDefault
     ];
 
     extraPackages32 = with pkgs.pkgsi686Linux; [
@@ -405,6 +422,13 @@
     pulse.enable = true;
     jack.enable = true;
     wireplumber.enable = true;
+
+    lowLatency = {
+      enable = true;
+      # defaults
+      quantum = 64;
+      rate = 48000;
+    };
   };
 
   # Enable touchpad support (enabled default in most desktopManager).
@@ -447,8 +471,8 @@
       trusted-users = ["@wheel" "root" "${config.users.users.gabz.name}"];
       auto-optimise-store = true;
       sandbox = lib.mkBefore true;
-      substituters = lib.mkBefore ["https://niri.cachix.org" "https://chaotic-nyx.cachix.org" "https://nix-community.cachix.org" "https://hyprland.cachix.org" "https://numtide.cachix.org" "https://cache.nixos.org/"];
-      trusted-public-keys = lib.mkBefore ["niri.cachix.org-1:Wv0OmO7PsuocRKzfDoJ3mulSl7Z6oezYhGhR+3W2964=" "chaotic-nyx.cachix.org-1:HfnXSw4pj95iI/n17rIDy40agHj12WfF+Gqk6SonIT8=" "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs=" "hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc=" "numtide.cachix.org-1:2ps1kLBUWjxIneOy1Ik6cQjb41X0iXVXeHigGmycPPE=" "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="];
+      substituters = lib.mkBefore ["https://niri.cachix.org" "https://chaotic-nyx.cachix.org" "https://nix-gaming.cachix.org" "https://nixpkgs-wayland.cachix.org" "https://nix-community.cachix.org" "https://hyprland.cachix.org" "https://numtide.cachix.org" "https://cache.nixos.org/"];
+      trusted-public-keys = lib.mkBefore ["niri.cachix.org-1:Wv0OmO7PsuocRKzfDoJ3mulSl7Z6oezYhGhR+3W2964=" "chaotic-nyx.cachix.org-1:HfnXSw4pj95iI/n17rIDy40agHj12WfF+Gqk6SonIT8=" "nix-gaming.cachix.org-1:nbjlureqMbRAxR1gJ/f3hxemL9svXaZF/Ees8vCUUs4=" "nixpkgs-wayland.cachix.org-1:3lwxaILxMRkVhehr5StQprHdEo4IrE8sRho9R9HOLYA=" "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs=" "hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc=" "numtide.cachix.org-1:2ps1kLBUWjxIneOy1Ik6cQjb41X0iXVXeHigGmycPPE=" "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="];
     };
 
     nixPath = ["nixpkgs=${inputs.nixpkgs}"];
@@ -528,6 +552,9 @@
       jdk17
       openal
       glfw-wayland-minecraft
+      nixgl.nixGLIntel
+      nixgl.nixVulkanIntel
+      nixgl.nixGLDefault
 
       # Required
       glib
@@ -730,6 +757,10 @@
 
     openal
     glfw-wayland-minecraft
+
+    nixgl.nixGLIntel
+    nixgl.nixVulkanIntel
+    nixgl.nixGLDefault
 
     just
     justbuild

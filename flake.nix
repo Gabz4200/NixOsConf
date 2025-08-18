@@ -6,6 +6,15 @@
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
     nixpkgs-stable.url = "github:NixOS/nixpkgs/nixos-25.05";
 
+    nixgl.url = "github:nix-community/nixGL";
+
+    nixpkgs-wayland = {
+      url = "github:nix-community/nixpkgs-wayland";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    nix-gaming.url = "github:fufexan/nix-gaming";
+
     niri.url = "github:sodiboo/niri-flake";
     #--> zen-browser.url = "github:MarceColl/zen-browser-flake";
 
@@ -67,6 +76,10 @@
 
         inputs.chaotic.nixosModules.default
         #inputs.niri.nixosModules.niri
+
+        inputs.nix-gaming.nixosModules.wine
+        inputs.nix-gaming.nixosModules.platformOptimizations
+        inputs.nix-gaming.nixosModules.pipewireLowLatency
 
         ./configuration.nix
 

@@ -4,6 +4,7 @@
   pkgs-stable,
   nixosConfigurations,
   system,
+  inputs,
   lib,
   ...
 }: {
@@ -141,6 +142,17 @@
 
   # Roblox
   programs.vinegar.enable = true;
+  programs.vinegar.package = pkgs.vinegar.overrideAttrs (self: {
+    buildInputs = map (v:
+      if v.pname != "wine-wow"
+      then v
+      else inputs.nix-gaming.packages.${pkgs.system}.wine-ge)
+    self.buildInputs;
+    postInstall = ''
+      wrapProgram $out/bin/vinegar \
+        --prefix PATH : ${lib.makeBinPath [inputs.nix-gaming.packages.${pkgs.system}.wine-ge]}
+    '';
+  });
 
   # VsCodium
   programs.vscode = {
@@ -201,6 +213,10 @@
     kdePackages.wayqt
     libsForQt5.qt5.qtwayland
     kdePackages.qtwayland
+
+    nixgl.nixGLIntel
+    nixgl.nixVulkanIntel
+    nixgl.nixGLDefault
 
     # archives
     zip
