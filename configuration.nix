@@ -658,6 +658,7 @@
     "/share/apparmor"
     "/share/wayland-sessions"
     "/etc/systemd/user"
+    "/share/glib-2.0/"
   ];
 
   # Virtualisation
