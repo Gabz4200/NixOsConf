@@ -258,7 +258,7 @@
     kdePackages.breeze
     kdePackages.kdenlive
     openai-whisper
-    openai-whisper-cpp
+    # openai-whisper-cpp
     srt
     python3
 
