@@ -812,7 +812,7 @@
     vulkan-loader
     vpl-gpu-rt
 
-    natron
+    # natron
 
     inputs.nix-alien.packages.${system}.nix-alien
   ];
