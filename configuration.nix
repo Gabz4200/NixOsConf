@@ -685,7 +685,7 @@
 
       # Need?
       python3
-      whisper-cpp-vulkan
+      whisper-cpp
 
       # Appimages need fuse, e.g. https://musescore.org/fr/download/musescore-x86_64.AppImage
       fuse
@@ -781,7 +781,7 @@
 
     openfx
     python3
-    whisper-cpp-vulkan
+    whisper-cpp
 
     openal
     glfw-wayland-minecraft
