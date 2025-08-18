@@ -63,7 +63,7 @@
   # Overlays
   nixpkgs.overlays = [
     inputs.niri.overlays.niri
-    inputs.nixpkgs-wayland.overlay
+    # inputs.nixpkgs-wayland.overlay
     inputs.chaotic.overlays.default
     inputs.nixgl.overlay
   ];
