@@ -787,7 +787,6 @@
     enable = true;
     maxretry = 6;
     bantime = "1h";
-    jails.sshd.enable = true;
   };
 
   system.stateVersion = "25.05";
