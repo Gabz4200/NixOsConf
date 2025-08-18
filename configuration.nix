@@ -183,7 +183,7 @@
     defaultSopsFile = ./secrets/secrets.yaml;
     defaultSopsFormat = "yaml";
 
-    age.keyFile = "/home/${config.users.users.gabz.name}/.config/sops/age/keys.txt";
+    age.keyFile = "/home/gabz/.config/sops/age/keys.txt";
   };
 
   # Hardware and Firmware
@@ -242,8 +242,10 @@
     package32 = pkgs.driversi686Linux.mesa;
 
     extraPackages = with pkgs; [
-      ocl-icd
+      mesa.opencl
+      rocmPackages.clr.icd
       intel-compute-runtime
+      ocl-icd
       intel-media-driver
       vaapiIntel
       vulkan-loader
@@ -439,7 +441,7 @@
     isNormalUser = true;
     shell = pkgs.zsh;
     description = "Gabriel";
-    extraGroups = ["networkmanager" "wheel" "podman"];
+    extraGroups = ["networkmanager" "wheel" "podman" "video" "render" "audio" "realtime"];
     #---> hashedPasswordFile = config.sops.secrets."initial_hashed_password".path;
   };
 
@@ -452,7 +454,7 @@
   # NH
   programs.nh = {
     enable = true;
-    flake = "/home/${config.users.users.gabz.name}/NixConf";
+    flake = "/home/gabz/NixConf";
     clean.enable = true;
     clean.dates = "weekly";
     clean.extraArgs = "--keep 6 --keep-since 3d";
@@ -468,7 +470,7 @@
   nix = {
     settings = {
       experimental-features = ["nix-command" "flakes"];
-      trusted-users = ["@wheel" "root" "${config.users.users.gabz.name}"];
+      trusted-users = ["@wheel" "root" "gabz"];
       auto-optimise-store = true;
       sandbox = lib.mkBefore true;
       substituters = lib.mkBefore [
@@ -773,12 +775,15 @@
     gamemode
     gamescope
 
+    openfx
+
     openal
     glfw-wayland-minecraft
 
     nixgl.nixGLIntel
     nixgl.nixVulkanIntel
     #nixgl.nixGLDefault
+    pkg-config
 
     just
     justbuild
