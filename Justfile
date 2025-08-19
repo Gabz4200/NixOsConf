@@ -43,18 +43,13 @@ repl:
 # on darwin, you may need to switch to root user to run this command
 [group('nix')]
 clean:
-  # Wipe out NixOS's history
   sudo nix profile wipe-history --profile /nix/var/nix/profiles/system --older-than 7d
-  # Wipe out home-manager's history
   nix profile wipe-history --profile "$XDG_STATE_HOME/nix/profiles/home-manager" --older-than 7d
 
 # Garbage collect all unused nix store entries
 [group('nix')]
 gc:
-  # garbage collect all unused nix store entries(system-wide)
   sudo nix-collect-garbage --delete-older-than 7d
-  # garbage collect all unused nix store entries(for the user - home-manager)
-  # https://github.com/NixOS/nix/issues/8508
   nix-collect-garbage --delete-older-than 7d
 
 # Enter a shell session which has all the necessary tools for this flake
@@ -65,7 +60,6 @@ shell:
 
 [group('nix')]
 fmt:
-  # format all .nix files (portable, zsh-safe)
   alejandra .
 
 # Show all the auto gc roots in the nix store
@@ -97,6 +91,47 @@ up-nix:
 #
 ############################################################################
 
+# Deploy configuration
+# Usage: just switch "message"
+[group('nixos')]
+switch message:
+  git add .
+  git commit -m {{message}}
+  nix flake update --commit-lock-file
+  nixos-rebuild switch --flake .
+
+# Deploy configuration without updating
+# Usage: just ss "message"
+[group('nixos')]
+ss message:
+  git add .
+  git commit -m {{message}}
+  nixos-rebuild switch --flake .
+
+# Deploy configuration with boot
+# Usage: just boot "message"
+[group('nixos')]
+boot message:
+  git add .
+  git commit -m {{message}}
+  nix flake update --commit-lock-file
+  nixos-rebuild boot --flake .
+
+# Deploy configuration with boot and no update
+# Usage: just bb "message"
+[group('nixos')]
+bb message:
+  git add .
+  git commit -m {{message}}
+  nixos-rebuild boot --flake .
+
+# Late Deploy configuration
+# Usage: just ldp (switch/boot)
+[group('nixos')]
+ldp type:
+  git add .
+  git commit --amend -a --no-edit
+  nixos-rebuild {{type}} --flake .
 
 # =================================================
 #
@@ -110,7 +145,6 @@ path:
 
 [group('common')]
 trace-access app *args:
-  # Runs strace and extracts file paths, filtering nix/store and /proc
   strace -f -t -e trace=file {{app}} {{args}} 2>&1 \
     | grep -oE '"(/[^\"]+)"' \
     | sed -E 's/"(\/[^\"]+)"/\1/' \
