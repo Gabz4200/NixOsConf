@@ -82,7 +82,7 @@
       jq
       yq-go
       glow # Markdown previewer in terminal
-      tldr # Simplified man pages
+      tealdeer # Simplified man pages
 
       # --- Monitoring ---
       btop
@@ -105,11 +105,6 @@
       shfmt
       shellcheck
       bash-language-server
-      python3
-      uv
-      pipx
-      virtualenv
-      ruff
 
       windsurf
       codeium
@@ -120,6 +115,8 @@
       openexr
       blender
       krita
+
+      # Kendlive with Whisper
       (let
         kdenlive = kdePackages.kdenlive;
         kdenlivePython = pkgs.python3.withPackages (ps:
@@ -133,58 +130,17 @@
       in
         pkgs.symlinkJoin {
           name = "kdenlive-with-whisper-${kdenlive.version}";
-          # mantém o kdenlive original intacto (benefício do cache)
           paths = [kdenlive kdenlivePython];
 
-          # preciso do makeWrapper para criar o wrapper no postBuild
           nativeBuildInputs = [pkgs.makeWrapper];
 
           postBuild = ''
-            # cria um wrapper simples para que, ao executar kdenlive,
-            # o PATH e o PYTHONPATH apontem para o python com os pacotes
             wrapProgram $out/bin/kdenlive \
               --prefix PATH : ${kdenlivePython}/bin \
-              --set PYTHONPATH ${kdenlivePython}/${kdenlivePython.sitePackages}
+              --set PYTHONPATH ${pkgs.python3.pkgs.makePythonPath [kdenlivePython]}
           '';
         })
-      (pkgs.symlinkJoin {
-        name = "davinci-resolve-fixed-${davinci.version}";
-        paths = [
-          davinci
-          pkgs.bwrap
-          pkgs.intel-compute-runtime
-          pkgs.libGL
-        ];
-        nativeBuildInputs = [pkgs.makeWrapper];
 
-        postBuild = ''
-                mkdir -p $out/bin
-
-                # caminho para o binário original (conforme o pacote no nixpkgs)
-                ORIGINAL_BIN=${davinci}/bin/resolve
-
-                cat > $out/bin/davinci-resolve <<'EOF'
-          #!/bin/sh
-          # launcher leve que rodará o resolve dentro de bwrap com binds necessários
-          exec ${pkgs.bwrap}/bin/bwrap \
-            --ro-bind /run/opengl-driver /run/opengl-driver \
-            --ro-bind ${pkgs.intel-compute-runtime}/lib /run/opengl-driver/lib \
-            --setenv LD_LIBRARY_PATH ${davinci}/libs:$LD_LIBRARY_PATH \
-            --setenv QT_PLUGIN_PATH ${davinci}/libs/plugins:$QT_PLUGIN_PATH \
-            --setenv XDG_DATA_DIRS ${davinci}/share:$XDG_DATA_DIRS \
-            "${ORIGINAL_BIN}" "$@"
-          EOF
-
-                chmod +x $out/bin/davinci-resolve
-
-                # opcional: expõe o desktop file e ícone (link simbólico)
-                mkdir -p $out/share/applications $out/share/icons/hicolor/128x128/apps
-                ln -s ${davinci}/share/applications/*.desktop $out/share/applications/ || true
-                if [ -f ${davinci}/graphics/DV_Resolve.png ]; then
-                  ln -s ${davinci}/graphics/DV_Resolve.png $out/share/icons/hicolor/128x128/apps/davinci-resolve.png || true
-                fi
-        '';
-      })
       krita-plugin-gmic
       gmic
       imagemagick
@@ -192,7 +148,7 @@
 
       obsidian
 
-      openai-whisper
+      # Fix: openai-whisper
       srt
       sox
       soxr

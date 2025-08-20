@@ -50,9 +50,30 @@
   gtk.gtk3.enable = true;
   gtk.gtk2.enable = true;
 
+  # Acctually needed or waybar and fuzzel simply breaks
+  home.packages = with pkgs; [
+    # Nerd Fonts
+    nerd-fonts.caskaydia-mono
+    nerd-fonts.dejavu-sans-mono
+    nerd-fonts.caskaydia-cove
+    nerd-fonts.jetbrains-mono
+
+    # System fonts
+    liberation_ttf
+    dejavu_fonts
+    noto-fonts
+    noto-fonts-cjk-sans
+    noto-fonts-emoji
+
+    # Icons
+    font-awesome
+    material-design-icons
+    nerd-fonts.symbols-only
+  ];
+
   # set cursor size and dpi for 1920x1080 monitor
   xresources.properties = {
     "Xcursor.size" = 24;
-    "Xft.dpi" = 141.21;
+    "Xft.dpi" = 142;
   };
 }

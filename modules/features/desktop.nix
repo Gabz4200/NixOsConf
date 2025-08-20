@@ -14,7 +14,7 @@
     niri = {
       prettyName = "Niri";
       comment = "Niri compositor managed by UWSM";
-      binPath = "/run/current-system/sw/bin/niri-session";
+      binPath = "${pkgs.niri-unstable}/bin/niri-session";
     };
   };
 
@@ -159,6 +159,8 @@
     python313Packages.pygments
 
     app2unit
+    uwsm
+    niri-unstable
     wget
 
     # Create an FHS environment using the command `fhs`, enabling the execution of non-NixOS packages in NixOS!
@@ -181,6 +183,7 @@
           runScript = "zsh";
           extraOutputsToInstall = ["dev"];
         }))
+    steam-run
 
     sops
     cachix

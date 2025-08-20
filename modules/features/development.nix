@@ -60,7 +60,7 @@
 
     # Tools
     jq
-    yq
+    yq-go
     ripgrep
     fd
     bat

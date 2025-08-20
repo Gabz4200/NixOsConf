@@ -337,7 +337,7 @@
 
     # JSON/YAML
     jq
-    yq
+    yq-go
 
     # Network
     httpie
