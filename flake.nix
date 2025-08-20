@@ -90,6 +90,7 @@
         # Fix: TODO: ./modules/desktop/niri.nix
         # Fix: TODO: ./modules/desktop/wayland.nix
         # Fix: TODO: ./modules/desktop/xdg.nix
+        ./modules/features/desktop.nix
 
         # Services
         # Fix: TODO: ./modules/services/audio.nix
@@ -131,6 +132,8 @@
         inputs.nix-gaming.nixosModules.pipewireLowLatency
         inputs.nix-gaming.nixosModules.platformOptimizations
         inputs.nix-gaming.nixosModules.wine
+
+        ./configuration.nix
 
         # Home Manager
         inputs.home-manager.nixosModules.home-manager

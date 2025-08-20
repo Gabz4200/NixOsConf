@@ -145,7 +145,7 @@
       liberation_ttf
       dejavu_fonts
       noto-fonts
-      noto-fonts-cjk
+      noto-fonts-cjk-sans
       noto-fonts-emoji
 
       # Icons
@@ -225,6 +225,8 @@
   # DNS
   networking.nameservers = ["2606:4700:4700::1111" "1.1.1.1"];
 
+  networking.networkmanager.enable = true;
+
   services.resolved = {
     enable = true;
     dnsovertls = "true";
@@ -285,7 +287,7 @@
 
   # Sops
   sops = {
-    defaultSopsFile = ./secrets/secrets.yaml;
+    defaultSopsFile = ../../secrets/secrets.yaml;
     defaultSopsFormat = "yaml";
 
     age.keyFile = "/home/gabz/.config/sops/age/keys.txt";

@@ -9,12 +9,12 @@
   nix = {
     # Features
     settings = {
-      experimental-features = ["nix-command" "flakes" "repl-flake"];
+      experimental-features = ["nix-command" "flakes"];
 
       # Performance
       auto-optimise-store = true;
-      max-jobs = lib.mkDefault 4; # 4 cores do i5-8250U
-      cores = lib.mkDefault 8; # 8 threads
+      max-jobs = lib.mkDefault 8;
+      cores = lib.mkDefault 8;
 
       # Segurança
       sandbox = true;
@@ -89,40 +89,6 @@
       inputs.niri.overlays.niri
       inputs.chaotic.overlays.default
       inputs.nixgl.overlay
-
-      # Custom overlay para fixes
-      (final: prev: {
-        # Fix for Davinci Resolve with Intel
-        davinci-resolve = prev.davinci-resolve.override {
-          buildFHSEnv = args:
-            prev.buildFHSEnv (args
-              // {
-                extraBwrapArgs = [
-                  "--ro-bind /run/opengl-driver /run/opengl-driver"
-                  "--ro-bind ${pkgs.intel-compute-runtime}/lib /run/opengl-driver/lib"
-                ];
-              });
-        };
-      })
-
-      # Fix for Davinci Resolve with Intel
-      (final: prev: {
-        kdePackages.kdenlive = prev.kdePackages.kdenlive.override {
-          buildInputs =
-            prev.kdePackages.kdenlive.buildInputs
-            ++ [
-              pkgs.python3.withPackages
-              (python-pkgs:
-                with python-pkgs; [
-                  pip
-                  openai-whisper
-                  srt
-                  opencv4
-                  torch
-                ])
-            ];
-        };
-      })
     ];
 
     # Flake settings
@@ -165,7 +131,6 @@
       libGL
       libGLU
       vulkan-loader
-      onevpl-intel-gpu
       vpl-gpu-rt
 
       # X11/Wayland
@@ -212,6 +177,7 @@
   # Packages
   environment.systemPackages = with pkgs; [
     nyx-generic-git-update
+    cachix
   ];
 
   # Sandboxing for FHS compatibility

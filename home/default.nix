@@ -18,8 +18,8 @@
   ];
 
   home = {
-    username = "gabz";
-    homeDirectory = "/home/gabz";
+    username = lib.mkForce "gabz";
+    homeDirectory = lib.mkForce "/home/gabz";
     stateVersion = "25.05";
 
     # Session variables
@@ -37,7 +37,7 @@
       QT_AUTO_SCREEN_SCALE_FACTOR = "1";
       QT_WAYLAND_DISABLE_WINDOWDECORATION = "1";
 
-      QT_QPA_PLATFORMTHEME = "qt6ct";
+      #QT_QPA_PLATFORMTHEME = "qt6ct";
 
       GDK_BACKEND = "wayland,x11,*";
 
@@ -111,14 +111,87 @@
       virtualenv
       ruff
 
+      windsurf
+      codeium
+
       # --- Creative / Job ---
-      ffmpeg
+      ffmpeg-full
+      openusd
+      openexr
       blender
       krita
+      (let
+        kdenlive = kdePackages.kdenlive;
+        kdenlivePython = pkgs.python3.withPackages (ps:
+          with ps; [
+            pip
+            openai-whisper
+            srt
+            opencv4
+            torch
+          ]);
+      in
+        pkgs.symlinkJoin {
+          name = "kdenlive-with-whisper-${kdenlive.version}";
+          # mantém o kdenlive original intacto (benefício do cache)
+          paths = [kdenlive kdenlivePython];
+
+          # preciso do makeWrapper para criar o wrapper no postBuild
+          nativeBuildInputs = [pkgs.makeWrapper];
+
+          postBuild = ''
+            # cria um wrapper simples para que, ao executar kdenlive,
+            # o PATH e o PYTHONPATH apontem para o python com os pacotes
+            wrapProgram $out/bin/kdenlive \
+              --prefix PATH : ${kdenlivePython}/bin \
+              --set PYTHONPATH ${kdenlivePython}/${kdenlivePython.sitePackages}
+          '';
+        })
+      (pkgs.symlinkJoin {
+        name = "davinci-resolve-fixed-${davinci.version}";
+        paths = [
+          davinci
+          pkgs.bwrap
+          pkgs.intel-compute-runtime
+          pkgs.libGL
+        ];
+        nativeBuildInputs = [pkgs.makeWrapper];
+
+        postBuild = ''
+                mkdir -p $out/bin
+
+                # caminho para o binário original (conforme o pacote no nixpkgs)
+                ORIGINAL_BIN=${davinci}/bin/resolve
+
+                cat > $out/bin/davinci-resolve <<'EOF'
+          #!/bin/sh
+          # launcher leve que rodará o resolve dentro de bwrap com binds necessários
+          exec ${pkgs.bwrap}/bin/bwrap \
+            --ro-bind /run/opengl-driver /run/opengl-driver \
+            --ro-bind ${pkgs.intel-compute-runtime}/lib /run/opengl-driver/lib \
+            --setenv LD_LIBRARY_PATH ${davinci}/libs:$LD_LIBRARY_PATH \
+            --setenv QT_PLUGIN_PATH ${davinci}/libs/plugins:$QT_PLUGIN_PATH \
+            --setenv XDG_DATA_DIRS ${davinci}/share:$XDG_DATA_DIRS \
+            "${ORIGINAL_BIN}" "$@"
+          EOF
+
+                chmod +x $out/bin/davinci-resolve
+
+                # opcional: expõe o desktop file e ícone (link simbólico)
+                mkdir -p $out/share/applications $out/share/icons/hicolor/128x128/apps
+                ln -s ${davinci}/share/applications/*.desktop $out/share/applications/ || true
+                if [ -f ${davinci}/graphics/DV_Resolve.png ]; then
+                  ln -s ${davinci}/graphics/DV_Resolve.png $out/share/icons/hicolor/128x128/apps/davinci-resolve.png || true
+                fi
+        '';
+      })
       krita-plugin-gmic
+      gmic
+      imagemagick
       gimp3-with-plugins
-      kdenlive
+
       obsidian
+
       openai-whisper
       srt
       sox
@@ -236,7 +309,7 @@
     };
 
     enable = true;
-    tray.enable = true;
+    tray.enable = false;
   };
 
   programs = {
@@ -249,7 +322,7 @@
 
   # Sops
   sops = {
-    defaultSopsFile = ./secrets/secrets.yaml;
+    defaultSopsFile = ../secrets/secrets.yaml;
     defaultSopsFormat = "yaml";
 
     age.keyFile = "/home/gabz/.config/sops/age/keys.txt";
@@ -284,6 +357,10 @@
     package = pkgs.vscodium.fhs;
     mutableExtensionsDir = true;
   };
+
+  programs.zed-editor.enable = true;
+
+  # Container
 
   programs.distrobox = {
     enable = true;

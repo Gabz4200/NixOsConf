@@ -135,7 +135,7 @@
     };
   };
 
-  services.gnome.core-apps.enable = true;
+  #services.gnome.core-apps.enable = true;
 
   # Share
   environment.pathsToLink = [
@@ -190,6 +190,8 @@
 
     appimageupdate
     gearlever
+
+    nautilus
 
     gamemode
     gamescope

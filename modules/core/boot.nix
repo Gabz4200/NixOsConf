@@ -56,25 +56,27 @@
   # Sysctl
   boot.kernel.sysctl = {
     # Memory
-    "vm.swappiness" = 10; # Laptop com SSD
-    "vm.vfs_cache_pressure" = 50;
-    "vm.dirty_background_ratio" = 5;
-    "vm.dirty_ratio" = 10;
+    "vm.swappiness" = lib.mkDefault 10; # Laptop com SSD
+    "vm.vfs_cache_pressure" = lib.mkDefault 50;
+    "vm.dirty_background_ratio" = lib.mkDefault 5;
+    "vm.dirty_ratio" = lib.mkDefault 10;
 
     # Network performance
-    "net.core.netdev_max_backlog" = 16384;
-    "net.core.somaxconn" = 8192;
-    "net.ipv4.tcp_fastopen" = 3;
-    "net.ipv4.tcp_congestion_control" = "bbr";
-    "net.ipv4.tcp_notsent_lowat" = 16384;
+    "net.core.netdev_max_backlog" = lib.mkDefault 16384;
+    "net.core.somaxconn" = lib.mkDefault 8192;
+    "net.ipv4.tcp_fastopen" = lib.mkDefault 3;
+    "net.ipv4.tcp_congestion_control" = lib.mkDefault "bbr";
+    "net.ipv4.tcp_notsent_lowat" = lib.mkDefault 16384;
 
     # Security
-    "kernel.dmesg_restrict" = 1;
-    "kernel.kptr_restrict" = 2;
-    "kernel.yama.ptrace_scope" = 1;
+    /*
+       "kernel.dmesg_restrict" = lib.mkDefault 1;
+    "kernel.kptr_restrict" = lib.mkDefault 2;
+    "kernel.yama.ptrace_scope" = lib.mkDefault 1;
+    */
 
     # SSD
-    "vm.dirty_expire_centisecs" = 3000;
+    "vm.dirty_expire_centisecs" = lib.mkDefault 3000;
   };
 
   # Plymouth (boot splash) - opcional
@@ -138,9 +140,9 @@
   # CPU microcode updates (em intel-gpu.nix)
 
   # Watchdog
-  systemd.watchdog = {
-    runtimeTime = "30s";
-    rebootTime = "10min";
-    kexecTime = "10min";
+  systemd.settings.Manager = {
+    KExecWatchdogSec = "10min";
+    RebootWatchdogSec = "10min";
+    RuntimeWatchdogSec = "30s";
   };
 }

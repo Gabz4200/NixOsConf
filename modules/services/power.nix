@@ -96,7 +96,6 @@
   # ACPI event handling
   services.acpid.enable = true;
   services.logind = {
-    enable = true;
     lidSwitch = "suspend";
     powerKey = "hibernate";
   };
@@ -115,7 +114,7 @@
     percentageLow = 15;
     percentageCritical = 5;
     percentageAction = 3;
-    criticalPowerAction = "hibernate";
+    criticalPowerAction = "Hibernate";
   };
 
   # Power monitoring tools
@@ -124,6 +123,5 @@
     s-tui
     stress
     intel-gpu-tools
-    turbostat
   ];
 }

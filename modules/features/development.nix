@@ -16,6 +16,7 @@
     nix-tree
     nix-diff
     nix-output-monitor
+    nix-binary-cache
 
     # Language servers
     bash-language-server

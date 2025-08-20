@@ -1,8 +1,8 @@
-# Arquivo principal minimalista - tudo modularizado
 {
   config,
   pkgs,
   lib,
+  inputs,
   ...
 }: {
   imports = [

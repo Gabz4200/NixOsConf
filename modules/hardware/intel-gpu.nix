@@ -56,13 +56,10 @@
 
       # VPL for newer Intel media SDK
       vpl-gpu-rt
-      onevpl-intel-gpu
     ];
 
     extraPackages32 = with pkgs.driversi686Linux; [
       intel-media-driver
-      vaapiIntel
-      ocl-icd
     ];
   };
 
@@ -110,21 +107,21 @@
   # DPI
   services.xserver = {
     enable = true;
-    dpi = 141.21;
+    dpi = 142;
   };
 
   # Font config
-  console.font = "${pkgs.terminus_font}/share/consolefonts/ter-u28n.psf.gz";
+  console.font = lib.mkDefault "${pkgs.terminus_font}/share/consolefonts/ter-u28n.psf.gz";
   fonts.fontconfig = {
     hinting = {
       enable = true;
-      style = "hintfull";
+      style = lib.mkDefault "slight";
       autohint = true;
     };
     antialias = true;
     subpixel = {
-      rgba = "rgb";
-      lcdfilter = "default";
+      rgba = lib.mkDefault "rgb";
+      lcdfilter = lib.mkDefault "default";
     };
   };
 }

@@ -37,7 +37,7 @@
     # Oh My Zsh
     oh-my-zsh = {
       enable = true;
-      theme = "catppuccin-mocha";
+      theme = lib.mkDefault "catppuccin-mocha";
 
       plugins = [
         # Aliases
@@ -66,11 +66,6 @@
         "dirhistory"
         "z"
       ];
-    };
-
-    programs.nix-your-shell = {
-      enable = lib.mkBefore true;
-      enableZshIntegration = lib.mkBefore true;
     };
 
     # Aliases
@@ -129,7 +124,7 @@
     };
 
     # Init extra
-    initExtra = ''
+    initContent = lib.mkOrder 1200 ''
       # Better cd
       setopt AUTO_CD
       setopt AUTO_PUSHD
@@ -193,6 +188,11 @@
   };
 
   home.shell.enableZshIntegration = true;
+
+  programs.nix-your-shell = {
+    enable = lib.mkBefore true;
+    enableZshIntegration = lib.mkBefore true;
+  };
 
   # Starship prompt
   programs.starship = {
@@ -263,7 +263,7 @@
     eza = {
       enable = true;
       enableZshIntegration = true;
-      icons = true;
+      icons = "always";
       git = true;
     };
 
@@ -271,7 +271,7 @@
     bat = {
       enable = true;
       config = {
-        theme = "Catppuccin-mocha";
+        theme = lib.mkDefault "Catppuccin-mocha";
         pager = "less -FR";
       };
     };

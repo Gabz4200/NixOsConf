@@ -132,7 +132,7 @@
     "net.ipv4.tcp_mtu_probing" = 1;
 
     # Memory
-    "vm.max_map_count" = 2147483642; # For some games
+    #"vm.max_map_count" = 2147483642; # For some games
     "vm.swappiness" = 10;
 
     # File watchers for some games
