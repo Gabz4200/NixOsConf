@@ -98,7 +98,16 @@ switch message:
   git add .
   git commit -m {{message}}
   nix flake update --commit-lock-file
-  nixos-rebuild switch --flake .
+  sudo nixos-rebuild switch --flake .
+
+# Gen new facter.json
+# Usage: just fac
+[group('nixos')]
+fac message:
+  sudo rm ./facter.json
+  sudo nix run --option experimental-features "nix-command flakes" --option extra-substituters https://numtide.cachix.org --option extra-trusted-public-keys numtide.cachix.org-1:2ps1kLBUWjxIneOy1Ik6cQjb41X0iXVXeHigGmycPPE= github:nix-community/nixos-facter -- -o facter.json
+  git add .
+  git commit --amend -a --no-edit
 
 # Deploy configuration without updating
 # Usage: just ss "message"
@@ -106,7 +115,7 @@ switch message:
 ss message:
   git add .
   git commit -m {{message}}
-  nixos-rebuild switch --flake .
+  sudo nixos-rebuild switch --flake .
 
 # Deploy configuration with boot
 # Usage: just boot "message"
@@ -115,7 +124,7 @@ boot message:
   git add .
   git commit -m {{message}}
   nix flake update --commit-lock-file
-  nixos-rebuild boot --flake .
+  sudo nixos-rebuild boot --flake .
 
 # Deploy configuration with boot and no update
 # Usage: just bb "message"
@@ -123,7 +132,7 @@ boot message:
 bb message:
   git add .
   git commit -m {{message}}
-  nixos-rebuild boot --flake .
+  sudo nixos-rebuild boot --flake .
 
 # Late Deploy configuration
 # Usage: just ldp (switch/boot)
@@ -131,7 +140,16 @@ bb message:
 ldp type:
   git add .
   git commit --amend -a --no-edit
-  nixos-rebuild {{type}} --flake .
+  sudo nixos-rebuild {{type}} --flake .
+
+# Late Deploy configuration
+# Usage: just uldp (switch/boot)
+[group('nixos')]
+uldp type:
+  git add .
+  git commit --amend -a --no-edit
+  nix flake update --commit-lock-file
+  sudo nixos-rebuild {{type}} --flake .
 
 # =================================================
 #
