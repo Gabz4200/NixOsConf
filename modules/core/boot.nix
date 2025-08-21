@@ -31,13 +31,13 @@
   # Kernel
   boot.kernelPackages = pkgs.linuxKernel.packages.linux_zen;
 
-  boot.extraModulePackages = [
-    config.boot.kernelPackages.rtl8821ce
-  ];
+  # boot.extraModulePackages = [
+  #   config.boot.kernelPackages.rtl8821ce
+  # ];
 
   # Kernel modules
   boot.initrd.kernelModules = ["xhci_pci" "ahci" "sd_mod" "sdhci_pci" "i915"];
-  boot.initrd.availableKernelModules = ["usb_storage" "usbhid" "8821ce" "rtw88" "rtl8821ce"];
+  boot.initrd.availableKernelModules = ["usb_storage" "usbhid" "rtw88_pci" "rtw88_8821ce" "rtw88_core"];
   boot.kernelModules = ["kvm-intel" "coretemp"];
 
   # Kernel parameters (hardware specific em intel-gpu.nix)
