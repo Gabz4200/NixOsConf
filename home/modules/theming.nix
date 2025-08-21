@@ -74,6 +74,6 @@
   # set cursor size and dpi for 1920x1080 monitor
   xresources.properties = {
     "Xcursor.size" = 24;
-    "Xft.dpi" = 142;
+    "Xft.dpi" = 140;
   };
 }

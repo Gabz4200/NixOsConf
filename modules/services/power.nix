@@ -16,13 +16,13 @@
 
   # Auto-cpufreq
   services.auto-cpufreq = {
-    enable = true;
+    enable = lib.mkForce true;
     settings = {
       charger = {
         governor = "performance";
         energy_performance_preference = "balance_performance";
         scaling_min_freq = 800000;
-        scaling_max_freq = 3400000; # i5-8250U max turbo
+        scaling_max_freq = 3400000;
         turbo = "auto";
       };
 
@@ -30,7 +30,7 @@
         governor = "powersave";
         energy_performance_preference = "balance_power";
         scaling_min_freq = 800000;
-        scaling_max_freq = 2000000; # Limite mais realista
+        scaling_max_freq = 2000000;
         turbo = "auto";
       };
     };
@@ -39,43 +39,16 @@
   # Desabilitar power-profiles-daemon
   services.power-profiles-daemon.enable = lib.mkForce false;
 
-  # Thermald para controle térmico Intel
-  services.thermald = {
-    enable = true;
-    configFile = pkgs.writeText "thermald-config.xml" ''
-      <?xml version="1.0"?>
-      <ThermalConfiguration>
-        <Platform>
-          <Name>ASUS VivoBook</Name>
-          <ProductName>X540UAR</ProductName>
-          <ThermalZones>
-            <ThermalZone>
-              <Type>auto</Type>
-              <TripPoints>
-                <TripPoint>
-                  <Temperature>85000</Temperature>
-                  <Type>passive</Type>
-                </TripPoint>
-                <TripPoint>
-                  <Temperature>95000</Temperature>
-                  <Type>critical</Type>
-                </TripPoint>
-              </TripPoints>
-            </ThermalZone>
-          </ThermalZones>
-        </Platform>
-      </ThermalConfiguration>
-    '';
-  };
+  services.thermald.enable = false;
 
   # Undervolt
   services.undervolt = {
     enable = true;
 
     # Safe
-    coreOffset = -50;
+    coreOffset = -60;
     gpuOffset = -30;
-    uncoreOffset = -50;
+    uncoreOffset = -60;
     analogioOffset = -30;
 
     # Thermal limits

@@ -11,17 +11,19 @@
   hardware.graphics = {
     enable = true;
     enable32Bit = true;
+    package = pkgs.mesa;
+    package32 = pkgs.driversi686Linux.mesa;
+    extraPackages = with pkgs; [
+      intel-media-driver
+      ocl-icd
+      intel-ocl
+      intel-vaapi-driver
+      libvdpau-va-gl
+      libva
+    ];
   };
-  hardware.graphics.package = pkgs.mesa;
-  hardware.graphics.package32 = pkgs.driversi686Linux.mesa;
-  hardware.graphics.extraPackages = with pkgs; [
-    intel-media-driver
-    intel-ocl
-    intel-vaapi-driver
-    libva
-  ];
 
-  boot.kernelParams = [
+  boot.kernelParams = lib.mkMerge [
     "quiet"
     "loglevel=3"
 
@@ -37,6 +39,6 @@
 
   services.xserver = {
     enable = true;
-    dpi = 142;
+    dpi = 140;
   };
 }

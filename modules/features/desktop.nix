@@ -25,7 +25,7 @@
     package = pkgs.niri-unstable;
   };
 
-  # F
+  # Flatpak
   services.flatpak.enable = true;
 
   # Dconf
@@ -85,6 +85,7 @@
 
   # Enable the X11 windowing system.
   programs.xwayland.enable = true;
+  programs.xwayland.package = pkgs.xwayland;
 
   # SDDM
   services.displayManager.sddm = {

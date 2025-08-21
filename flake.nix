@@ -8,17 +8,10 @@
 
     # Wayland/Compositor
     niri.url = "github:sodiboo/niri-flake";
-    nixpkgs-wayland = {
-      url = "github:nix-community/nixpkgs-wayland";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
 
     # Gaming
     chaotic.url = "github:chaotic-cx/nyx/nyxpkgs-unstable";
     nix-gaming.url = "github:fufexan/nix-gaming";
-
-    # Graphics
-    nixgl.url = "github:nix-community/nixGL";
 
     # Sandbox
     nix-flatpak.url = "github:gmodena/nix-flatpak/?ref=latest";
@@ -59,6 +52,8 @@
   };
 
   nixConfig = {
+    allowUnfree = true;
+
     sandbox = true;
     trusted-users = ["@wheel" "gabz"];
     allowed-users = ["@wheel" "gabz"];
@@ -88,8 +83,8 @@
     system = "x86_64-linux";
     outputs = self;
 
-    # Stable pkgs for downgrade
-    pkgs-stable = import inputs.nixpkgs-stable {
+    # pkgs
+    pkgs = import nixpkgs {
       inherit system;
       config.allowUnfree = true;
       sandbox = true;
@@ -110,43 +105,44 @@
         "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="
         "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
       ];
+      overlays = [
+        inputs.niri.overlays.niri
+        inputs.chaotic.overlays.default
+        inputs.nixgl.overlay
+      ];
+    };
+
+    # Stable pkgs for downgrade
+    pkgs-stable = import inputs.nixpkgs-stable {
+      inherit system;
+      config.allowUnfree = true;
+      sandbox = true;
+      trusted-users = ["@wheel" "gabz"];
+      allowed-users = ["@wheel" "gabz"];
+      substituters = [
+        "https://cache.nixos.org"
+        "https://nix-community.cachix.org"
+        "https://niri.cachix.org"
+        "https://chaotic-nyx.cachix.org"
+        "https://nix-gaming.cachix.org"
+      ];
+
+      trusted-public-keys = [
+        "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="
+        "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
+        "niri.cachix.org-1:Wv0OmO7PsuocRKzfDoJ3mulSl7Z6oezYhGhR+3W2964="
+        "chaotic-nyx.cachix.org-1:HfnXSw4pj95iI/n17rIDy40agHj12WfF+Gqk6SonIT8="
+        "nix-gaming.cachix.org-1:nbjlureqMbRAxR1gJ/f3hxemL9svXaZF/Ees8vCUUs4="
+      ];
     };
 
     # Special args
     specialArgs = {
-      inherit inputs outputs system pkgs-stable;
+      inherit inputs outputs system pkgs pkgs-stable;
     };
   in {
-    nixpkgs.config.allowUnfree = true;
-
     packages.x86_64-linux = let
-      pkgs = import nixpkgs {
-        inherit system;
-        config.allowUnfree = true;
-        sandbox = true;
-        trusted-users = ["@wheel" "gabz"];
-        allowed-users = ["@wheel" "gabz"];
-        substituters = [
-          "https://niri.cachix.org"
-          "https://chaotic-nyx.cachix.org"
-          "https://nix-gaming.cachix.org"
-          "https://cache.nixos.org"
-          "https://nix-community.cachix.org"
-        ];
-
-        trusted-public-keys = [
-          "niri.cachix.org-1:Wv0OmO7PsuocRKzfDoJ3mulSl7Z6oezYhGhR+3W2964="
-          "chaotic-nyx.cachix.org-1:HfnXSw4pj95iI/n17rIDy40agHj12WfF+Gqk6SonIT8="
-          "nix-gaming.cachix.org-1:nbjlureqMbRAxR1gJ/f3hxemL9svXaZF/Ees8vCUUs4="
-          "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="
-          "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
-        ];
-        overlays = [
-          inputs.niri.overlays.niri
-          inputs.chaotic.overlays.default
-          inputs.nixgl.overlay
-        ];
-      };
+      inherit pkgs;
 
       mkNixPak = inputs.nixpak.lib.nixpak {
         inherit (pkgs) lib;
@@ -275,7 +271,7 @@
             useUserPackages = true;
 
             extraSpecialArgs = specialArgs;
-            backupFileExtension = "bak";
+            backupFileExtension = "backup";
 
             sharedModules = [
               inputs.sops-nix.homeManagerModules.sops
@@ -292,28 +288,7 @@
     };
 
     devShells."x86_64-linux".default = let
-      pkgs = import nixpkgs {
-        inherit system;
-        config.allowUnfree = true;
-        sandbox = true;
-        trusted-users = ["@wheel" "gabz"];
-        allowed-users = ["@wheel" "gabz"];
-        substituters = [
-          "https://niri.cachix.org"
-          "https://chaotic-nyx.cachix.org"
-          "https://nix-gaming.cachix.org"
-          "https://cache.nixos.org"
-          "https://nix-community.cachix.org"
-        ];
-
-        trusted-public-keys = [
-          "niri.cachix.org-1:Wv0OmO7PsuocRKzfDoJ3mulSl7Z6oezYhGhR+3W2964="
-          "chaotic-nyx.cachix.org-1:HfnXSw4pj95iI/n17rIDy40agHj12WfF+Gqk6SonIT8="
-          "nix-gaming.cachix.org-1:nbjlureqMbRAxR1gJ/f3hxemL9svXaZF/Ees8vCUUs4="
-          "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="
-          "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
-        ];
-      };
+      inherit pkgs;
     in
       pkgs.mkShell {
         packages = with pkgs; [

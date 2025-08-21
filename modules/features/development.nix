@@ -26,7 +26,9 @@
     (pkgs.python3.withPackages (ps:
       with ps; [
         ruff
+        pip
         pipx
+        virtualenv
         uv
       ]))
 
@@ -80,7 +82,7 @@
     lfs.enable = true;
 
     config = {
-      init.defaultBranch = "main";
+      init.defaultBranch = "master";
 
       # Performance para repos grandes
       core = {
@@ -211,5 +213,5 @@
   };
 
   # Development kernel modules
-  boot.kernelModules = ["kvm-intel"];
+  boot.kernelModules = lib.mkMerge ["kvm-intel"];
 }

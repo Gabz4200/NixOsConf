@@ -32,12 +32,12 @@
   boot.kernelPackages = pkgs.linuxKernel.packages.linux_zen;
 
   # Kernel modules
-  boot.initrd.kernelModules = ["xhci_pci" "ahci" "sd_mod" "sdhci_pci" "i915"];
-  boot.initrd.availableKernelModules = ["usb_storage" "usbhid"];
-  boot.kernelModules = ["kvm-intel" "coretemp"];
+  boot.initrd.kernelModules = lib.mkMerge ["xhci_pci" "ahci" "sd_mod" "sdhci_pci" "i915"];
+  boot.initrd.availableKernelModules = lib.mkMerge ["usb_storage" "usbhid"];
+  boot.kernelModules = lib.mkMerge ["kvm-intel" "coretemp"];
 
   # Kernel parameters (hardware specific em intel-gpu.nix)
-  boot.kernelParams = [
+  boot.kernelParams = lib.mkMerge [
     # Silent boot
     "quiet"
     "loglevel=3"
@@ -55,7 +55,7 @@
   ];
 
   # Sysctl
-  boot.kernel.sysctl = {
+  boot.kernel.sysctl = lib.mkMerge {
     # Memory
     "vm.swappiness" = lib.mkDefault 10; # Laptop com SSD
     "vm.vfs_cache_pressure" = lib.mkDefault 50;
