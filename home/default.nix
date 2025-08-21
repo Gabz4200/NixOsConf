@@ -55,6 +55,7 @@
       fastfetch
       wl-clipboard
       xdg-utils
+      niri-unstable
       file
       which
       tree
@@ -163,17 +164,6 @@
   # XDG
   xdg = {
     enable = true;
-    portal.enable = true;
-    portal.extraPortals = with pkgs; [
-      xdg-desktop-portal-gtk
-      xdg-desktop-portal-gnome
-      gnome-keyring
-    ];
-    portal.configPackages = with pkgs; [
-      niri-unstable
-    ];
-    portal.xdgOpenUsePortal = true;
-    autostart.enable = true;
 
     userDirs = {
       enable = true;
@@ -194,37 +184,6 @@
     };
 
     mime.enable = true;
-    mimeApps = {
-      enable = true;
-
-      defaultApplications = {
-        # Browser
-        "text/html" = ["firedragon.desktop"];
-        "x-scheme-handler/http" = ["firedragon.desktop"];
-        "x-scheme-handler/https" = ["firedragon.desktop"];
-
-        # Terminal
-        "x-scheme-handler/terminal" = ["kitty.desktop"];
-
-        # Files
-        "inode/directory" = ["nautilus.desktop"];
-
-        # Images
-        "image/png" = ["imv.desktop"];
-        "image/jpeg" = ["imv.desktop"];
-        "image/gif" = ["imv.desktop"];
-
-        # Video
-        "video/mp4" = ["mpv.desktop"];
-        "video/x-matroska" = ["mpv.desktop"];
-
-        # Text
-        "text/plain" = ["nvim.desktop"];
-
-        # PDF
-        "application/pdf" = ["org.kde.okular.desktop"];
-      };
-    };
 
     configFile = {
       # git
@@ -235,6 +194,29 @@
       "waybar/.keep".text = "";
     };
   };
+
+  xdg.portal.enable = true;
+
+  xdg.portal.xdgOpenUsePortal = true;
+
+  xdg.portal.config = {
+    niri = {
+      "default" = ["gnome" "gtk"];
+      "org.freedesktop.impl.portal.FileChooser" = "gtk";
+      "org.freedesktop.impl.portal.Access" = ["gtk"];
+      "org.freedesktop.impl.portal.Notification" = ["gtk"];
+      "org.freedesktop.impl.portal.Secret" = ["gnome-keyring"];
+    };
+  };
+
+  xdg.portal.extraPortals = with pkgs; [
+    xdg-desktop-portal-gtk
+    xdg-desktop-portal-gnome
+    gnome-keyring
+  ];
+  xdg.portal.configPackages = with pkgs; [
+    niri-unstable
+  ];
 
   # Syncthing
   services.syncthing = {

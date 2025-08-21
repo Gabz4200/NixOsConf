@@ -99,6 +99,7 @@
     # Xdg
     xdg-dbus-proxy
     wayland-proxy-virtwl
+    niri-unstable
 
     # Help
     man-pages
@@ -261,12 +262,27 @@
     XDG_STATE_HOME = "$HOME/.local/state";
   };
 
+  environment.pathsToLink = [
+    "/share/xdg-desktop-portal"
+    "/share/applications"
+  ];
+
   # XDG
   xdg.mime.enable = true;
 
   xdg.portal.enable = true;
 
   xdg.portal.xdgOpenUsePortal = true;
+
+  xdg.portal.config = {
+    niri = {
+      "default" = ["gnome" "gtk"];
+      "org.freedesktop.impl.portal.FileChooser" = "gtk";
+      "org.freedesktop.impl.portal.Access" = ["gtk"];
+      "org.freedesktop.impl.portal.Notification" = ["gtk"];
+      "org.freedesktop.impl.portal.Secret" = ["gnome-keyring"];
+    };
+  };
 
   xdg.portal.extraPortals = with pkgs; [
     xdg-desktop-portal-gtk
