@@ -25,6 +25,9 @@
     package = pkgs.niri-unstable;
   };
 
+  # F
+  services.flatpak.enable = true;
+
   # Dconf
   programs.dconf.enable = true;
 

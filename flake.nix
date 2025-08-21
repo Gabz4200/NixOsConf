@@ -58,6 +58,28 @@
     nix-alien.url = "github:thiagokokada/nix-alien";
   };
 
+  nixConfig = {
+    sandbox = true;
+    trusted-users = ["@wheel" "gabz"];
+    allowed-users = ["@wheel" "gabz"];
+
+    substituters = [
+      "https://niri.cachix.org"
+      "https://chaotic-nyx.cachix.org"
+      "https://nix-gaming.cachix.org"
+      "https://cache.nixos.org"
+      "https://nix-community.cachix.org"
+    ];
+
+    trusted-public-keys = [
+      "niri.cachix.org-1:Wv0OmO7PsuocRKzfDoJ3mulSl7Z6oezYhGhR+3W2964="
+      "chaotic-nyx.cachix.org-1:HfnXSw4pj95iI/n17rIDy40agHj12WfF+Gqk6SonIT8="
+      "nix-gaming.cachix.org-1:nbjlureqMbRAxR1gJ/f3hxemL9svXaZF/Ees8vCUUs4="
+      "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="
+      "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
+    ];
+  };
+
   outputs = {
     self,
     nixpkgs,
@@ -70,6 +92,24 @@
     pkgs-stable = import inputs.nixpkgs-stable {
       inherit system;
       config.allowUnfree = true;
+      sandbox = true;
+      trusted-users = ["@wheel" "gabz"];
+      allowed-users = ["@wheel" "gabz"];
+      substituters = [
+        "https://niri.cachix.org"
+        "https://chaotic-nyx.cachix.org"
+        "https://nix-gaming.cachix.org"
+        "https://cache.nixos.org"
+        "https://nix-community.cachix.org"
+      ];
+
+      trusted-public-keys = [
+        "niri.cachix.org-1:Wv0OmO7PsuocRKzfDoJ3mulSl7Z6oezYhGhR+3W2964="
+        "chaotic-nyx.cachix.org-1:HfnXSw4pj95iI/n17rIDy40agHj12WfF+Gqk6SonIT8="
+        "nix-gaming.cachix.org-1:nbjlureqMbRAxR1gJ/f3hxemL9svXaZF/Ees8vCUUs4="
+        "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="
+        "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
+      ];
     };
 
     # Special args
@@ -77,8 +117,36 @@
       inherit inputs outputs system pkgs-stable;
     };
   in {
+    nixpkgs.config.allowUnfree = true;
+
     packages.x86_64-linux = let
-      pkgs = nixpkgs.legacyPackages.x86_64-linux;
+      pkgs = import nixpkgs {
+        inherit system;
+        config.allowUnfree = true;
+        sandbox = true;
+        trusted-users = ["@wheel" "gabz"];
+        allowed-users = ["@wheel" "gabz"];
+        substituters = [
+          "https://niri.cachix.org"
+          "https://chaotic-nyx.cachix.org"
+          "https://nix-gaming.cachix.org"
+          "https://cache.nixos.org"
+          "https://nix-community.cachix.org"
+        ];
+
+        trusted-public-keys = [
+          "niri.cachix.org-1:Wv0OmO7PsuocRKzfDoJ3mulSl7Z6oezYhGhR+3W2964="
+          "chaotic-nyx.cachix.org-1:HfnXSw4pj95iI/n17rIDy40agHj12WfF+Gqk6SonIT8="
+          "nix-gaming.cachix.org-1:nbjlureqMbRAxR1gJ/f3hxemL9svXaZF/Ees8vCUUs4="
+          "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="
+          "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
+        ];
+        overlays = [
+          inputs.niri.overlays.niri
+          inputs.chaotic.overlays.default
+          inputs.nixgl.overlay
+        ];
+      };
 
       mkNixPak = inputs.nixpak.lib.nixpak {
         inherit (pkgs) lib;
@@ -87,6 +155,7 @@
 
       davinci-resolve-with-deps = pkgs.buildEnv {
         name = "davinci-resolve-with-intel-drivers";
+
         paths = [
           pkgs.davinci-resolve
           pkgs.intel-compute-runtime
@@ -100,8 +169,6 @@
           app.package = davinci-resolve-with-deps;
           app.binPath = "bin/resolve";
           flatpak.appId = "com.blackmagicdesign.Resolve";
-
-          flatpak.enable = true;
 
           dbus.enable = true;
           dbus.policies = {
@@ -128,15 +195,6 @@
               "/dev/dri"
               "/dev/snd"
             ];
-          };
-
-          env = {
-            LD_LIBRARY_PATH = "${pkgs.lib.makeLibraryPath [
-              pkgs.intel-media-driver
-              pkgs.intel-compute-runtime
-              pkgs.libva
-            ]}";
-            XDG_RUNTIME_DIR = "${sloth.env "XDG_RUNTIME_DIR"}";
           };
         };
       };
@@ -224,6 +282,7 @@
               inputs.nix4nvchad.homeManagerModule
               inputs.catppuccin.homeModules.catppuccin
               inputs.niri.homeModules.niri
+              inputs.nix-flatpak.homeManagerModules.nix-flatpak
             ];
 
             users.gabz = import ./home/default.nix;
@@ -235,6 +294,25 @@
     devShells."x86_64-linux".default = let
       pkgs = import nixpkgs {
         inherit system;
+        config.allowUnfree = true;
+        sandbox = true;
+        trusted-users = ["@wheel" "gabz"];
+        allowed-users = ["@wheel" "gabz"];
+        substituters = [
+          "https://niri.cachix.org"
+          "https://chaotic-nyx.cachix.org"
+          "https://nix-gaming.cachix.org"
+          "https://cache.nixos.org"
+          "https://nix-community.cachix.org"
+        ];
+
+        trusted-public-keys = [
+          "niri.cachix.org-1:Wv0OmO7PsuocRKzfDoJ3mulSl7Z6oezYhGhR+3W2964="
+          "chaotic-nyx.cachix.org-1:HfnXSw4pj95iI/n17rIDy40agHj12WfF+Gqk6SonIT8="
+          "nix-gaming.cachix.org-1:nbjlureqMbRAxR1gJ/f3hxemL9svXaZF/Ees8vCUUs4="
+          "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="
+          "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
+        ];
       };
     in
       pkgs.mkShell {

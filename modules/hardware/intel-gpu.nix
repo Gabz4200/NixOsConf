@@ -8,6 +8,19 @@
 
   boot.kernelModules = ["i915" "intel_agp" "coretemp" "kvm-intel"];
 
+  hardware.graphics = {
+    enable = true;
+    enable32Bit = true;
+  };
+  hardware.graphics.package = pkgs.mesa;
+  hardware.graphics.package32 = pkgs.driversi686Linux.mesa;
+  hardware.graphics.extraPackages = with pkgs; [
+    intel-media-driver
+    intel-ocl
+    intel-vaapi-driver
+    libva
+  ];
+
   boot.kernelParams = [
     "quiet"
     "loglevel=3"

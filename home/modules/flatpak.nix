@@ -55,11 +55,9 @@
     XDG_DATA_DIRS = "$XDG_DATA_DIRS:/usr/share:/var/lib/flatpak/exports/share:$HOME/.local/share/flatpak/exports/share";
   };
 
-  home.packages = with pkgs; [
-    libportal
-    libportal-gtk4
-    libportal-qt6
+  xdg.enable = true;
 
+  home.packages = with pkgs; [
     xdg-dbus-proxy
     wayland-proxy-virtwl
     wayland-protocols
