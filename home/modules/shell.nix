@@ -37,7 +37,6 @@
     # Oh My Zsh
     oh-my-zsh = {
       enable = true;
-      theme = lib.mkDefault "catppuccin-mocha";
 
       plugins = [
         # Aliases

@@ -27,6 +27,8 @@
     "quiet"
     "loglevel=3"
 
+    "pcie_aspm=off"
+
     "intel_pstate=active"
     "threadirqs"
   ];
