@@ -36,12 +36,12 @@
   ];
 
   # Kernel modules
-  boot.initrd.kernelModules = lib.mkMerge ["xhci_pci" "ahci" "sd_mod" "sdhci_pci" "i915"];
-  boot.initrd.availableKernelModules = lib.mkMerge ["usb_storage" "usbhid" "8821ce" "rtw88" "rtl8821ce"];
-  boot.kernelModules = lib.mkMerge ["kvm-intel" "coretemp"];
+  boot.initrd.kernelModules = ["xhci_pci" "ahci" "sd_mod" "sdhci_pci" "i915"];
+  boot.initrd.availableKernelModules = ["usb_storage" "usbhid" "8821ce" "rtw88" "rtl8821ce"];
+  boot.kernelModules = ["kvm-intel" "coretemp"];
 
   # Kernel parameters (hardware specific em intel-gpu.nix)
-  boot.kernelParams = lib.mkMerge [
+  boot.kernelParams = [
     # Silent boot
     "quiet"
     "loglevel=3"
@@ -60,7 +60,7 @@
   ];
 
   # Sysctl
-  boot.kernel.sysctl = lib.mkMerge {
+  boot.kernel.sysctl = {
     # Memory
     "vm.swappiness" = lib.mkDefault 10; # Laptop com SSD
     "vm.vfs_cache_pressure" = lib.mkDefault 50;

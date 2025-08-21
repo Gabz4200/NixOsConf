@@ -164,6 +164,14 @@
   xdg = {
     enable = true;
     portal.enable = true;
+    portal.extraPortals = with pkgs; [
+      xdg-desktop-portal-gtk
+      xdg-desktop-portal-gnome
+      gnome-keyring
+    ];
+    portal.configPackages = with pkgs; [
+      niri-unstable
+    ];
     portal.xdgOpenUsePortal = true;
     autostart.enable = true;
 
@@ -337,6 +345,11 @@
       };
     };
   };
+
+  # NixGL
+  nixGL.vulkan.enable = true;
+  nixGL.prime.installScript = "mesa";
+  nixGL.defaultWrapper = "mesa";
 
   # Terminal
   programs.kitty = lib.mkForce {

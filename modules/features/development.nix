@@ -213,5 +213,5 @@
   };
 
   # Development kernel modules
-  boot.kernelModules = lib.mkMerge ["kvm-intel"];
+  boot.kernelModules = ["kvm-intel"];
 }

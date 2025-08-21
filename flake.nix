@@ -108,7 +108,6 @@
       overlays = [
         inputs.niri.overlays.niri
         inputs.chaotic.overlays.default
-        inputs.nixgl.overlay
       ];
     };
 
@@ -138,7 +137,7 @@
 
     # Special args
     specialArgs = {
-      inherit inputs outputs system pkgs pkgs-stable;
+      inherit inputs outputs system pkgs-stable;
     };
   in {
     packages.x86_64-linux = let

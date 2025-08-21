@@ -23,7 +23,7 @@
     ];
   };
 
-  boot.kernelParams = lib.mkMerge [
+  boot.kernelParams = [
     "quiet"
     "loglevel=3"
 

@@ -89,7 +89,6 @@
     overlays = [
       inputs.niri.overlays.niri
       inputs.chaotic.overlays.default
-      inputs.nixgl.overlay
     ];
 
     # Flake settings

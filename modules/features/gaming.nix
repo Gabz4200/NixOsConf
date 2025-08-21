@@ -101,7 +101,7 @@
   ];
 
   # Kernel optimizations for gaming
-  boot.kernel.sysctl = lib.mkMerge {
+  boot.kernel.sysctl = {
     "net.ipv4.tcp_fastopen" = 3;
     "net.ipv4.tcp_mtu_probing" = 1;
 
