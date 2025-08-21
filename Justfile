@@ -92,7 +92,7 @@ up-nix:
 
 # Gen new facter.json
 [group('nixos')]
-fac message:
+fac:
   sudo rm ./facter.json
   sudo nix run --option experimental-features "nix-command flakes" --option extra-substituters https://numtide.cachix.org --option extra-trusted-public-keys numtide.cachix.org-1:2ps1kLBUWjxIneOy1Ik6cQjb41X0iXVXeHigGmycPPE= github:nix-community/nixos-facter -- -o facter.json
   git add .
@@ -121,7 +121,7 @@ boot message:
 
 # Deploy configuration with boot and no new commit
 [group('nixos')]
-bb message:
+bb:
   git add .
   git commit --amend -a --no-edit
   sudo nixos-rebuild boot --flake .
