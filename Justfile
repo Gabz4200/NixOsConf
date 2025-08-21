@@ -21,12 +21,13 @@ test:
 # Update all the flake inputs
 [group('nix')]
 up:
+  git add .
   nix flake update --commit-lock-file
 
-# Update specific input
-# Usage: just upp nixpkgs
+# Update specific input (just upp nixpkgs)
 [group('nix')]
 upp input:
+  git add .
   nix flake update {{input}} --commit-lock-file
 
 # List all generations of the system profile
@@ -39,18 +40,17 @@ history:
 repl:
   nix repl -f flake:nixpkgs
 
-# remove all generations older than 7 days
-# on darwin, you may need to switch to root user to run this command
+# Remove all generations older than 5 days
 [group('nix')]
 clean:
-  sudo nix profile wipe-history --profile /nix/var/nix/profiles/system --older-than 7d
-  nix profile wipe-history --profile "$XDG_STATE_HOME/nix/profiles/home-manager" --older-than 7d
+  sudo nix profile wipe-history --profile /nix/var/nix/profiles/system --older-than 5d
+  nix profile wipe-history --profile "$XDG_STATE_HOME/nix/profiles/home-manager" --older-than 5d
 
 # Garbage collect all unused nix store entries
 [group('nix')]
 gc:
-  sudo nix-collect-garbage --delete-older-than 7d
-  nix-collect-garbage --delete-older-than 7d
+  sudo nix-collect-garbage --delete-older-than 5d
+  nix-collect-garbage --delete-older-than 5d
 
 # Enter a shell session which has all the necessary tools for this flake
 [linux]
@@ -58,6 +58,7 @@ gc:
 shell:
   nix shell nixpkgs#git nixpkgs#neovim nixpkgs#alejandra nixpkgs#nixd nixpkgs#vscodium-fhs
 
+# Format all nix files
 [group('nix')]
 fmt:
   alejandra .
@@ -68,9 +69,6 @@ gcroot:
   ls -al /nix/var/nix/gcroots/auto/
 
 # Verify all the store entries
-# Nix Store can contains corrupted entries if the nix store object has been modified unexpectedly.
-# This command will verify all the store entries,
-# and we need to fix the corrupted entries manually via `sudo nix store delete <store-path-1> <store-path-2> ...`
 [group('nix')]
 verify-store:
   nix store verify --all
@@ -83,7 +81,7 @@ repair-store *paths:
 # Update all Nixpkgs inputs
 [group('nix')]
 up-nix:
-  nix flake update nixpkgs nixpkgs-stable nixpkgs-unstable nixpkgs-darwin nixpkgs-ollama
+  nix flake update nixpkgs nixpkgs-stable nixpkgs-unstable nixpkgs-darwin nixpkgs-ollama nixpkgs-wayland
 
 ############################################################################
 #
@@ -91,17 +89,8 @@ up-nix:
 #
 ############################################################################
 
-# Deploy configuration
-# Usage: just switch "message"
-[group('nixos')]
-switch message:
-  git add .
-  git commit -m {{message}}
-  nix flake update --commit-lock-file
-  sudo nixos-rebuild switch --flake .
 
 # Gen new facter.json
-# Usage: just fac
 [group('nixos')]
 fac message:
   sudo rm ./facter.json
@@ -109,47 +98,40 @@ fac message:
   git add .
   git commit --amend -a --no-edit
 
-# Deploy configuration without updating
-# Usage: just ss "message"
+# Deploy configuration (just switch "message")
 [group('nixos')]
-ss message:
+switch message:
   git add .
   git commit -m {{message}}
   sudo nixos-rebuild switch --flake .
 
-# Deploy configuration with boot
-# Usage: just boot "message"
+# Deploy configuration without a new commit
+[group('nixos')]
+ss:
+  git add .
+  git commit --amend -a --no-edit
+  sudo nixos-rebuild switch --flake .
+
+# Deploy configuration with boot (just boot "message")
 [group('nixos')]
 boot message:
   git add .
   git commit -m {{message}}
-  nix flake update --commit-lock-file
   sudo nixos-rebuild boot --flake .
 
-# Deploy configuration with boot and no update
-# Usage: just bb "message"
+# Deploy configuration with boot and no new commit
 [group('nixos')]
 bb message:
   git add .
-  git commit -m {{message}}
+  git commit --amend -a --no-edit
   sudo nixos-rebuild boot --flake .
 
-# Late Deploy configuration
-# Usage: just ldp (switch/boot)
+# Commit and update (just uc "message")
 [group('nixos')]
-ldp type:
+uc message:
   git add .
-  git commit --amend -a --no-edit
-  sudo nixos-rebuild {{type}} --flake .
-
-# Late Deploy configuration
-# Usage: just uldp (switch/boot)
-[group('nixos')]
-uldp type:
-  git add .
-  git commit --amend -a --no-edit
+  git commit -m {{message}}
   nix flake update --commit-lock-file
-  sudo nixos-rebuild {{type}} --flake .
 
 # =================================================
 #
@@ -183,6 +165,7 @@ ggc:
 # Amend the last commit without changing the commit message
 [group('git')]
 game:
+  git add .
   git commit --amend -a --no-edit
 
 [linux]
