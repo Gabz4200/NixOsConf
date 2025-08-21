@@ -20,6 +20,13 @@
     # Graphics
     nixgl.url = "github:nix-community/nixGL";
 
+    # Sandbox
+    nix-flatpak.url = "github:gmodena/nix-flatpak/?ref=latest";
+    nixpak = {
+      url = "github:nixpak/nixpak";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     # Home & System Management
     home-manager = {
       url = "github:nix-community/home-manager";
@@ -70,6 +77,73 @@
       inherit inputs outputs system pkgs-stable;
     };
   in {
+    packages.x86_64-linux = let
+      pkgs = nixpkgs.legacyPackages.x86_64-linux;
+
+      mkNixPak = inputs.nixpak.lib.nixpak {
+        inherit (pkgs) lib;
+        inherit pkgs;
+      };
+
+      davinci-resolve-with-deps = pkgs.buildEnv {
+        name = "davinci-resolve-with-intel-drivers";
+        paths = [
+          pkgs.davinci-resolve
+          pkgs.intel-compute-runtime
+          pkgs.intel-media-driver
+          pkgs.libva
+        ];
+      };
+
+      sandboxed-davinci-resolve = mkNixPak {
+        config = {sloth, ...}: {
+          app.package = davinci-resolve-with-deps;
+          app.binPath = "bin/resolve";
+          flatpak.appId = "com.blackmagicdesign.Resolve";
+
+          flatpak.enable = true;
+
+          dbus.enable = true;
+          dbus.policies = {
+            "org.freedesktop.DBus" = "talk";
+            "org.freedesktop.login1" = "see";
+          };
+
+          bubblewrap = {
+            network = true;
+
+            bind.rw = [
+              (sloth.env "XDG_RUNTIME_DIR")
+              (sloth.concat' sloth.homeDir "/Videos")
+              (sloth.concat' sloth.homeDir "/Documents")
+              (sloth.concat' sloth.homeDir "/.local/state/nixpak/resolve-runtime")
+            ];
+
+            bind.ro = [
+              (sloth.concat' sloth.homeDir "/Downloads")
+              (sloth.concat' sloth.homeDir "/.config")
+            ];
+
+            bind.dev = [
+              "/dev/dri"
+              "/dev/snd"
+            ];
+          };
+
+          env = {
+            LD_LIBRARY_PATH = "${pkgs.lib.makeLibraryPath [
+              pkgs.intel-media-driver
+              pkgs.intel-compute-runtime
+              pkgs.libva
+            ]}";
+            XDG_RUNTIME_DIR = "${sloth.env "XDG_RUNTIME_DIR"}";
+          };
+        };
+      };
+    in {
+      davinci-resolve = sandboxed-davinci-resolve.config.env;
+    };
+
     nixosConfigurations.nixos = nixpkgs.lib.nixosSystem {
       inherit system specialArgs;
 
@@ -157,5 +231,24 @@
         }
       ];
     };
+
+    devShells."x86_64-linux".default = let
+      pkgs = import nixpkgs {
+        inherit system;
+      };
+    in
+      pkgs.mkShell {
+        packages = with pkgs; [
+          vscodium-fhs
+          nixd
+          zsh
+          alejandra
+          just
+        ];
+
+        shellHook = ''
+          echo "hello"
+        '';
+      };
   };
 }

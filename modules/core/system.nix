@@ -96,6 +96,10 @@
     rsync
     openssh
 
+    # Xdg
+    xdg-dbus-proxy
+    wayland-proxy-virtwl
+
     # Help
     man-pages
     tldr
@@ -221,6 +225,8 @@
     apparmor = "enabled";
     enable = true;
   };
+
+  chaotic.appmenu-gtk3-module.enable = true;
 
   # DNS
   networking.nameservers = ["2606:4700:4700::1111" "1.1.1.1"];

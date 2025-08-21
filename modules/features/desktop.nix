@@ -3,6 +3,7 @@
   lib,
   pkgs,
   inputs,
+  outputs,
   ...
 }: {
   imports = [
@@ -187,6 +188,8 @@
 
     sops
     cachix
+
+    outputs.packages.x86_64-linux.davinci-resolve
 
     libsecret
     nix-your-shell

@@ -15,6 +15,7 @@
     ./modules/theming.nix
     ./modules/niri.nix
     ./modules/waybar.nix
+    ./modules/flatpak.nix
   ];
 
   home = {
@@ -115,32 +116,7 @@
       openexr
       blender
       krita
-
-      # Kendlive with Whisper
-      (let
-        kdenlive = kdePackages.kdenlive;
-        kdenlivePython = pkgs.python3.withPackages (ps:
-          with ps; [
-            pip
-            openai-whisper
-            srt
-            opencv4
-            torch
-          ]);
-      in
-        pkgs.symlinkJoin {
-          name = "kdenlive-with-whisper-${kdenlive.version}";
-          paths = [kdenlive kdenlivePython];
-
-          nativeBuildInputs = [pkgs.makeWrapper];
-
-          postBuild = ''
-            wrapProgram $out/bin/kdenlive \
-              --prefix PATH : ${kdenlivePython}/bin \
-              --set PYTHONPATH ${pkgs.python3.pkgs.makePythonPath [kdenlivePython]}
-          '';
-        })
-
+      davinci-resolve
       krita-plugin-gmic
       gmic
       imagemagick
@@ -148,7 +124,7 @@
 
       obsidian
 
-      # Fix: openai-whisper
+      openai-whisper
       srt
       sox
       soxr
