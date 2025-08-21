@@ -31,9 +31,13 @@
   # Kernel
   boot.kernelPackages = pkgs.linuxKernel.packages.linux_zen;
 
+  boot.extraModulePackages = [
+    config.boot.kernelPackages.rtl8821ce
+  ];
+
   # Kernel modules
   boot.initrd.kernelModules = lib.mkMerge ["xhci_pci" "ahci" "sd_mod" "sdhci_pci" "i915"];
-  boot.initrd.availableKernelModules = lib.mkMerge ["usb_storage" "usbhid"];
+  boot.initrd.availableKernelModules = lib.mkMerge ["usb_storage" "usbhid" "8821ce" "rtw88" "rtl8821ce"];
   boot.kernelModules = lib.mkMerge ["kvm-intel" "coretemp"];
 
   # Kernel parameters (hardware specific em intel-gpu.nix)
@@ -44,6 +48,7 @@
     "rd.systemd.show_status=false"
     "rd.udev.log_level=3"
     "udev.log_priority=3"
+
     "pcie_aspm=off"
 
     # Performance
@@ -71,9 +76,9 @@
 
     # Security
     /*
-       "kernel.dmesg_restrict" = lib.mkDefault 1;
-    "kernel.kptr_restrict" = lib.mkDefault 2;
-    "kernel.yama.ptrace_scope" = lib.mkDefault 1;
+    "kernel.dmesg_restrict" = lib.mkDefault 1;
+     "kernel.kptr_restrict" = lib.mkDefault 2;
+     "kernel.yama.ptrace_scope" = lib.mkDefault 1;
     */
 
     # SSD
