@@ -2,6 +2,8 @@
   config,
   lib,
   pkgs,
+  inputs,
+  outputs,
   ...
 }: {
   # Bootloader
@@ -31,14 +33,22 @@
   # Kernel
   boot.kernelPackages = pkgs.linuxKernel.packages.linux_zen;
 
+  boot.blacklistedKernelModules = ["rtw88_8821ce"];
+  boot.extraModulePackages = [
+    (config.boot.kernelPackages.rtl8821ce.overrideAttrs (finalAttrs: previousAttrs: {
+      src = inputs.rtl8821ce-src;
+      meta.broken = false;
+    }))
+  ];
+
   # boot.extraModulePackages = [
   #   config.boot.kernelPackages.rtl8821ce
   # ];
 
   # Kernel modules
   boot.initrd.kernelModules = ["xhci_pci" "ahci" "sd_mod" "sdhci_pci" "i915"];
-  boot.initrd.availableKernelModules = ["usb_storage" "usbhid" "rtw88_pci" "rtw88_8821ce" "rtw88_core"];
-  boot.kernelModules = ["kvm-intel" "coretemp"];
+  boot.initrd.availableKernelModules = ["usb_storage" "usbhid"];
+  boot.kernelModules = ["kvm-intel" "coretemp" "8821ce"];
 
   # Kernel parameters (hardware specific em intel-gpu.nix)
   boot.kernelParams = [

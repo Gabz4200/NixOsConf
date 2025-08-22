@@ -20,6 +20,12 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    # Wifi Git Src
+    rtl8821ce-src = {
+      url = "github:tomaspinho/rtl8821ce/master";
+      flake = false;
+    };
+
     # Home & System Management
     home-manager = {
       url = "github:nix-community/home-manager";
