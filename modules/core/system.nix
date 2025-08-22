@@ -323,6 +323,9 @@
     fileSystems = ["/"];
   };
 
+  # Ollama
+  services.ollama.enable = true;
+
   # Session variables
   environment.sessionVariables = {
     # Wayland

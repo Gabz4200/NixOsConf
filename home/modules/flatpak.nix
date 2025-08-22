@@ -29,6 +29,7 @@
   ];
 
   services.flatpak.packages = [
+    "com.github.tchx84.Flatseal"
     "org.vinegarhq.Sober"
     "io.github.OpenToonz"
     "org.kde.kdenlive"
@@ -48,6 +49,11 @@
 
         GTK_THEME = "Adwaita:dark";
       };
+    };
+    "org.kde.kdenlive".Context = {
+      filesystems = [
+        "${pkgs.python3.withPackages (ps: with ps; [pip openai-whisper virtualenv srt opencv4 torch])}/bin:/app/python:rw"
+      ];
     };
   };
 

@@ -141,6 +141,7 @@
   };
 
   #services.gnome.core-apps.enable = true;
+  appstream.enable = true;
 
   # Share
   environment.pathsToLink = [
@@ -188,6 +189,7 @@
           runScript = "zsh";
           extraOutputsToInstall = ["dev"];
         }))
+
     steam-run
 
     sops
@@ -207,6 +209,29 @@
     gamescope
 
     inputs.nix-alien.packages.${system}.nix-alien
+
+    # Gnome
+    baobab
+    decibels
+    epiphany
+    gnome-text-editor
+    gnome-calculator
+    gnome-calendar
+    gnome-characters
+    gnome-clocks
+    gnome-font-viewer
+    gnome-logs
+    gnome-maps
+    gnome-music
+    gnome-system-monitor
+    loupe
+    nautilus
+    gnome-connections
+    simple-scan
+    snapshot
+    totem
+    yelp
+    gnome-software
   ];
 
   networking.firewall.enable = true;
