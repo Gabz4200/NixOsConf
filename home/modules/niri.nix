@@ -264,7 +264,6 @@ in {
   home.packages = with pkgs; [
     # Dependências do sistema e UWSM
     app2unit
-    uwsm
     xwayland-satellite-unstable
 
     # Ferramentas de screenshot
@@ -281,18 +280,8 @@ in {
     swaylock # Ou outro locker, como 'blurred-locker'
   ];
 
-  xdg.terminal-exec.enable = true;
-  xdg.terminal-exec.settings = {default = ["kitty.desktop"];};
-  xdg.mimeApps.defaultApplications = {
-    "x-scheme-handler/terminal" = "kitty.desktop";
-  };
-  home.sessionVariables = {
-    TERMINAL = "kitty";
-  };
 
-  programs.kitty = {
-    enable = true;
-  };
+  # Kitty configuration moved to home/modules/terminal.nix
 
   systemd.user.startServices = true;
 

@@ -1,6 +1,56 @@
-{ config, pkgs, lib, ... }:
+{ ... }:
 
 {
-  # Terminal configuration will go here
-  # This module will contain terminal-related configurations
+  # Terminal configuration
+
+  # Default terminal handlers
+  xdg.terminal-exec.enable = true;
+  xdg.terminal-exec.settings = { default = ["kitty.desktop"]; };
+  xdg.mimeApps.defaultApplications = {
+    "x-scheme-handler/terminal" = "kitty.desktop";
+  };
+
+  # Session
+  home.sessionVariables = {
+    TERMINAL = "kitty";
+  };
+
+  # Kitty terminal
+  programs.kitty = {
+    enable = true;
+    enableGitIntegration = true;
+    shellIntegration.enableZshIntegration = true;
+    settings = {
+      confirm_os_window_close = 0;
+      dynamic_background_opacity = true;
+      enable_audio_bell = false;
+      mouse_hide_wait = "-1.0";
+      window_padding_width = 12;
+      background_opacity = "1.0";
+      background_blur = 5;
+      symbol_map = let
+        mappings = [
+          "U+23FB-U+23FE"
+          "U+2B58"
+          "U+E200-U+E2A9"
+          "U+E0A0-U+E0A3"
+          "U+E0B0-U+E0BF"
+          "U+E0C0-U+E0C8"
+          "U+E0CC-U+E0CF"
+          "U+E0D0-U+E0D2"
+          "U+E0D4"
+          "U+E700-U+E7C5"
+          "U+F000-U+F2E0"
+          "U+2665"
+          "U+26A1"
+          "U+F400-U+F4A8"
+          "U+F67C"
+          "U+E000-U+E00A"
+          "U+F300-U+F313"
+          "U+E5FA-U+E62B"
+        ];
+      in
+        (builtins.concatStringsSep "," mappings) + " Symbols Nerd Font";
+    };
+  };
 }

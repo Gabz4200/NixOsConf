@@ -1,6 +1,13 @@
-{ config, pkgs, lib, ... }:
+{ pkgs, ... }:
 
 {
-  # Gaming-related configurations will go here
-  # This module will contain gaming-related configurations and packages
+  # Gaming-related configurations and packages
+
+  # Enable gaming launchers/tools managed via HM
+  programs.lutris.enable = true;
+
+  # Gaming packages
+  home.packages = with pkgs; [
+    bottles
+  ];
 }
