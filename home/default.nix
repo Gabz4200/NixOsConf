@@ -108,8 +108,10 @@
       shellcheck
       bash-language-server
 
-      windsurf
+      windsurf.fhs
       codeium
+      uv
+      nodejs
 
       # --- Creative / Job ---
       ffmpeg-full
