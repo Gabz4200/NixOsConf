@@ -281,7 +281,6 @@
             backupFileExtension = "backup";
 
             sharedModules = [
-              inputs.sops-nix.homeManagerModules.sops
               inputs.nix4nvchad.homeManagerModule
               inputs.catppuccin.homeModules.catppuccin
               inputs.niri.homeModules.niri

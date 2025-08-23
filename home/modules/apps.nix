@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ pkgs, nixosConfig, ... }:
 
 {
   # Application configurations
@@ -55,7 +55,7 @@
     package = pkgs.gitFull;
     extraConfig = {
       include = {
-        path = config.sops.secrets."git".path;
+        path = nixosConfig.sops.secrets."git".path;
       };
     };
   };

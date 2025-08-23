@@ -58,12 +58,7 @@
     enableRenice = true;
   };
 
-  # Java for Minecraft
-  programs.java = {
-    enable = true;
-    package = pkgs.zulu17;
-    binfmt = true;
-  };
+  # Java moved to Home Manager (per-user). Remove system binfmt to avoid duplication.
 
   # Chaotic gaming packages
   # When using pkgs from the flake, I will need to change it:
@@ -75,36 +70,7 @@
 
   hardware.graphics.enable32Bit = true;
 
-  # System packages for gaming. Do I need all?
-  environment.systemPackages = with pkgs; [
-    # Launchers
-    lutris
-    bottles
-    heroic
-
-    # Minecraft
-    atlauncher
-    (prismlauncher.override {
-      jdks = [zulu8 zulu17 zulu21];
-    })
-
-    # Tools
-    mangohud
-    vkbasalt
-    goverlay
-
-    # Performance monitoring
-    nvtopPackages.intel
-
-    # Compatibility (Can I inject them on prismlauncher env only?)
-    openal
-    glfw-wayland-minecraft
-
-    # Vulkan
-    vulkan-tools
-    vulkan-loader
-    vulkan-validation-layers
-  ];
+  # User-facing gaming apps (launchers/tools) moved to Home Manager.
 
   # Kernel optimizations for gaming
   # The params will correctly merge with other files that set boot.kernel.sysctl?

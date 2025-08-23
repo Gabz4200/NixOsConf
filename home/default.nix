@@ -53,7 +53,6 @@
     packages = with pkgs; [
       # --- System tools ---
       fastfetch
-      wl-clipboard
       xdg-utils
       # niri-unstable moved/configured via modules; not needed here
       file
@@ -96,7 +95,7 @@
       ethtool
       pciutils # lspci
       usbutils # lsusb
-      nvtopPackages.intel
+      # nvtop moved to home/modules/gaming.nix
 
       # --- Media ---
       mpv
@@ -105,7 +104,14 @@
       vlc
 
       # --- Special case for faster refactoring ---
-      windsurf.fhs
+      windsurf.fhsWithPackages
+      (ps:
+        with ps; [
+          cargo
+          uv
+          nodejs
+          python3
+        ])
       codeium
       # uv and nodejs are provided by development.nix
 
@@ -165,18 +171,7 @@
   # Comp
   programs.man.generateCaches = true;
 
-  # Sops
-  sops = {
-    defaultSopsFile = ../secrets/secrets.yaml;
-    defaultSopsFormat = "yaml";
-
-    age.keyFile = "/home/gabz/.config/sops/age/keys.txt";
-
-    secrets = {
-      "git" = {
-      };
-    };
-  };
+  # SOPS moved to system (NixOS) single-source; HM reads nixosConfig.sops.secrets.*
 
   # fuzzel/swaylock and desktop services moved to modules
 
