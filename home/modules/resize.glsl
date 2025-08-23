@@ -1,3 +1,4 @@
+// I dont know what this does, but it works without errors;
 vec4 resize_color(vec3 coords_curr_geo, vec3 size_curr_geo) {
     vec3 coords_crop_next =       niri_geo_to_tex_next * niri_curr_geo_to_next_geo * (      coords_curr_geo);
     vec3 coords_shuf_prev = 1.0 - niri_geo_to_tex_prev * niri_curr_geo_to_prev_geo * (1.0 - coords_curr_geo);

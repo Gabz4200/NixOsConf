@@ -57,6 +57,7 @@
     notification.bell-outline-badge = "󰅸";
   };
 in {
+  #todo: Change it to a better configuration. Maybe the one from HyDE, or some sidebar one.
   programs.waybar = {
     enable = true;
     systemd.enable = true;

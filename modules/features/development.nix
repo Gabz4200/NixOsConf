@@ -6,6 +6,7 @@
   ...
 }: {
   # Development tools
+  # Only the ones that may always be needed even outside development shells on Nix flakes. Are these great tho?
   environment.systemPackages = with pkgs; [
     # Nix development
     nixd
@@ -77,9 +78,11 @@
   ];
 
   # Git
+  # Are these configs great? I did not made it.
   programs.git = {
     enable = true;
     lfs.enable = true;
+    package = pkgs.gitFull;
 
     config = {
       init.defaultBranch = "master";
@@ -119,6 +122,8 @@
   # SSH
   programs.ssh = {
     startAgent = false; # I use goldwarden
+
+    # Correct?
     extraConfig = ''
       AddKeysToAgent yes
       IdentityFile ~/.ssh/id_ed25519
@@ -136,6 +141,7 @@
   };
 
   # Goldwarden (Bitwarden CLI + SSH)
+  # Should I change to Bitwarden GUI?
   programs.goldwarden = {
     enable = true;
     useSshAgent = true;
@@ -158,13 +164,15 @@
     loadInNixShell = true;
   };
 
-  # FHS environment helper
+  # Appimages
   programs.appimage = {
     enable = true;
     binfmt = true;
   };
 
-  # Virtualização
+  # Virtualization
+
+  # Podman
   virtualisation.podman = {
     enable = true;
     dockerCompat = true;
@@ -212,6 +220,6 @@
     man.generateCaches = true;
   };
 
-  # Development kernel modules
+  # Development kernel modules. Will it merge?
   boot.kernelModules = ["kvm-intel"];
 }

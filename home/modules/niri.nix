@@ -40,6 +40,9 @@ with lib; let
   in
     listToAttrs (pairs prefixes (prefix: pairs suffixes (suffix: [(format prefix suffix)])));
 in {
+  # This configuration works. And I like it.
+  # BUT IT IS A MESS!!
+  #TODO: Organize it!
   programs.niri.settings = {
     input.keyboard.xkb.layout = "br";
     input.mouse.accel-speed = 0.3;
@@ -229,7 +232,10 @@ in {
       }
     ];
     xwayland-satellite.enable = true;
+
+    # This was not working. It wouldnt build the system.
     #xwayland-satellite.path = "/etc/profiles/per-user/gabz/bin/xwayland-satellite";
+    #xwayland-satellite.path = "{pkgs.xwayland-satellite-unstable}/bin/xwayland-satellite";
   };
 
   programs.niri.settings.environment."NIXOS_OZONE_WL" = "1";
@@ -237,6 +243,8 @@ in {
   #systemd.user.services.niri-flake-polkit.enable = true;
 
   #TODO: xwayland-satellite.path = "${lib.getExe pkgs.xwayland-satellite-unstable}";
+
+  # I dont remember to ever using it tbh
   programs.niriswitcher.enable = true;
   programs.niriswitcher.settings = {
     keys = {
@@ -288,6 +296,7 @@ in {
 
   systemd.user.startServices = true;
 
+  # Wallpaper setter. Great. But maybe move to somewhere else.
   systemd.user.services = {
     wallpaper_setter = {
       Unit = {
@@ -305,10 +314,12 @@ in {
     };
   };
 
+  # Fuzzel. (Should I switch with rofi-wayland/wofi? I used rofi on Hyprland)
   programs.fuzzel = {
     enable = true;
     settings = {
       main = {
+        # Is this well done? I have no clue.
         launch-prefix = "niri msg action spawn -- app2unit --fuzzel-compat --";
         terminal = "${pkgs.app2unit}/bin/app2unit-term-scope";
         layer = "overlay";

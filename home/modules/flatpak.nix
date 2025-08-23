@@ -8,6 +8,7 @@
   imports = [
   ];
 
+  # Great, because some packages are not on nixpkgs or are broke there.
   services.flatpak.enable = true;
   services.flatpak.update.onActivation = false;
 
@@ -52,6 +53,7 @@
     };
     "org.kde.kdenlive".Context = {
       filesystems = [
+        # Kdenlive couldnt use some features on NixOS. I think this is what made it work on Flatpak, but I am not sure if it could be handled better.
         "${pkgs.python3.withPackages (ps: with ps; [pip openai-whisper virtualenv srt opencv4 torch])}/bin:/app/python:rw"
       ];
     };
@@ -62,7 +64,7 @@
   };
 
   xdg.enable = true;
-
+  # Is this okay?
   home.packages = with pkgs; [
     xdg-dbus-proxy
     wayland-proxy-virtwl

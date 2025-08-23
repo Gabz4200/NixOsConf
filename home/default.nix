@@ -7,11 +7,11 @@
 }: {
   imports = [
     ./modules/shell.nix
-    # Fix: TODO: ./modules/terminal.nix
-    # Fix: TODO: ./modules/development.nix
-    # Fix: TODO: ./modules/desktop.nix
-    # Fix: TODO: ./modules/apps.nix
-    # Fix: TODO: ./modules/gaming.nix
+    #TODO: ./modules/terminal.nix
+    #TODO: ./modules/development.nix
+    #TODO: ./modules/desktop.nix
+    #TODO: ./modules/apps.nix
+    #TODO: ./modules/gaming.nix
     ./modules/theming.nix
     ./modules/niri.nix
     ./modules/waybar.nix
@@ -24,6 +24,7 @@
     stateVersion = "25.05";
 
     # Session variables
+    # Do I NEED to set all of them?
     sessionVariables = {
       EDITOR = "nvim";
       BROWSER = "firedragon";
@@ -38,8 +39,6 @@
       QT_AUTO_SCREEN_SCALE_FACTOR = "1";
       QT_WAYLAND_DISABLE_WINDOWDECORATION = "1";
 
-      #QT_QPA_PLATFORMTHEME = "qt6ct";
-
       GDK_BACKEND = "wayland,x11,*";
 
       MOZ_ENABLE_WAYLAND = 1;
@@ -50,6 +49,7 @@
       NIXOS_CONFIG = "$HOME/NixConf";
     };
 
+    # Are these packages appropriate? Maybe remove some? Add others?
     packages = with pkgs; [
       # --- System tools ---
       fastfetch
@@ -85,6 +85,7 @@
       yq-go
       glow # Markdown previewer in terminal
       tealdeer # Simplified man pages
+      obsidian
 
       # --- Monitoring ---
       btop
@@ -108,6 +109,7 @@
       shellcheck
       bash-language-server
 
+      # --- Special case for faster refactoring ---
       windsurf.fhs
       codeium
       uv
@@ -117,15 +119,15 @@
       ffmpeg-full
       openusd
       openexr
-      blender
-      krita
-      davinci-resolve
-      krita-plugin-gmic
       gmic
       imagemagick
-      gimp3-with-plugins
 
-      obsidian
+      blender
+
+      krita
+      krita-plugin-gmic
+
+      gimp3-with-plugins
 
       openai-whisper
       srt
@@ -137,7 +139,7 @@
     ];
   };
 
-  # Install firefox.
+  # Install firefox fork of choice. I wanted Zen, but it isnt packaged on nixpkgs yet.
   programs.floorp = {
     enable = true;
     package = pkgs.firedragon;
@@ -145,7 +147,7 @@
 
   # Nix
   nix.settings = {
-    # Substituters
+    # Substituters. Maybe let it be flake only.
     substituters = [
       "https://niri.cachix.org"
       "https://chaotic-nyx.cachix.org"
@@ -163,7 +165,9 @@
     ];
   };
 
-  # XDG
+  # XDG. Should I use home-manager or nixos for it?
+  # Some options are home-manager only (namely userDirs)
+  # How to be sure home-manager will inherit NixOS xdg decisions?
   xdg = {
     enable = true;
 
@@ -186,15 +190,6 @@
     };
 
     mime.enable = true;
-
-    configFile = {
-      # git
-      "git/config".enable = false;
-
-      # Important
-      "niri/.keep".text = "";
-      "waybar/.keep".text = "";
-    };
   };
 
   xdg.portal.enable = true;
@@ -286,15 +281,16 @@
     mutableExtensionsDir = true;
   };
 
+  # Zed
   programs.zed-editor.enable = true;
 
-  # Container
-
+  # Container distro
   programs.distrobox = {
     enable = true;
     enableSystemdUnit = true;
   };
 
+  # Gaming
   programs.lutris.enable = true;
 
   # OBS
@@ -304,6 +300,7 @@
   # Neovim
   programs.nvchad = {
     enable = true;
+    # Necessary?
     extraPackages = with pkgs; [
       bash-language-server
       kdlfmt
@@ -330,7 +327,7 @@
     };
   };
 
-  # NixGL
+  # NixGL (Really needed when on NixOS?)
   nixGL.vulkan.enable = true;
   nixGL.prime.installScript = "mesa";
   nixGL.defaultWrapper = "mesa";

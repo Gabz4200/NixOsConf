@@ -4,10 +4,12 @@
   pkgs,
   ...
 }: {
+  # Really needed?
   boot.initrd.availableKernelModules = ["i915"];
-
   boot.kernelModules = ["i915" "intel_agp" "coretemp" "kvm-intel"];
 
+  # Is this correct? I have no Idea if the drivers are the expected for my Hardware or not.
+  # Do I need any further configuration to use Vulkan and etc?
   hardware.graphics = {
     enable = true;
     enable32Bit = true;
@@ -23,6 +25,8 @@
     ];
   };
 
+  # I have this param set in many files. Will it correctly merge?
+  # I also am not sure about the params. Only pcie_aspm=off is something I know for sure.
   boot.kernelParams = [
     "quiet"
     "loglevel=3"
@@ -33,6 +37,7 @@
     "threadirqs"
   ];
 
+  # Is it the best way to use this option tho?
   environment.etc."modprobe.d/i915.conf".text = lib.optionalString true ''
     options i915 enable_guc=0
     options i915 enable_psr=0

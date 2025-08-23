@@ -5,6 +5,8 @@
   inputs,
   ...
 }: {
+  # I am not sure about ANYTHING here. I need help.
+
   # Nix daemon configuration
   nix = {
     # Features
@@ -59,19 +61,20 @@
       dates = ["03:00"];
     };
 
+    #todo: Automatic mapping of my flake inputs to here.
     # Registry and channels
     nixPath = ["nixpkgs=${inputs.nixpkgs}"];
 
     channel.enable = false;
 
-    # Extra config
+    # Extra config ( Wtf is happening here?)
     extraOptions = ''
       min-free = ${toString (1024 * 1024 * 1024)}
       max-free = ${toString (5 * 1024 * 1024 * 1024)}
     '';
   };
 
-  # Nyx
+  # Nyx (change if readonly package)
   chaotic.nyx = {
     cache.enable = true;
     nixPath.enable = true;
@@ -85,7 +88,7 @@
       allowBroken = false;
     };
 
-    # Overlays
+    # Overlays (change if readonly package)
     overlays = [
       inputs.niri.overlays.niri
       inputs.chaotic.overlays.default
@@ -98,7 +101,7 @@
     };
   };
 
-  # NH - Nix Helper
+  # NH - Nix Helper (Some config else?)
   programs.nh = {
     enable = true;
     flake = "/home/gabz/NixConf";
@@ -109,7 +112,7 @@
     };
   };
 
-  # Nix-ld
+  # Nix-ld (To help with foreign pkgs on NixOS)
   programs.nix-ld = {
     enable = true;
     libraries = with pkgs; [
@@ -169,12 +172,13 @@
     ];
   };
 
-  # Nix-index for command-not-found
+  # Nix-index
   programs.nix-index = {
     enable = true;
     enableZshIntegration = true;
   };
 
+  # Conflicts with nix-index
   programs.command-not-found.enable = false;
 
   # Packages
@@ -183,6 +187,6 @@
     cachix
   ];
 
-  # Sandboxing for FHS compatibility
+  # Sandboxing compat
   programs.nix-required-mounts.enable = true;
 }

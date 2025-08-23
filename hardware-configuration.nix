@@ -20,6 +20,7 @@
   fileSystems."/" = {
     device = "/dev/disk/by-uuid/c5627d10-2763-4f71-a4bb-4d55d9ad1354";
     fsType = "btrfs";
+    # I wanted compression.
     options = ["subvol=@" "defaults" "ssd" "noatime" "discard=async" "compress=zstd:10"];
   };
 
@@ -29,9 +30,11 @@
     options = ["fmask=0077" "dmask=0077"];
   };
 
+  # I use mainly for hibernate.
   swapDevices = [
     {
       device = "/dev/disk/by-uuid/7ce2c6e6-3966-48e3-a2b5-9e2a266beb9b";
+      # Low priority so Zram is preferred.
       priority = 10;
     }
   ];

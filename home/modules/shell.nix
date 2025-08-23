@@ -4,6 +4,8 @@
   lib,
   ...
 }: {
+  # I am not sure about ANYTHING here. I need help.
+
   # Zsh
   programs.zsh = {
     enable = true;
@@ -67,7 +69,7 @@
       ];
     };
 
-    # Aliases
+    # Aliases (I didnt made any of them)
     shellAliases = {
       # System
       rebuild = "nh os switch";
@@ -112,6 +114,7 @@
       df = "df -h";
       du = "dust";
       free = "free -h";
+      c = "clear";
 
       # Clipboard
       copy = "wl-copy";
@@ -122,7 +125,7 @@
       zshrc = "$EDITOR ~/.zshrc";
     };
 
-    # Init extra
+    # Init extra (I didnt made any of them. I am not sure about any of them)
     initContent = lib.mkOrder 1200 ''
       # Better cd
       setopt AUTO_CD
@@ -197,6 +200,8 @@
   programs.starship = {
     enable = true;
     enableZshIntegration = true;
+
+    #todo: Make so it dont jump line from prompt.
 
     settings = {
       format = ''
@@ -320,7 +325,7 @@
     };
   };
 
-  # Shell packages
+  # Shell packages (need?)
   home.packages = with pkgs; [
     # Shell utils
     shellcheck

@@ -5,6 +5,7 @@ in
     pname = "PixiEditor";
     version = "2.0.1.7";
 
+    #todo: It works. But I need to upgrade its version, its outdated. Its kinda boring to do that manually all the time.
     # Remote tarball (preferred for reproducibility)
     src = fetchurl {
       url = "https://github.com/PixiEditor/PixiEditor/releases/download/2.0.1.7/PixiEditor-2.0.1.7-amd64-linux.tar.gz";

@@ -13,14 +13,14 @@
     chaotic.url = "github:chaotic-cx/nyx/nyxpkgs-unstable";
     nix-gaming.url = "github:fufexan/nix-gaming";
 
-    # Sandbox
+    # Sandbox for apps that simply not worky on NixOS
     nix-flatpak.url = "github:gmodena/nix-flatpak/?ref=latest";
     nixpak = {
       url = "github:nixpak/nixpak";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    # Wifi Git Src
+    # Wifi Git Src (the version nixpkgs uses is broken. But master has the fix, so I override it)
     rtl8821ce-src = {
       url = "github:tomaspinho/rtl8821ce/master";
       flake = false;
@@ -37,7 +37,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    # Theming
+    # Theming (having a hard time deciding)
     stylix = {
       url = "github:nix-community/stylix";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -57,6 +57,7 @@
     nix-alien.url = "github:thiagokokada/nix-alien";
   };
 
+  # Maybe is a good Idea to centralize Substituters here? I have to be sure it would apply to the whole Flake.
   nixConfig = {
     allowUnfree = true;
 
@@ -89,6 +90,7 @@
     system = "x86_64-linux";
     outputs = self;
 
+    #Todo: I want to make this pkgs as a "single source of truth", but I know I would need to change things
     # pkgs
     pkgs = import nixpkgs {
       inherit system;
@@ -141,11 +143,13 @@
       ];
     };
 
+    # todo: Insert pkgs here when the changes are done
     # Special args
     specialArgs = {
       inherit inputs outputs system pkgs-stable;
     };
   in {
+    #todo: I tryed to fix Davinci Resolve (It doesnt recognize my GPU), but it didnt work
     packages.x86_64-linux = let
       inherit pkgs;
 
@@ -210,40 +214,40 @@
         # Hardware & Firmware
         ./hardware-configuration.nix
         ./modules/hardware/intel-gpu.nix
-        # Fix: TODO: ./modules/hardware/laptop.nix
+        #TODO: ./modules/hardware/laptop.nix
 
         # Core System
         ./modules/core/boot.nix
-        # Fix: TODO: ./modules/core/networking.nix
+        #TODO: ./modules/core/networking.nix
         ./modules/core/nix.nix
-        # Fix: TODO: ./modules/core/security.nix
+        #TODO: ./modules/core/security.nix
         ./modules/core/system.nix
 
         # Desktop Environment
-        # Fix: TODO: ./modules/desktop/niri.nix
-        # Fix: TODO: ./modules/desktop/wayland.nix
-        # Fix: TODO: ./modules/desktop/xdg.nix
+        #TODO: ./modules/desktop/niri.nix
+        #TODO: ./modules/desktop/wayland.nix
+        #TODO: ./modules/desktop/xdg.nix
         ./modules/features/desktop.nix
 
         # Services
-        # Fix: TODO: ./modules/services/audio.nix
-        # Fix: TODO: ./modules/services/display-manager.nix
+        #TODO: ./modules/services/audio.nix
+        #TODO: ./modules/services/display-manager.nix
         ./modules/services/power.nix
 
         # Features
         ./modules/features/gaming.nix
-        # Fix: TODO: ./modules/features/virtualization.nix
+        #TODO: ./modules/features/virtualization.nix
         ./modules/features/development.nix
 
         # Theming
-        # Fix: TODO: ./modules/theming/stylix.nix
+        #TODO: ./modules/theming/stylix.nix
 
         # Users
-        # Fix: TODO: ./modules/users/gabz.nix
+        #TODO: ./modules/users/gabz.nix
 
         # Secrets
         inputs.sops-nix.nixosModules.sops
-        # Fix: TODO: ./modules/core/secrets.nix
+        #TODO: ./modules/core/secrets.nix
 
         # External Modules
         inputs.nixos-hardware.nixosModules.asus-battery
@@ -253,8 +257,6 @@
 
         inputs.nixos-hardware.nixosModules.common-pc-laptop
         inputs.nixos-hardware.nixosModules.common-pc-laptop-ssd
-
-        #inputs.nixos-hardware.nixosModules.common-cpu-intel-kaby-lake
 
         inputs.nixos-facter-modules.nixosModules.facter
         {config.facter.reportPath = ./facter.json;}
@@ -292,6 +294,9 @@
       ];
     };
 
+    #todo: Make a backup configuration with the bare minimum and the internet driver. It would help if I ever reformat this computer again.
+
+    # Just in case I need it.
     devShells."x86_64-linux".default = let
       inherit pkgs;
     in

@@ -10,6 +10,9 @@
   ];
 
   # UWSM
+  # Do I really want to use it with Niri?
+  # I came from Hyprland, so it was instinct.
+  # But look at: https://yalter.github.io/niri/Example-systemd-Setup.html
   programs.uwsm.enable = true;
   programs.uwsm.waylandCompositors = {
     niri = {
@@ -19,7 +22,7 @@
     };
   };
 
-  # Niri
+  # Niri (Love it, but I need to spicy it up a bit)
   programs.niri = {
     enable = true;
     package = pkgs.niri-unstable;
@@ -67,12 +70,18 @@
     cursor.name = "Bibata-Modern-Ice";
     cursor.size = 24;
 
+    # I would want it enabled. But some themes are not that great (mainly the zsh-syntax-highlighting),
+    # so I use it together with catppuccin.nix flake. Dont know how to make it suck less.
+    # I think the main problem are
+    # # 1- Only 16 colors aint enough for everything.
+    # # 2- The catppuccin one may have them ordered in a weird way that makes thing that should be bright, be dark.
     autoEnable = false;
+
     homeManagerIntegration.autoImport = true;
     homeManagerIntegration.followSystem = true;
   };
 
-  # Fonts
+  # Fonts (font-awesome and dejavu_fonts need to be here so )
   fonts.packages = with pkgs; [
     nerd-fonts.caskaydia-mono
     nerd-fonts.dejavu-sans-mono
@@ -87,7 +96,7 @@
   programs.xwayland.enable = true;
   programs.xwayland.package = pkgs.xwayland;
 
-  # SDDM
+  # SDDM (Works great)
   services.displayManager.sddm = {
     wayland.enable = true;
     package = pkgs.kdePackages.sddm;
@@ -121,6 +130,7 @@
     jack.enable = true;
     wireplumber.enable = true;
 
+    # Dont know if really needed. But if dont hurting, can let it.
     lowLatency = {
       enable = true;
       # defaults
@@ -140,10 +150,10 @@
     };
   };
 
-  #services.gnome.core-apps.enable = true;
   appstream.enable = true;
 
-  # Share
+  # pathsToLink
+  # Dont know if all of them are really needed. i think some are not.
   environment.pathsToLink = [
     "/share/zsh"
     "/share/applications"
@@ -152,7 +162,7 @@
     "/share/icons"
     "/share/man"
     "/share/info"
-    "/libexec"
+    "/libexec" #<--- Maybe a bad Idea?
     "/share/apparmor"
     "/share/wayland-sessions"
     "/etc/systemd/user"
@@ -162,6 +172,8 @@
   environment.systemPackages = with pkgs; [
     (pkgs.sddm-astronaut.override {embeddedTheme = "black_hole";})
     apparmor-profiles
+
+    # Needed for oh-my-zsh plugins
     python313Packages.pygments
 
     app2unit
@@ -170,6 +182,7 @@
     wget
 
     # Create an FHS environment using the command `fhs`, enabling the execution of non-NixOS packages in NixOS!
+    # Maybe could be better made tho?
     (let
       base = pkgs.appimageTools.defaultFhsEnvArgs;
     in
@@ -190,11 +203,13 @@
           extraOutputsToInstall = ["dev"];
         }))
 
+    # Can it be better than the handmade?
     steam-run
 
     sops
     cachix
 
+    # It isnt working. It installs, but that is it.
     outputs.packages.x86_64-linux.davinci-resolve
 
     libsecret
@@ -210,7 +225,9 @@
 
     inputs.nix-alien.packages.${system}.nix-alien
 
-    # Gnome
+    # Gnome apps
+    # I want default desktop apps on my Niri. Gnome was the ones I knew would be good enough.
+    # Maybe change a bit?
     baobab
     decibels
     epiphany
@@ -234,6 +251,7 @@
     gnome-software
   ];
 
+  # Firewall. Great?
   networking.firewall.enable = true;
   networking.firewall.allowPing = false;
   networking.nftables.enable = true;

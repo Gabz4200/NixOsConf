@@ -6,14 +6,18 @@
   lib,
   ...
 }: {
+  # Managing two config frameworks is messy. How should I adress the problems?
+
   # Catppuccin Mocha
   catppuccin.enable = true;
   catppuccin.flavor = "mocha";
   catppuccin.accent = "pink";
   catppuccin.cache.enable = true;
 
+  # The stylix theme for this was hard to see, dark when shouldnt be.
   catppuccin.zsh-syntax-highlighting.enable = true;
 
+  # All the ones set to false were broken or ugly. Vscode is just a no no for custom.
   catppuccin.kvantum.enable = false;
   catppuccin.kvantum.apply = false;
   catppuccin.vscode.profiles.default.enable = false;
@@ -25,12 +29,18 @@
   stylix.enable = true;
   stylix.icons.enable = true;
 
+  # I would want it enabled. But some themes are not that great (Namely the zsh-syntax-highlighting),
+  # so I use it together with catppuccin.nix flake. Dont know how to make it suck less.
+  # I think the main problem are
+  # # 1- Only 16 colors aint enough for everything.
+  # # 2- The catppuccin one may have them ordered in a weird way that makes thing that should be bright, be dark.
   stylix.autoEnable = false;
 
   stylix.icons.package = pkgs.papirus-icon-theme;
   stylix.icons.dark = "Papirus-Dark";
   stylix.icons.light = "Papirus-Light";
 
+  # I theme Vscode with extensions, for better syntax highlighting.
   stylix.targets.vscode.enable = false;
 
   stylix.targets.gtk.enable = true;
@@ -40,8 +50,11 @@
   stylix.targets.gnome.enable = true;
 
   services.swww.enable = true;
+
+  # Needed?
   services.swww.extraArgs = ["--layer" "bottom"];
 
+  # Qt and GTK
   qt.enable = true;
 
   gtk.enable = true;
@@ -50,7 +63,7 @@
   gtk.gtk3.enable = true;
   gtk.gtk2.enable = true;
 
-  # Acctually needed or waybar and fuzzel simply breaks
+  # Fonts need to be here, or waybar and fuzzel simply breaks for no reason.
   home.packages = with pkgs; [
     # Nerd Fonts
     nerd-fonts.caskaydia-mono

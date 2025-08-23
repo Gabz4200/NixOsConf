@@ -6,6 +6,8 @@
   outputs,
   ...
 }: {
+  # I am not sure about ANYTHING here. I need help.
+
   # Bootloader
   boot.loader = {
     # Systemd-boot (UEFI)
@@ -33,6 +35,7 @@
   # Kernel
   boot.kernelPackages = pkgs.linuxKernel.packages.linux_zen;
 
+  # Fix my WiFI connection:
   boot.blacklistedKernelModules = ["rtw88_8821ce"];
   boot.extraModulePackages = [
     (config.boot.kernelPackages.rtl8821ce.overrideAttrs (finalAttrs: previousAttrs: {
@@ -41,16 +44,13 @@
     }))
   ];
 
-  # boot.extraModulePackages = [
-  #   config.boot.kernelPackages.rtl8821ce
-  # ];
-
-  # Kernel modules
+  # Kernel modules (Need? Really? Only sure about "8821ce")
   boot.initrd.kernelModules = ["xhci_pci" "ahci" "sd_mod" "sdhci_pci" "i915"];
   boot.initrd.availableKernelModules = ["usb_storage" "usbhid"];
   boot.kernelModules = ["kvm-intel" "coretemp" "8821ce"];
 
-  # Kernel parameters (hardware specific em intel-gpu.nix)
+  # Kernel parameters
+  # Are they great? Will them correctly merge?
   boot.kernelParams = [
     # Silent boot
     "quiet"
@@ -70,6 +70,7 @@
   ];
 
   # Sysctl
+  # Are they great? Will them correctly merge?
   boot.kernel.sysctl = {
     # Memory
     "vm.swappiness" = lib.mkDefault 10; # Laptop com SSD
@@ -84,6 +85,7 @@
     "net.ipv4.tcp_congestion_control" = lib.mkDefault "bbr";
     "net.ipv4.tcp_notsent_lowat" = lib.mkDefault 16384;
 
+    # Will these conflict with NixOS defauts?
     # Security
     /*
     "kernel.dmesg_restrict" = lib.mkDefault 1;
@@ -95,20 +97,20 @@
     "vm.dirty_expire_centisecs" = lib.mkDefault 3000;
   };
 
-  # Plymouth (boot splash) - opcional
+  # Plymouth (boot splash) - optional
   boot.plymouth = {
     enable = false;
     theme = "breeze";
   };
 
-  # Tmp on tmpfs
+  # Tmp on tmpfs. Do I need it? Will it take much space?
   fileSystems."/tmp" = {
     device = "tmpfs";
     fsType = "tmpfs";
     options = ["mode=1777" "size=4G"];
   };
 
-  # Zram
+  # Zram. Needed in my humble 8 Gb Ram machine.
   zramSwap = {
     enable = true;
     priority = 200;
@@ -122,17 +124,17 @@
   # Console
   boot.consoleLogLevel = 3;
 
-  # Kernel compression
+  # Kernel compression (need?)
   boot.initrd.compressor = "zstd";
   boot.initrd.compressorArgs = ["-19" "-T0"];
 
-  # Preload modules
+  # Preload modules (need?)
   boot.initrd.preDeviceCommands = ''
     modprobe -q tcp_bbr || true
     modprobe -q i915 || true
   '';
 
-  # Support for additional filesystems
+  # Support for additional filesystems (need?)
   boot.supportedFilesystems = [
     "btrfs"
     "ntfs"
@@ -140,7 +142,7 @@
     "exfat"
   ];
 
-  # BTRFS specific
+  # BTRFS specific (need?)
   boot.initrd.supportedFilesystems = ["btrfs"];
 
   # Hardware and Firmware
@@ -153,9 +155,7 @@
 
   services.fwupd.enable = true;
 
-  # CPU microcode updates (em intel-gpu.nix)
-
-  # Watchdog
+  # Watchdog (need? maybe remove?)
   systemd.settings.Manager = {
     KExecWatchdogSec = "10min";
     RebootWatchdogSec = "10min";

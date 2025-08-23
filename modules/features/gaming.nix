@@ -16,6 +16,7 @@
     ];
 
     # Runtime packages necessários
+    # The drivers are needed tho?
     extraPackages = with pkgs; [
       gamemode
       gamescope
@@ -37,6 +38,7 @@
     protontricks.enable = true;
 
     # Performance optimizations
+    # Are these great on my Hardware?
     platformOptimizations.enable = true;
   };
 
@@ -45,10 +47,12 @@
     enable = true;
     package = pkgs.wineWow64Packages.waylandFull;
     ntsync = true;
+
+    # The intention was to be more secure, letting it to bottles. Dont know if needed.
     binfmt = false;
   };
 
-  # Gamemode
+  # Gamemode (Is this a good idea with scx?)
   programs.gamemode = {
     enable = true;
     enableRenice = true;
@@ -62,6 +66,8 @@
   };
 
   # Chaotic gaming packages
+  # When using pkgs from the flake, I will need to change it:
+  # # refer to "Using with read-only pkgs" on: https://www.nyx.chaotic.cx/
   chaotic.nyx = {
     cache.enable = true;
     overlay.enable = true;
@@ -69,7 +75,7 @@
 
   hardware.graphics.enable32Bit = true;
 
-  # System packages for gaming
+  # System packages for gaming. Do I need all?
   environment.systemPackages = with pkgs; [
     # Launchers
     lutris
@@ -90,7 +96,7 @@
     # Performance monitoring
     nvtopPackages.intel
 
-    # Compatibility
+    # Compatibility (Can I inject them on prismlauncher env only?)
     openal
     glfw-wayland-minecraft
 
@@ -101,6 +107,8 @@
   ];
 
   # Kernel optimizations for gaming
+  # The params will correctly merge with other files that set boot.kernel.sysctl?
+  # More important... Are these great on my Hardware?
   boot.kernel.sysctl = {
     "net.ipv4.tcp_fastopen" = 3;
     "net.ipv4.tcp_mtu_probing" = 1;
@@ -113,7 +121,7 @@
 
   # Firewall rules for gaming
   networking.firewall = {
-    # Minecraft
+    # Minecraft (Firewall messed up my Minecraft gameplay via Lan in older system. May this fix it?)
     allowedTCPPorts = [25565];
     allowedUDPPorts = [25565];
   };

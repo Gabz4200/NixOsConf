@@ -41,10 +41,35 @@
     enable = true;
     package = pkgs.scx_git.full;
     scheduler = "scx_lavd";
+
+    # Maybe it conflicts with auto-cpufreq? It has tmany options:
+    /*
+    Options:
+          --autopilot
+              Automatically decide the scheduler's power mode (performance vs. powersave vs. balanced), CPU preference order, etc, based on system load. The options affecting the power mode and the use of
+              core compaction (--autopower, --performance, --powersave, --balanced, --no-core-compaction) cannot be used with this option. When no option is specified, this is a default mode
+
+          --autopower
+              Automatically decide the scheduler's power mode (performance vs. powersave vs. balanced) based on the system's active power profile. The scheduler's power mode decides the CPU preference order
+              and the use of core compaction, so the options affecting these (--autopilot, --performance, --powersave, --balanced, --no-core-compaction) cannot be used with this option
+
+          --performance
+              Run the scheduler in performance mode to get maximum performance. This option cannot be used with other conflicting options (--autopilot, --autopower, --balanced, --powersave,
+              --no-core-compaction) affecting the use of core compaction
+
+          --powersave
+              Run the scheduler in powersave mode to minimize powr consumption. This option cannot be used with other conflicting options (--autopilot, --autopower, --performance, --balanced,
+              --no-core-compaction) affecting the use of core compaction
+
+          --balanced
+              Run the scheduler in balanced mode aiming for sweetspot between power and performance. This option cannot be used with other conflicting options (--autopilot, --autopower, --performance,
+              --powersave, --no-core-compaction) affecting the use of core compaction
+    */
     extraArgs = ["--autopilot"];
   };
 
   # Essential system packages
+  # Are these great? Maybe I should change them? Remove some? Add some?
   environment.systemPackages = with pkgs; [
     # Core utils
     coreutils-full
@@ -96,7 +121,7 @@
     rsync
     openssh
 
-    # Xdg
+    # Xdg (I need it? I was thinking on nixpak)
     xdg-dbus-proxy
     wayland-proxy-virtwl
     niri-unstable
@@ -110,7 +135,7 @@
   programs.zsh = {
     enable = true;
 
-    # System-wide config
+    # System-wide config (I need to keep it here? I am the only user on the machine)
     interactiveShellInit = ''
       # Better history
       setopt EXTENDED_HISTORY
@@ -137,6 +162,7 @@
   # Set as default shell
   users.defaultUserShell = pkgs.zsh;
 
+  # I accidentally repeated it.
   # Fonts
   fonts = {
     packages = with pkgs; [
@@ -158,7 +184,7 @@
       material-design-icons
     ];
 
-    # Font config
+    # Font config. Good for my screen and gpu?
     fontconfig = {
       enable = true;
       defaultFonts = {
@@ -208,7 +234,7 @@
       ];
     };
 
-    # Time sync
+    # Time sync (I dont even know what it does)
     timesyncd = {
       enable = true;
       servers = [
@@ -227,12 +253,14 @@
     enable = true;
   };
 
+  # I had this on CachyOS. Dont know if I need?
   chaotic.appmenu-gtk3-module.enable = true;
+
+  # Network
+  networking.networkmanager.enable = true;
 
   # DNS
   networking.nameservers = ["2606:4700:4700::1111" "1.1.1.1"];
-
-  networking.networkmanager.enable = true;
 
   services.resolved = {
     enable = true;
@@ -248,7 +276,7 @@
     ];
   };
 
-  # Environment variables
+  # Environment variables. Do I need to set tho?
   environment.variables = {
     EDITOR = "nvim";
     VISUAL = "nvim";
@@ -267,7 +295,9 @@
     "/share/applications"
   ];
 
-  # XDG
+  # XDG.
+  # I need help to be SURE that XDG is correclty configured.
+  # And need to choose if here or home-manager.
   xdg.mime.enable = true;
 
   xdg.portal.enable = true;
@@ -301,7 +331,7 @@
 
   xdg.autostart.enable = true;
 
-  # AppArmor
+  # AppArmor (I dont know if it is effective on NixOS, but I want atleast some safety)
   security.apparmor = {
     enable = true;
     enableCache = true;
@@ -326,7 +356,7 @@
   # Ollama
   services.ollama.enable = true;
 
-  # Session variables
+  # Session variables (Do i need to set all these?)
   environment.sessionVariables = {
     # Wayland
     NIXOS_OZONE_WL = "1";

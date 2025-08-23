@@ -4,7 +4,7 @@
   pkgs,
   ...
 }: {
-  # Power management
+  # Power management (It is needed for Hibernate)
   powerManagement = {
     enable = true;
     cpuFreqGovernor = lib.mkDefault "schedutil";
@@ -14,7 +14,7 @@
     enable = lib.mkForce false;
   };
 
-  # Auto-cpufreq
+  # Auto-cpufreq (I am used to it.)
   services.auto-cpufreq = {
     enable = lib.mkForce true;
     settings = {
@@ -36,16 +36,17 @@
     };
   };
 
-  # Desabilitar power-profiles-daemon
+  # Desabilitar power-profiles-daemon (It conflicts with auto-cpufreq)
   services.power-profiles-daemon.enable = lib.mkForce false;
 
+  # Thermald (It conflicts with Undervolt)
   services.thermald.enable = false;
 
-  # Undervolt
+  # Undervolt (My laptop was overheating, this helped a lot to reduce it and the early throttling)
   services.undervolt = {
     enable = true;
 
-    # Safe
+    # Works greats
     coreOffset = -60;
     gpuOffset = -30;
     uncoreOffset = -60;
@@ -56,6 +57,7 @@
     tempBat = 85;
 
     # Power limits (PL1/PL2)
+    # Is this good?
     p1 = {
       limit = 25;
       window = 28;
@@ -73,7 +75,7 @@
     powerKey = "hibernate";
   };
 
-  # Suspend/Hibernate
+  # Suspend/Hibernate. Is this correct?
   systemd.sleep.extraConfig = ''
     HibernateDelaySec=30min
     SuspendState=mem
