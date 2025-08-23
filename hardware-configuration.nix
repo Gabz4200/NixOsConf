@@ -20,7 +20,7 @@
   fileSystems."/" = {
     device = "/dev/disk/by-uuid/c5627d10-2763-4f71-a4bb-4d55d9ad1354";
     fsType = "btrfs";
-    # I wanted compression.
+    # I want compression.
     options = ["subvol=@" "defaults" "ssd" "noatime" "discard=async" "compress=zstd:10"];
   };
 

@@ -7,7 +7,7 @@
   # Power management (It is needed for Hibernate)
   powerManagement = {
     enable = true;
-    cpuFreqGovernor = lib.mkDefault "schedutil";
+    cpuFreqGovernor = lib.mkDefault "ondemand";
   };
 
   services.tlp = {

@@ -63,13 +63,14 @@
   gtk.gtk3.enable = true;
   gtk.gtk2.enable = true;
 
-  # Fonts need to be here, or waybar and fuzzel simply breaks for no reason.
+  # Fonts need to be here on home-manager or Waybar and fuzzel suddenly break
   home.packages = with pkgs; [
     # Nerd Fonts
     nerd-fonts.caskaydia-mono
     nerd-fonts.dejavu-sans-mono
     nerd-fonts.caskaydia-cove
     nerd-fonts.jetbrains-mono
+    nerd-fonts.symbols-only
 
     # System fonts
     liberation_ttf
@@ -81,7 +82,6 @@
     # Icons
     font-awesome
     material-design-icons
-    nerd-fonts.symbols-only
   ];
 
   # set cursor size and dpi for 1920x1080 monitor

@@ -50,6 +50,7 @@
   ];
 
   # Desktop services
+  services.gnome-keyring.enable = true;
   services.easyeffects.enable = true;
   services.swayosd = {
     display = "eDP-1";

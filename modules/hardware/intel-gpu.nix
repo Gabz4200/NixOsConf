@@ -4,7 +4,9 @@
   pkgs,
   ...
 }: {
-  # Really needed?
+  # Is a Intel Core i5-8250U and Intel UHD Graphics 620
+
+  # Is it really needed?
   boot.initrd.availableKernelModules = ["i915"];
   boot.kernelModules = ["i915" "intel_agp" "coretemp" "kvm-intel"];
 

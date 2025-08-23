@@ -1,14 +1,17 @@
-{ config, pkgs, lib, ... }:
-
 {
+  config,
+  pkgs,
+  lib,
+  ...
+}: {
   # Display Manager configuration
   # Moved from modules/features/desktop.nix
 
   # SDDM (Works great)
   services.displayManager.sddm = {
+    enable = true;
     wayland.enable = true;
     package = pkgs.kdePackages.sddm;
-    enable = true;
     extraPackages = [
       pkgs.kdePackages.qtsvg
       pkgs.kdePackages.qtmultimedia
@@ -17,4 +20,13 @@
     ];
     theme = "sddm-astronaut-theme";
   };
+
+  # For some unknow rreason, if this is not on systemPackages, the theme simply dont work.
+  environment.systemPackages = [
+    (pkgs.sddm-astronaut.override {embeddedTheme = "black_hole";})
+  ];
+
+  # Unlock GNOME Keyring at login (both SDDM and TTY)
+  security.pam.services.sddm.enableGnomeKeyring = true;
+  security.pam.services.login.enableGnomeKeyring = true;
 }

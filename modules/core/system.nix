@@ -277,18 +277,12 @@
     ];
   };
 
-  # Environment variables. Do I need to set tho?
+  # Environment variables (limit to system-safe ones; user XDG vars handled by Home Manager)
   environment.variables = {
     EDITOR = "nvim";
     VISUAL = "nvim";
     BROWSER = "firedragon";
     PAGER = "less";
-
-    # XDG Base Directories
-    XDG_CACHE_HOME = "$HOME/.cache";
-    XDG_CONFIG_HOME = "$HOME/.config";
-    XDG_DATA_HOME = "$HOME/.local/share";
-    XDG_STATE_HOME = "$HOME/.local/state";
   };
 
   environment.pathsToLink = [
@@ -296,41 +290,7 @@
     "/share/applications"
   ];
 
-  # XDG.
-  # I need help to be SURE that XDG is correclty configured.
-  # And need to choose if here or home-manager.
-  xdg.mime.enable = true;
-
-  xdg.portal.enable = true;
-
-  xdg.portal.xdgOpenUsePortal = true;
-
-  xdg.portal.config = {
-    niri = {
-      "default" = ["gnome" "gtk"];
-      "org.freedesktop.impl.portal.FileChooser" = "gtk";
-      "org.freedesktop.impl.portal.Access" = ["gtk"];
-      "org.freedesktop.impl.portal.Notification" = ["gtk"];
-      "org.freedesktop.impl.portal.Secret" = ["gnome-keyring"];
-    };
-  };
-
-  xdg.portal.extraPortals = with pkgs; [
-    xdg-desktop-portal-gtk
-    xdg-desktop-portal-gnome
-    gnome-keyring
-  ];
-  xdg.portal.configPackages = with pkgs; [
-    niri-unstable
-  ];
-
-  xdg.terminal-exec.enable = true;
-
-  xdg.icons.enable = true;
-  xdg.menus.enable = true;
-  xdg.sounds.enable = true;
-
-  xdg.autostart.enable = true;
+  # XDG is managed by Home Manager; keep only the required link paths in NixOS (set below)
 
   # AppArmor (I dont know if it is effective on NixOS, but I want atleast some safety)
   security.apparmor = {
@@ -339,13 +299,7 @@
     killUnconfinedConfinables = true;
   };
 
-  # Sops
-  sops = {
-    defaultSopsFile = ../../secrets/secrets.yaml;
-    defaultSopsFormat = "yaml";
-
-    age.keyFile = "/home/gabz/.config/sops/age/keys.txt";
-  };
+  # SOPS configured in modules/core/secrets.nix
 
   # Btrfs
   services.btrfs.autoScrub = {
