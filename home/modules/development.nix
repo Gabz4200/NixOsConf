@@ -1,6 +1,4 @@
-{ pkgs, ... }:
-
-{
+{pkgs, ...}: {
   # Development tools and configurations
 
   # Nix settings (cachix substituters/keys)
@@ -27,9 +25,5 @@
     shfmt
     shellcheck
     bash-language-server
-
-    # Runtimes and package managers
-    nodejs
-    uv
   ];
 }

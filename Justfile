@@ -98,6 +98,15 @@ fac:
   git add .
   git commit --amend -a --no-edit
 
+# Update all the flake inputs
+[group('nixos')]
+gup:
+  git add .
+  git commit --amend -a --no-edit
+  nix flake update
+  git add .
+  git commit --amend -a --no-edit
+
 # Deploy configuration (just switch "message")
 [group('nixos')]
 switch message:
@@ -208,3 +217,73 @@ pkg-test pr pname:
 [group('nixpkgs')]
 pkg-summary:
   gh workflow view review.yml --repo ryan4yin/nixpkgs-review-gha
+
+# =================================================
+#
+# Benchmarks (measure before/after changes)
+#
+# =================================================
+
+[linux]
+[group('bench')]
+bench-prepare:
+  mkdir -p results/$(date +"%Y%m%d-%H%M%S")
+
+[linux]
+[group('bench')]
+bench-cpu:
+  set -euo pipefail
+  OUT=results/$(date +"%Y%m%d-%H%M%S")
+  mkdir -p "$OUT"
+  echo "CPU: sysbench 1 min" | tee "$OUT/cpu.txt"
+  sysbench cpu --cpu-max-prime=20000 --threads=$(nproc) run | tee -a "$OUT/cpu.txt"
+  echo "\nCPU: stress-ng 1 min" | tee -a "$OUT/cpu.txt"
+  stress-ng --matrix $(nproc) --matrix-ops 100000 --timeout 60s --metrics-brief | tee -a "$OUT/cpu.txt"
+
+[linux]
+[group('bench')]
+bench-gpu:
+  set -euo pipefail
+  OUT=results/$(date +"%Y%m%d-%H%M%S")
+  mkdir -p "$OUT"
+  echo "GPU: glmark2" | tee "$OUT/gpu.txt"
+  glmark2 -b :duration=60 | tee -a "$OUT/gpu.txt"
+
+[linux]
+[group('bench')]
+bench-disk:
+  set -euo pipefail
+  OUT=results/$(date +"%Y%m%d-%H%M%S")
+  mkdir -p "$OUT"
+  echo "Disk: fio (sequential read/write)" | tee "$OUT/disk.txt"
+  fio --name=seqwrite --rw=write --bs=1M --size=1G --numjobs=1 --iodepth=32 --filename="$OUT/fio.tmp" --direct=1 | tee -a "$OUT/disk.txt" || true
+  fio --name=seqread  --rw=read  --bs=1M --size=1G --numjobs=1 --iodepth=32 --filename="$OUT/fio.tmp" --direct=1 | tee -a "$OUT/disk.txt" || true
+  rm -f "$OUT/fio.tmp"
+
+[linux]
+[group('bench')]
+bench-net host:
+  set -euo pipefail
+  OUT=results/$(date +"%Y%m%d-%H%M%S")
+  mkdir -p "$OUT"
+  echo "Net: iperf3 to {{host}}" | tee "$OUT/net.txt"
+  iperf3 -c {{host}} -t 30 | tee -a "$OUT/net.txt"
+
+[linux]
+[group('bench')]
+bench-power:
+  set -euo pipefail
+  OUT=results/$(date +"%Y%m%d-%H%M%S")
+  mkdir -p "$OUT"
+  echo "Sensors & power snapshot" | tee "$OUT/power.txt"
+  sensors | tee -a "$OUT/power.txt" || true
+  powertop --time=30 --html="$OUT/powertop.html" || true
+
+[linux]
+[group('bench')]
+bench-all:
+  just bench-cpu
+  just bench-gpu
+  just bench-disk
+  # Run `just bench-net <server>` separately if you have an iperf3 server
+  just bench-power

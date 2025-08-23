@@ -1,6 +1,9 @@
-{ config, pkgs, lib, ... }:
-
 {
+  config,
+  pkgs,
+  lib,
+  ...
+}: {
   # Define my user account.
   users.users.gabz = {
     isNormalUser = true;
@@ -8,4 +11,6 @@
     description = "Gabriel";
     extraGroups = ["networkmanager" "wheel" "podman" "video" "render" "audio" "realtime"];
   };
+
+  programs.zsh.enable = lib.mkForce true;
 }

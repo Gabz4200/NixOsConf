@@ -150,7 +150,7 @@
     };
   in {
     #todo: I tryed to fix Davinci Resolve (It doesnt recognize my GPU), but it didnt work
-    packages.x86_64-linux = let
+    packages."${system}" = let
       inherit pkgs;
 
       mkNixPak = inputs.nixpak.lib.nixpak {
@@ -164,6 +164,7 @@
         paths = [
           pkgs.davinci-resolve
           pkgs.intel-compute-runtime
+          pkgs.intel-ocl
           pkgs.intel-media-driver
           pkgs.libva
         ];
@@ -296,7 +297,7 @@
     #todo: Make a backup configuration with the bare minimum and the internet driver. It would help if I ever reformat this computer again.
 
     # Just in case I need it.
-    devShells."x86_64-linux".default = let
+    devShells."${system}".default = let
       inherit pkgs;
     in
       pkgs.mkShell {

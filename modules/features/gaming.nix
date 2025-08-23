@@ -16,7 +16,7 @@
     ];
 
     # Runtime packages necessários
-    # The drivers are needed tho?
+    # The drivers are needed here tho?
     extraPackages = with pkgs; [
       gamemode
       gamescope

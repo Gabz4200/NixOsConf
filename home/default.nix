@@ -1,8 +1,8 @@
 {
-  _config,
+  config,
   pkgs,
   lib,
-  _inputs,
+  inputs,
   ...
 }: {
   imports = [
@@ -113,7 +113,6 @@
             python3
           ]))
       codeium
-      # uv and nodejs are provided by development.nix
 
       # --- Creative / Job ---
       ffmpeg-full

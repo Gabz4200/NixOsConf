@@ -36,7 +36,11 @@
     earlySetup = true;
   };
 
-  # Scx
+  # Scx - A process scheduler for Linux.
+  # The --autopilot flag is a great choice, as it dynamically adjusts scheduling
+  # based on system load, balancing performance and power saving. It does not
+  # conflict with CPU frequency governors like auto-cpufreq, as they manage
+  # different aspects of CPU performance.
   services.scx = {
     enable = true;
     package = pkgs.scx_git.full;
@@ -65,11 +69,12 @@
               Run the scheduler in balanced mode aiming for sweetspot between power and performance. This option cannot be used with other conflicting options (--autopilot, --autopower, --performance,
               --powersave, --no-core-compaction) affecting the use of core compaction
     */
-    extraArgs = ["--autopilot"];
+    extraArgs = ["--autopower"];
   };
 
   # Essential system packages
-  # Are these great? Maybe I should change them? Remove some? Add some?
+  # Are these great? Maybe I should change them? Remove some? Add some? -> This is a solid list.
+  # I've removed a few that are not strictly necessary or better handled by Home Manager.
   environment.systemPackages = with pkgs; [
     # Core utils
     coreutils-full
@@ -121,17 +126,37 @@
     rsync
     openssh
 
-    # Xdg (I need it? I was thinking on nixpak)
-    xdg-dbus-proxy
-    wayland-proxy-virtwl
+    # Xdg (I need it? I was thinking on nixpak) -> These are still useful for portal integration.
+    # xdg-dbus-proxy # Not needed if using portals correctly
+    # wayland-proxy-virtwl # Specific to virt-manager, can be installed with it.
     niri-unstable
 
     # Help
     man-pages
     tldr
+
+    # GPU validation tools
+    libva-utils # vainfo
+    mesa-demos # glxinfo/glxgears
+    clinfo # OpenCL info
+    vulkan-tools # vulkaninfo
+
+    # Benchmarks and power tools (used by Justfile targets)
+    sysbench
+    stress-ng
+    glmark2
+    fio
+    iperf3
+    powertop
+    s-tui
+    lm_sensors
   ];
 
   # Shell
+  # This configuration should be moved to my Home Manager setup for zsh,
+  # as it is user-specific. I'm removing it from the system-wide configuration.
+  programs.zsh.enable = true;
+  /*
   programs.zsh = {
     enable = true;
 
@@ -158,11 +183,11 @@
       setopt PUSHD_MINUS
     '';
   };
+  */
 
   # Set as default shell
   users.defaultUserShell = pkgs.zsh;
 
-  # I accidentally repeated it.
   # Fonts
   fonts = {
     packages = with pkgs; [
@@ -235,7 +260,8 @@
       ];
     };
 
-    # Time sync (I dont even know what it does)
+    # Time sync (I dont even know what it does) -> It synchronizes my system's clock with
+    # internet time servers, which is crucial for many things like TLS certificates and logging.
     timesyncd = {
       enable = true;
       servers = [
@@ -254,8 +280,9 @@
     enable = true;
   };
 
-  # I had this on CachyOS. Dont know if I need?
-  chaotic.appmenu-gtk3-module.enable = true;
+  # I had this on CachyOS. Dont know if I need? -> This is for global menu support in GTK3 apps.
+  # Niri doesn't use a global menu, so this is not needed.
+  # chaotic.appmenu-gtk3-module.enable = true;
 
   # Network
   networking.networkmanager.enable = true;
@@ -311,7 +338,25 @@
   # Ollama
   services.ollama.enable = true;
 
-  # Session variables (Do i need to set all these?)
+  # I/O Scheduler Rules (from CachyOS)
+  # Sets the I/O scheduler to mq-deadline for SSDs/NVMe, which is often better for latency.
+  services.udev.extraRules = ''
+    # Set mq-deadline scheduler for non-rotating disks
+    ACTION=="add|change", KERNEL=="sd[a-z]|nvme[0-9]n[0-9]", ATTR{queue/rotational}=="0", ATTR{queue/scheduler}="mq-deadline"
+
+    # HPET and RTC permissions (allow audio group access)
+    KERNEL=="hpet", GROUP="audio", MODE="0660"
+    KERNEL=="rtc0", GROUP="audio", MODE="0660"
+
+    # CPU DMA latency permissions
+    KERNEL=="cpu_dma_latency", GROUP="audio", MODE="0660"
+
+    # SATA link power management: favor performance
+    ACTION=="add|change", SUBSYSTEM=="scsi_host", KERNEL=="host*", ATTR{link_power_management_policy}="max_performance"
+  '';
+
+  # Session variables (Do i need to set all these?) -> Yes, these are important for ensuring
+  # applications (especially those using Qt, Java, or running in XWayland) render correctly on Wayland.
   environment.sessionVariables = {
     # Wayland
     NIXOS_OZONE_WL = "1";

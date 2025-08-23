@@ -7,9 +7,9 @@
   # Power management (It is needed for Hibernate)
   powerManagement = {
     enable = true;
-    cpuFreqGovernor = lib.mkDefault "ondemand";
   };
 
+  # It conflicts with auto-cpufreq
   services.tlp = {
     enable = lib.mkForce false;
   };
@@ -47,10 +47,10 @@
     enable = true;
 
     # Works greats
-    coreOffset = -60;
-    gpuOffset = -30;
-    uncoreOffset = -60;
-    analogioOffset = -30;
+    coreOffset = -65;
+    gpuOffset = -35;
+    uncoreOffset = -65;
+    analogioOffset = -35;
 
     # Thermal limits
     tempAc = 95;

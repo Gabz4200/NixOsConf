@@ -21,7 +21,7 @@
     theme = "sddm-astronaut-theme";
   };
 
-  # For some unknow rreason, if this is not on systemPackages, the theme simply dont work.
+  # For some unknow reason, if this is not on systemPackages, the theme simply dont work.
   environment.systemPackages = [
     (pkgs.sddm-astronaut.override {embeddedTheme = "black_hole";})
   ];

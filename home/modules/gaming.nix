@@ -1,6 +1,4 @@
-{ pkgs, ... }:
-
-{
+{pkgs, ...}: {
   # Gaming-related configurations and packages (user scope)
 
   # Prefer options over plain packages where available
@@ -17,8 +15,7 @@
     # Launchers
     bottles
     heroic
-    atlauncher
-    (prismlauncher.override { jdks = [ zulu8 zulu17 zulu21 ]; })
+    (prismlauncher.override {jdks = [zulu8 zulu17 zulu21];})
 
     # Tools / overlays
     mangohud

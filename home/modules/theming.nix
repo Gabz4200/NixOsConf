@@ -48,6 +48,7 @@
   stylix.targets.fuzzel.enable = true;
 
   stylix.targets.gnome.enable = true;
+  stylix.targets.gnome-text-editor.enable = true;
 
   services.swww.enable = true;
 
