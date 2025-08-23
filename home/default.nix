@@ -104,14 +104,14 @@
       vlc
 
       # --- Special case for faster refactoring ---
-      windsurf.fhsWithPackages
-      (ps:
-        with ps; [
-          cargo
-          uv
-          nodejs
-          python3
-        ])
+      (windsurf.fhsWithPackages
+        (ps:
+          with ps; [
+            cargo
+            uv
+            nodejs
+            python3
+          ]))
       codeium
       # uv and nodejs are provided by development.nix
 
