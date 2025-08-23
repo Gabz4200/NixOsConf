@@ -4,8 +4,3 @@ result-*
 
 # Ignore automatically generated direnv output
 .direnv
-.vscode
-.vscodium
-
-# Ignore extras
-notes

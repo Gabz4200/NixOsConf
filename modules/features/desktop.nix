@@ -13,20 +13,9 @@
   # Do I really want to use it with Niri?
   # I came from Hyprland, so it was instinct.
   # But look at: https://yalter.github.io/niri/Example-systemd-Setup.html
-  programs.uwsm.enable = true;
-  programs.uwsm.waylandCompositors = {
-    niri = {
-      prettyName = "Niri";
-      comment = "Niri compositor managed by UWSM";
-      binPath = "${pkgs.niri-unstable}/bin/niri-session";
-    };
-  };
+  # Moved to modules/desktop/niri.nix
 
-  # Niri (Love it, but I need to spicy it up a bit)
-  programs.niri = {
-    enable = true;
-    package = pkgs.niri-unstable;
-  };
+  # Moved to modules/desktop/niri.nix
 
   # Flatpak
   services.flatpak.enable = true;
@@ -39,108 +28,21 @@
   services.gnome.gnome-keyring.enable = true;
   security.pam.services.swaylock = {};
 
-  # Stylix (aka. theming)
-  stylix = {
-    enable = true;
-    base16Scheme = "${pkgs.base16-schemes}/share/themes/catppuccin-mocha.yaml";
-    image = ./wallpaper.jpg;
-    polarity = "dark";
-    fonts = {
-      serif = {
-        package = pkgs.nerd-fonts.caskaydia-cove;
-        name = "CaskaydiaCove Nerd Font";
-      };
+  # Moved to modules/theming/stylix.nix
 
-      sansSerif = {
-        package = pkgs.nerd-fonts.dejavu-sans-mono;
-        name = "DejaVuSansMono Nerd Font";
-      };
+  # Moved to modules/theming/stylix.nix
 
-      monospace = {
-        package = pkgs.nerd-fonts.caskaydia-mono;
-        name = "CaskaydiaMono Nerd Font";
-      };
+  # Moved to modules/desktop/wayland.nix
 
-      emoji = {
-        package = pkgs.noto-fonts-emoji;
-        name = "Noto Color Emoji";
-      };
-    };
-    cursor.package = pkgs.bibata-cursors;
-    cursor.name = "Bibata-Modern-Ice";
-    cursor.size = 24;
+  # Moved to modules/services/display-manager.nix
 
-    # I would want it enabled. But some themes are not that great (mainly the zsh-syntax-highlighting),
-    # so I use it together with catppuccin.nix flake. Dont know how to make it suck less.
-    # I think the main problem are
-    # # 1- Only 16 colors aint enough for everything.
-    # # 2- The catppuccin one may have them ordered in a weird way that makes thing that should be bright, be dark.
-    autoEnable = false;
+  # Moved to modules/desktop/xdg.nix
 
-    homeManagerIntegration.autoImport = true;
-    homeManagerIntegration.followSystem = true;
-  };
+  # Moved to modules/core/system.nix
 
-  # Fonts (font-awesome and dejavu_fonts need to be here so )
-  fonts.packages = with pkgs; [
-    nerd-fonts.caskaydia-mono
-    nerd-fonts.dejavu-sans-mono
-    nerd-fonts.caskaydia-cove
-    nerd-fonts.jetbrains-mono
-    font-awesome
-    dejavu_fonts
-    nerd-fonts.symbols-only
-  ];
+  # Moved to modules/services/audio.nix
 
-  # Enable the X11 windowing system.
-  programs.xwayland.enable = true;
-  programs.xwayland.package = pkgs.xwayland;
-
-  # SDDM (Works great)
-  services.displayManager.sddm = {
-    wayland.enable = true;
-    package = pkgs.kdePackages.sddm;
-    enable = true;
-    extraPackages = [
-      pkgs.kdePackages.qtsvg
-      pkgs.kdePackages.qtmultimedia
-      pkgs.kdePackages.qtvirtualkeyboard
-      (pkgs.sddm-astronaut.override {embeddedTheme = "black_hole";})
-    ];
-    theme = "sddm-astronaut-theme";
-  };
-
-  # Configure keymap in X11
-  services.xserver.xkb = {
-    layout = "br";
-    variant = "";
-  };
-
-  # Configure console keymap
-  console.keyMap = "br-abnt2";
-
-  # Enable sound with pipewire.
-  services.pulseaudio.enable = false;
-  security.rtkit.enable = true;
-  services.pipewire = {
-    enable = true;
-    alsa.enable = true;
-    alsa.support32Bit = true;
-    pulse.enable = true;
-    jack.enable = true;
-    wireplumber.enable = true;
-
-    # Dont know if really needed. But if dont hurting, can let it.
-    lowLatency = {
-      enable = true;
-      # defaults
-      quantum = 64;
-      rate = 48000;
-    };
-  };
-
-  # Enable touchpad support (enabled default in most desktopManager).
-  services.libinput.enable = true;
+  # Moved to modules/desktop/wayland.nix
 
   programs = {
     # File manager integration
@@ -251,15 +153,7 @@
     gnome-software
   ];
 
-  # Firewall. Great?
-  networking.firewall.enable = true;
-  networking.firewall.allowPing = false;
-  networking.nftables.enable = true;
-
-  networking.firewall.allowedTCPPorts = [];
-  networking.firewall.allowedUDPPorts = [];
-
-  networking.enableIPv6 = true;
+  # Moved to modules/core/networking.nix
 
   services.syncthing.openDefaultPorts = true;
   services.minecraft-server.openFirewall = true;

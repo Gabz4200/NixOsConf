@@ -7,11 +7,11 @@
 }: {
   imports = [
     ./modules/shell.nix
-    #TODO: ./modules/terminal.nix
-    #TODO: ./modules/development.nix
-    #TODO: ./modules/desktop.nix
-    #TODO: ./modules/apps.nix
-    #TODO: ./modules/gaming.nix
+    ./modules/terminal.nix
+    ./modules/development.nix
+    ./modules/desktop.nix
+    ./modules/apps.nix
+    ./modules/gaming.nix
     ./modules/theming.nix
     ./modules/niri.nix
     ./modules/waybar.nix

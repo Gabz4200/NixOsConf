@@ -214,40 +214,40 @@
         # Hardware & Firmware
         ./hardware-configuration.nix
         ./modules/hardware/intel-gpu.nix
-        #TODO: ./modules/hardware/laptop.nix
+        ./modules/hardware/laptop.nix
 
         # Core System
         ./modules/core/boot.nix
-        #TODO: ./modules/core/networking.nix
+        ./modules/core/networking.nix
         ./modules/core/nix.nix
-        #TODO: ./modules/core/security.nix
+        ./modules/core/security.nix
         ./modules/core/system.nix
 
         # Desktop Environment
-        #TODO: ./modules/desktop/niri.nix
-        #TODO: ./modules/desktop/wayland.nix
-        #TODO: ./modules/desktop/xdg.nix
+        ./modules/desktop/niri.nix
+        ./modules/desktop/wayland.nix
+        ./modules/desktop/xdg.nix
         ./modules/features/desktop.nix
 
         # Services
-        #TODO: ./modules/services/audio.nix
-        #TODO: ./modules/services/display-manager.nix
+        ./modules/services/audio.nix
+        ./modules/services/display-manager.nix
         ./modules/services/power.nix
 
         # Features
         ./modules/features/gaming.nix
-        #TODO: ./modules/features/virtualization.nix
+        ./modules/features/virtualization.nix
         ./modules/features/development.nix
 
         # Theming
-        #TODO: ./modules/theming/stylix.nix
+        ./modules/theming/stylix.nix
 
         # Users
-        #TODO: ./modules/users/gabz.nix
+        ./modules/users/gabz.nix
 
         # Secrets
         inputs.sops-nix.nixosModules.sops
-        #TODO: ./modules/core/secrets.nix
+        ./modules/core/secrets.nix
 
         # External Modules
         inputs.nixos-hardware.nixosModules.asus-battery
