@@ -171,6 +171,7 @@
       nerd-fonts.dejavu-sans-mono
       nerd-fonts.caskaydia-cove
       nerd-fonts.jetbrains-mono
+      nerd-fonts.symbols-only
 
       # System fonts
       liberation_ttf

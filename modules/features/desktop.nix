@@ -72,15 +72,12 @@
   ];
 
   environment.systemPackages = with pkgs; [
-    (pkgs.sddm-astronaut.override {embeddedTheme = "black_hole";})
     apparmor-profiles
 
     # Needed for oh-my-zsh plugins
     python313Packages.pygments
 
     app2unit
-    uwsm
-    niri-unstable
     wget
 
     # Create an FHS environment using the command `fhs`, enabling the execution of non-NixOS packages in NixOS!
@@ -119,8 +116,6 @@
 
     appimageupdate
     gearlever
-
-    nautilus
 
     gamemode
     gamescope

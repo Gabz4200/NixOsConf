@@ -184,7 +184,7 @@ in {
         }
       ];
 
-    animations.window-resize.custom-shader = builtins.readFile ./resize.glsl;
+    animations.window-resize.custom-shader = builtins.readFile ../../resources/resize.glsl;
 
     window-rules = let
       colors = config.lib.stylix.colors.withHashtag;

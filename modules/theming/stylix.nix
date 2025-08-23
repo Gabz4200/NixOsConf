@@ -1,6 +1,9 @@
-{ config, pkgs, lib, ... }:
-
 {
+  config,
+  pkgs,
+  lib,
+  ...
+}: {
   # Styling and theming with Stylix
   # Moved from modules/features/desktop.nix
 
@@ -8,7 +11,7 @@
   stylix = {
     enable = true;
     base16Scheme = "${pkgs.base16-schemes}/share/themes/catppuccin-mocha.yaml";
-    image = ../features/wallpaper.jpg;
+    image = ../../resources/wallpaper.jpg;
     polarity = "dark";
     fonts = {
       serif = {
@@ -45,15 +48,4 @@
     homeManagerIntegration.autoImport = true;
     homeManagerIntegration.followSystem = true;
   };
-
-  # Fonts (font-awesome and dejavu_fonts need to be here so )
-  fonts.packages = with pkgs; [
-    nerd-fonts.caskaydia-mono
-    nerd-fonts.dejavu-sans-mono
-    nerd-fonts.caskaydia-cove
-    nerd-fonts.jetbrains-mono
-    font-awesome
-    dejavu_fonts
-    nerd-fonts.symbols-only
-  ];
 }
