@@ -1,6 +1,8 @@
-{ pkgs, nixosConfig, ... }:
-
 {
+  pkgs,
+  nixosConfig,
+  ...
+}: {
   # Application configurations
 
   # Browser (Floorp via Firedragon package)

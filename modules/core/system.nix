@@ -69,7 +69,7 @@
               Run the scheduler in balanced mode aiming for sweetspot between power and performance. This option cannot be used with other conflicting options (--autopilot, --autopower, --performance,
               --powersave, --no-core-compaction) affecting the use of core compaction
     */
-    extraArgs = ["--autopower"];
+    extraArgs = ["--autopilot"];
   };
 
   # Essential system packages

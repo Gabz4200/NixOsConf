@@ -60,14 +60,6 @@
 
   # Java moved to Home Manager (per-user). Remove system binfmt to avoid duplication.
 
-  # Chaotic gaming packages
-  # When using pkgs from the flake, I will need to change it:
-  # # refer to "Using with read-only pkgs" on: https://www.nyx.chaotic.cx/
-  chaotic.nyx = {
-    cache.enable = true;
-    overlay.enable = true;
-  };
-
   hardware.graphics.enable32Bit = true;
 
   # User-facing gaming apps (launchers/tools) moved to Home Manager.
