@@ -178,6 +178,8 @@
       inherit system specialArgs;
 
       modules = [
+        #{nixpkgs.hostPlatform = system;}
+
         nixpkgs.nixosModules.readOnlyPkgs
         {nixpkgs.pkgs = pkgs;}
 
