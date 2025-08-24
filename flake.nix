@@ -178,10 +178,29 @@
       inherit system specialArgs;
 
       modules = [
-        #{nixpkgs.hostPlatform = system;}
+        #todo: Temporary, readOnlyPackages being broken really sucks.
+        {
+          nixpkgs = {
+            inherit system;
 
-        nixpkgs.nixosModules.readOnlyPkgs
-        {nixpkgs.pkgs = pkgs;}
+            config = {
+              allowUnfree = true;
+              allowBroken = false;
+            };
+
+            # Overlays
+            overlays = [
+              inputs.niri.overlays.niri
+              inputs.chaotic.overlays.cache-friendly
+            ];
+
+            # Flake settings
+            flake = {
+              setFlakeRegistry = true;
+              setNixPath = true;
+            };
+          };
+        }
 
         # Hardware & Firmware
         ./hardware-configuration.nix
@@ -249,7 +268,7 @@
             useGlobalPkgs = true;
             useUserPackages = true;
 
-            inherit pkgs;
+            # inherit pkgs;
 
             extraSpecialArgs = specialArgs;
             backupFileExtension = "backup";

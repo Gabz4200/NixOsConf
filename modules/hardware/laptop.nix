@@ -12,12 +12,12 @@
   hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
 
   # Platform settings
-  # nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
+  nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
 
   # Boot modules for laptop hardware
-  # boot.initrd.availableKernelModules = ["xhci_pci" "ahci" "usb_storage" "usbhid" "sd_mod" "sdhci_pci"];
-  # boot.kernelModules = ["kvm-intel"];
-  # boot.extraModulePackages = [];
+  boot.initrd.availableKernelModules = ["xhci_pci" "ahci" "usb_storage" "usbhid" "sd_mod" "sdhci_pci"];
+  boot.kernelModules = ["kvm-intel"];
+  boot.extraModulePackages = [];
 
   # File systems configuration with Btrfs optimizations
   fileSystems."/" = {
