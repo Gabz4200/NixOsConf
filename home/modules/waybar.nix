@@ -64,7 +64,7 @@ in {
   };
   programs.waybar.settings.mainBar = {
     layer = "top";
-    position = "top";
+    position = "bottom";
     height = 30;
     spacing = 1;
     margin = "0px";
@@ -304,7 +304,7 @@ in {
       border: none;
       border-radius: 0;
       font-family: ${config.stylix.fonts.monospace.name} Propo;
-      font-size: ${toString config.stylix.fonts.sizes.desktop}px;
+      font-size: ${toString (config.stylix.fonts.sizes.desktop + 4)}px;
       min-height: 0;
       color: #${colors.base07};
     }
