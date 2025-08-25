@@ -123,7 +123,7 @@
       # Overlays
       overlays = [
         inputs.niri.overlays.niri
-        inputs.chaotic.overlays.cache-friendly
+        inputs.chaotic.overlays.default
       ];
 
       # Flake settings
@@ -145,7 +145,7 @@
       # Overlays
       overlays = [
         inputs.niri.overlays.niri
-        inputs.chaotic.overlays.cache-friendly
+        inputs.chaotic.overlays.default
       ];
 
       # Flake settings
@@ -191,7 +191,7 @@
             # Overlays
             overlays = [
               inputs.niri.overlays.niri
-              inputs.chaotic.overlays.cache-friendly
+              inputs.chaotic.overlays.default
             ];
 
             # Flake settings
