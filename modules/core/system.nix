@@ -36,42 +36,6 @@
     earlySetup = true;
   };
 
-  # Scx - A process scheduler for Linux.
-  # The --autopilot flag is a great choice, as it dynamically adjusts scheduling
-  # based on system load, balancing performance and power saving. It does not
-  # conflict with CPU frequency governors like auto-cpufreq, as they manage
-  # different aspects of CPU performance.
-  services.scx = {
-    enable = true;
-    package = pkgs.scx_git.full;
-    scheduler = "scx_lavd";
-
-    # Maybe it conflicts with auto-cpufreq? It has tmany options:
-    /*
-    Options:
-          --autopilot
-              Automatically decide the scheduler's power mode (performance vs. powersave vs. balanced), CPU preference order, etc, based on system load. The options affecting the power mode and the use of
-              core compaction (--autopower, --performance, --powersave, --balanced, --no-core-compaction) cannot be used with this option. When no option is specified, this is a default mode
-
-          --autopower
-              Automatically decide the scheduler's power mode (performance vs. powersave vs. balanced) based on the system's active power profile. The scheduler's power mode decides the CPU preference order
-              and the use of core compaction, so the options affecting these (--autopilot, --performance, --powersave, --balanced, --no-core-compaction) cannot be used with this option
-
-          --performance
-              Run the scheduler in performance mode to get maximum performance. This option cannot be used with other conflicting options (--autopilot, --autopower, --balanced, --powersave,
-              --no-core-compaction) affecting the use of core compaction
-
-          --powersave
-              Run the scheduler in powersave mode to minimize powr consumption. This option cannot be used with other conflicting options (--autopilot, --autopower, --performance, --balanced,
-              --no-core-compaction) affecting the use of core compaction
-
-          --balanced
-              Run the scheduler in balanced mode aiming for sweetspot between power and performance. This option cannot be used with other conflicting options (--autopilot, --autopower, --performance,
-              --powersave, --no-core-compaction) affecting the use of core compaction
-    */
-    extraArgs = ["--autopilot"];
-  };
-
   # Essential system packages
   # Are these great? Maybe I should change them? Remove some? Add some? -> This is a solid list.
   # I've removed a few that are not strictly necessary or better handled by Home Manager.
@@ -152,41 +116,9 @@
     lm_sensors
   ];
 
-  # Shell
-  # This configuration should be moved to my Home Manager setup for zsh,
-  # as it is user-specific. I'm removing it from the system-wide configuration.
-  programs.zsh.enable = true;
-  /*
-  programs.zsh = {
-    enable = true;
-
-    # System-wide config (I need to keep it here? I am the only user on the machine)
-    interactiveShellInit = ''
-      # Better history
-      setopt EXTENDED_HISTORY
-      setopt HIST_EXPIRE_DUPS_FIRST
-      setopt HIST_IGNORE_DUPS
-      setopt HIST_IGNORE_SPACE
-      setopt HIST_VERIFY
-      setopt SHARE_HISTORY
-
-      # Better completion
-      setopt COMPLETE_IN_WORD
-      setopt ALWAYS_TO_END
-      setopt AUTO_MENU
-      setopt COMPLETE_ALIASES
-
-      # Better navigation
-      setopt AUTO_CD
-      setopt AUTO_PUSHD
-      setopt PUSHD_IGNORE_DUPS
-      setopt PUSHD_MINUS
-    '';
-  };
-  */
-
   # Set as default shell
   users.defaultUserShell = pkgs.zsh;
+  programs.zsh.enable = true;
 
   # Fonts
   fonts = {
@@ -264,12 +196,6 @@
     # internet time servers, which is crucial for many things like TLS certificates and logging.
     timesyncd = {
       enable = true;
-      servers = [
-        "0.br.pool.ntp.org"
-        "1.br.pool.ntp.org"
-        "2.br.pool.ntp.org"
-        "3.br.pool.ntp.org"
-      ];
     };
   };
 
@@ -320,11 +246,7 @@
   # XDG is managed by Home Manager; keep only the required link paths in NixOS (set below)
 
   # AppArmor (I dont know if it is effective on NixOS, but I want atleast some safety)
-  security.apparmor = {
-    enable = true;
-    enableCache = true;
-    killUnconfinedConfinables = true;
-  };
+  # Moved to Security
 
   # SOPS configured in modules/core/secrets.nix
 
@@ -337,23 +259,6 @@
 
   # Ollama
   services.ollama.enable = true;
-
-  # I/O Scheduler Rules (from CachyOS)
-  # Sets the I/O scheduler to mq-deadline for SSDs/NVMe, which is often better for latency.
-  services.udev.extraRules = ''
-    # Set mq-deadline scheduler for non-rotating disks
-    ACTION=="add|change", KERNEL=="sd[a-z]|nvme[0-9]n[0-9]", ATTR{queue/rotational}=="0", ATTR{queue/scheduler}="mq-deadline"
-
-    # HPET and RTC permissions (allow audio group access)
-    KERNEL=="hpet", GROUP="audio", MODE="0660"
-    KERNEL=="rtc0", GROUP="audio", MODE="0660"
-
-    # CPU DMA latency permissions
-    KERNEL=="cpu_dma_latency", GROUP="audio", MODE="0660"
-
-    # SATA link power management: favor performance
-    ACTION=="add|change", SUBSYSTEM=="scsi_host", KERNEL=="host*", ATTR{link_power_management_policy}="max_performance"
-  '';
 
   # Session variables (Do i need to set all these?) -> Yes, these are important for ensuring
   # applications (especially those using Qt, Java, or running in XWayland) render correctly on Wayland.

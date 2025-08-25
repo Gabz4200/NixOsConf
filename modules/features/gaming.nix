@@ -64,19 +64,6 @@
 
   # User-facing gaming apps (launchers/tools) moved to Home Manager.
 
-  # Kernel optimizations for gaming
-  # The params will correctly merge with other files that set boot.kernel.sysctl?
-  # More important... Are these great on my Hardware?
-  boot.kernel.sysctl = {
-    "net.ipv4.tcp_fastopen" = 3;
-    "net.ipv4.tcp_mtu_probing" = 1;
-
-    "vm.swappiness" = 10;
-
-    "fs.file-max" = 524288;
-    "fs.inotify.max_user_watches" = 524288;
-  };
-
   # Firewall rules for gaming
   networking.firewall = {
     # Minecraft (Firewall messed up my Minecraft gameplay via Lan in older system. May this fix it?)

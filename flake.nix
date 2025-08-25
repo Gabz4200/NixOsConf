@@ -205,7 +205,7 @@
         # Hardware & Firmware
         ./hardware-configuration.nix
         ./modules/hardware/intel-gpu.nix
-        ./modules/hardware/laptop.nix
+        ./modules/hardware/cachyos.nix
 
         # Core System
         ./modules/core/boot.nix

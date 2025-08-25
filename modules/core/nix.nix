@@ -39,7 +39,7 @@
   chaotic.nyx = {
     cache.enable = true;
     nixPath.enable = true;
-    overlay.enable = lib.mkForce false;
+    overlay.enable = true;
   };
 
   # NH - Nix Helper (Some config else?)
@@ -56,61 +56,6 @@
   # Nix-ld (To help with foreign pkgs on NixOS)
   programs.nix-ld = {
     enable = true;
-    libraries = with pkgs; [
-      # Core system libraries
-      glibc
-      glib
-      stdenv.cc.cc.lib
-
-      # Basic Linux libraries
-      zlib
-      zstd
-      bzip2
-      xz
-      openssl
-      curl
-      libxml2
-
-      # Graphics (OpenGL/Vulkan)
-      libGL
-      libGLU
-      vulkan-loader
-      vpl-gpu-rt
-
-      # X11/Wayland
-      xorg.libX11
-      xorg.libXext
-      xorg.libXrender
-      xorg.libXtst
-      xorg.libXi
-      wayland
-
-      # GTK/Qt
-      gtk3
-      gtk4
-      libadwaita
-
-      # Multimedia
-      alsa-lib
-      pipewire
-      libxkbcommon
-      libxcrypt-legacy
-      libGLU
-      fuse
-
-      # Common dependencies
-      dbus
-      libusb1
-      systemd
-      xdg-dbus-proxy
-      xdg-utils
-      libportal
-
-      # Intel specific
-      intel-compute-runtime
-      ocl-icd
-      intel-media-driver
-    ];
   };
 
   # Nix-index
