@@ -57,7 +57,6 @@
     notification.bell-outline-badge = "󰅸";
   };
 in {
-  #todo: Change it to a better configuration. Maybe the one from HyDE, or some sidebar one.
   programs.waybar = {
     enable = true;
     systemd.enable = true;
@@ -65,186 +64,254 @@ in {
   };
   programs.waybar.settings.mainBar = {
     layer = "top";
+    position = "top";
+    height = 30;
+    spacing = 1;
+    margin = "0px";
+
     modules-left = [
-      "wireplumber"
-      "wireplumber#source"
-      "idle_inhibitor"
+      "group/hardware"
+      "niri/workspaces"
+      "niri/window"
     ];
     modules-center = [
-      "clock#date"
       "clock"
     ];
     modules-right = [
+      "wireplumber#sink"
+      "backlight"
       "network"
-      "bluetooth"
-      "bluetooth#battery"
       "battery"
-      "custom/swaync"
+      "group/session"
+      "tray"
     ];
 
-    battery = {
-      interval = 5;
-      format = "{icon}  {capacity}%";
-      format-charging = "{icon}  {capacity}% ${icons.battery.charging}";
-      format-icons = icons.battery.levels;
-      states.warning = 30;
-      states.critical = 15;
+    "niri/workspaces" = {
+      format = "{icon}";
+      format-icons = {
+        active = "";
+        default = "";
+      };
+    };
+
+    "niri/window" = {
+      format = "<span color='#${config.lib.stylix.colors.base0A}'>  {title}</span>";
+      rewrite = {
+        "(.*) - Mozilla Firefox" = "🌎 $1";
+        "(.*) - zsh" = "> [$1]";
+      };
+    };
+
+    "custom/hardware-wrap" = {
+      format = "";
+      tooltip-format = "Resource Usage";
+    };
+
+    "group/hardware" = {
+      orientation = "horizontal";
+      drawer = {
+        transition-duration = 500;
+        transition-left-to-right = true;
+      };
+      modules = [
+        "custom/hardware-wrap"
+        "power-profiles-daemon"
+        "cpu"
+        "memory"
+        "temperature"
+        "disk"
+      ];
+    };
+
+    "custom/session-wrap" = {
+      format = "<span color='#${config.lib.stylix.colors.base0D}'>  </span>";
+      tooltip-format = "Lock, Reboot, Shutdown";
+    };
+
+    "group/session" = {
+      orientation = "horizontal";
+      drawer = {
+        transition-duration = 500;
+        transition-left-to-right = true;
+      };
+      modules = [
+        "custom/session-wrap"
+        "custom/lock"
+        "custom/reboot"
+        "custom/power"
+      ];
+    };
+
+    "custom/lock" = {
+      format = "<span color='#${config.lib.stylix.colors.base0C}'>  </span>";
+      on-click = "swaylock -c 000000";
+      tooltip = true;
+      tooltip-format = "Lock screen";
+    };
+
+    "custom/reboot" = {
+      format = "<span color='#${config.lib.stylix.colors.base0A}'>  </span>";
+      on-click = "systemctl reboot";
+      tooltip = true;
+      tooltip-format = "Reboot";
+    };
+
+    "custom/power" = {
+      format = "<span color='#${config.lib.stylix.colors.base08}'>  </span>";
+      on-click = "systemctl poweroff";
+      tooltip = true;
+      tooltip-format = "Power Off";
     };
 
     clock = {
-      interval = 1;
-      format = "${icons.clock} {:%H:%M:%S} paggles";
+      format = "󰥔 {:%H:%M 󰃮 %B %d, %Y}";
+      format-alt = "󰥔 {:%H:%M}";
+      tooltip-format = "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>";
+      calendar = {
+        mode = "month";
+        mode-mon-col = 3;
+        weeks-pos = "right";
+        on-scroll = 1;
+        on-click-right = "mode";
+        format = {
+          months = "<span color='#${config.lib.stylix.colors.base06}'><b>{}</b></span>";
+          days = "<span color='#${config.lib.stylix.colors.base08}'>{}</span>";
+          weeks = "<span color='#${config.lib.stylix.colors.base0B}'><b>W{}</b></span>";
+          weekdays = "<span color='#${config.lib.stylix.colors.base0C}'><b>{}</b></span>";
+          today = "<span color='#${config.lib.stylix.colors.base0A}'><b><u>{}</u></b></span>";
+        };
+      };
+      actions = {
+        on-click-right = "mode";
+        on-click-forward = "tz_up";
+        on-click-backward = "tz_down";
+        on-scroll-up = "shift_up";
+        on-scroll-down = "shift_down";
+      };
     };
 
-    "clock#date" = {
-      format = "${icons.calendar} {:%Y-%m-%d}";
+    cpu = {
+      format = "󰘚 {usage}%";
+      tooltip = true;
+      interval = 1;
+      on-click = "alacritty -e htop";
     };
-    "clock#week" = {
-      format = "${icons.calendar} {:%W}";
+
+    memory = {
+      format = "󰍛 {}%";
+      interval = 1;
+      on-click = "alacritty -e htop";
+    };
+
+    temperature = {
+      critical-threshold = 80;
+      format = "{icon} {temperatureC}°C";
+      format-icons = [
+        "󱃃"
+        "󰔏"
+        "󱃂"
+      ];
+    };
+
+    battery = {
+      states = {
+        good = 95;
+        warning = 30;
+        critical = 15;
+      };
+      format = "{icon} {capacity}%";
+      format-charging = "󰂄 {capacity}%";
+      format-plugged = "󰚥 {capacity}%";
+      format-alt = "{icon} {time}";
+      format-icons = [
+        "󰂎"
+        "󰁺"
+        "󰁻"
+        "󰁼"
+        "󰁽"
+        "󰁾"
+        "󰁿"
+        "󰂀"
+        "󰂁"
+        "󰂂"
+        "󰁹"
+      ];
     };
 
     network = {
-      tooltip-format = "{ifname}";
-      format-disconnected = icons.network.disconnected;
-      format-ethernet = icons.network.ethernet;
-      format-wifi = "{icon} {essid}";
-      format-icons = icons.network.strength;
+      format-wifi = "󰖩 {essid} ({signalStrength}%)";
+      format-ethernet = "󰈀 {ifname}";
+      format-linked = "󰈀 {ifname} (No IP)";
+      format-disconnected = "󰖪 Disconnected";
+      format-alt = "{ifname}: {ipaddr}/{cidr}";
+      tooltip-format = "{ifname}: {ipaddr}";
+      on-click-right = "alacritty -e nmtui";
     };
 
-    bluetooth = {
-      format = "{icon}";
-      format-disabled = "";
-      format-icons = {
-        inherit (icons.bluetooth) on off;
-        connected = icons.bluetooth.on;
-      };
-      format-connected = "{icon} {device_alias}";
-    };
-    "bluetooth#battery" = {
-      format = "";
-      format-connected-battery = "${icons.bluetooth.battery} {device_battery_percentage}%";
-    };
-
-    wireplumber = {
+    "wireplumber#sink" = {
       format = "{icon} {volume}%";
-      format-muted = "${icons.volume.muted} {volume}%";
-      format-icons = icons.volume.levels;
-      reverse-scrolling = 1;
-      tooltip = false;
+      format-muted = "";
+      format-icons = [
+        ""
+        ""
+        ""
+      ];
+      on-click = "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle";
+      on-scroll-down = "wpctl set-volume @DEFAULT_SINK@ 1%-";
+      on-scroll-up = "wpctl set-volume @DEFAULT_SINK@ 1%+";
     };
 
-    "wireplumber#source" = {
-      format = "${icons.volume.source} {node_name}";
-      tooltip = false;
+    backlight = {
+      format = "{icon} {percent}%";
+      format-icons = [
+        "󰃞"
+        "󰃟"
+        "󰃠"
+      ];
+      on-scroll-up = "brightnessctl set +5%";
+      on-scroll-down = "brightnessctl set 5%-";
     };
 
-    # "group/volume" = {
-    #   orientation = "horizontal";
-    #   modules = [
-    #     "wireplumber"
-    #     "wireplumber#source"
-    #   ];
-    #   drawer = {
-    #     transition-left-to-right = true;
-    #   };
-    # };
+    disk = {
+      interval = 30;
+      format = "󰋊 {percentage_used}%";
+      path = "/";
+    };
 
-    idle_inhibitor = {
+    tray = {
+      icon-size = 16;
+      spacing = 5;
+    };
+
+    power-profiles-daemon = {
       format = "{icon}";
+      tooltip-format = "Power profile: {profile}\nDriver: {driver}";
+      tooltip = true;
       format-icons = {
-        activated = icons.idle.on;
-        deactivated = icons.idle.off;
+        default = "";
+        performance = "";
+        balanced = "";
+        power-saver = "";
       };
-    };
-
-    "custom/swaync" = {
-      tooltip = false;
-      format = "{icon}";
-      format-icons = {
-        notification = "<span foreground='red'><sup></sup></span>";
-        none = icons.notification.bell-outline;
-        none-cc-open = icons.notification.bell;
-        dnd-notification = "<span foreground='red'><sup></sup></span>";
-        dnd-none = "";
-        inhibited-notification = "<span foreground='red'><sup></sup></span>";
-        inhibited-none = "";
-        dnd-inhibited-notification = "<span foreground='red'><sup></sup></span>";
-        dnd-inhibited-none = "";
-      };
-      return-type = "json";
-      exec-if = "which swaync-client";
-      exec = "swaync-client -swb";
-      # exec = ''swaync-client -swb | jq -c 'if .class | .[]? // . | contains("cc-open") then .alt += "-cc-open" else . end' '';
-      on-click = "swaync-client -t -sw";
-      on-click-right = "swaync-client -d -sw";
-      escape = true;
     };
   };
   stylix.targets.waybar.enable = false;
-  programs.waybar.style = ''
-    /* Pastel TTY Colors */
-    @define-color background #212121;
-    @define-color background-light #3a3a3a;
-    @define-color foreground #e0e0e0;
-    @define-color black #5a5a5a;
-    @define-color red #ff9a9e;
-    @define-color green #b5e8a9;
-    @define-color yellow #ffe6a7;
-    @define-color blue #63a4ff;
-    @define-color magenta #dda0dd;
-    @define-color cyan #a3e8e8;
-    @define-color white #ffffff;
-    @define-color orange #ff8952;
-
-    /* Module-specific colors */
-    @define-color workspaces-color @foreground;
-    @define-color workspaces-focused-bg @green;
-    @define-color workspaces-focused-fg @cyan;
-    @define-color workspaces-urgent-bg @red;
-    @define-color workspaces-urgent-fg @black;
-
-    /* Text and border colors for modules */
-    @define-color mode-color @orange;
-    @define-color group-hardware-color @blue;
-    @define-color group-session-color @red;
-    @define-color clock-color @blue;
-    @define-color cpu-color @green;
-    @define-color memory-color @magenta;
-    @define-color temperature-color @yellow;
-    @define-color temperature-critical-color @red;
-    @define-color battery-color @cyan;
-    @define-color battery-charging-color @green;
-    @define-color battery-warning-color @yellow;
-    @define-color battery-critical-color @red;
-    @define-color network-color @blue;
-    @define-color network-disconnected-color @red;
-    @define-color pulseaudio-color @orange;
-    @define-color pulseaudio-muted-color @red;
-    @define-color wireplumber-color @orange;
-    @define-color wireplumber-muted-color @red;
-    @define-color backlight-color @yellow;
-    @define-color disk-color @cyan;
-    @define-color updates-color @orange;
-    @define-color quote-color @green;
-    @define-color idle-inhibitor-color @foreground;
-    @define-color idle-inhibitor-active-color @red;
-    @define-color power-profiles-daemon-color @cyan;
-    @define-color power-profiles-daemon-performance-color @red;
-    @define-color power-profiles-daemon-balanced-color @yellow;
-    @define-color power-profiles-daemon-power-saver-color @green;
-
+  programs.waybar.style = let
+    colors = config.lib.stylix.colors;
+  in ''
+    /* Base styling */
     * {
-      /* Base styling for all modules */
       border: none;
       border-radius: 0;
-      font-family: "JetBrainsMono Nerd Font Propo";
-      font-size: 14px;
+      font-family: ${config.stylix.fonts.monospace.name} Propo;
+      font-size: ${toString config.stylix.fonts.sizes.desktop}px;
       min-height: 0;
+      color: #${colors.base07};
     }
 
     window#waybar {
-      background-color: @background;
-      color: @foreground;
+      background-color: #${colors.base00};
+      color: #${colors.base07};
     }
 
     /* Common module styling with border-bottom */
@@ -274,172 +341,55 @@ in {
     #workspaces button {
       padding: 0 10px;
       background-color: transparent;
-      color: @workspaces-color;
+      color: #${colors.base07};
       margin: 0;
     }
 
     #workspaces button:hover {
-      background: @background-light;
+      background: #${colors.base01};
       box-shadow: inherit;
     }
 
     #workspaces button.focused {
-      box-shadow: inset 0 -2px @workspaces-focused-fg;
-      color: @workspaces-focused-fg;
+      box-shadow: inset 0 -2px #${colors.base0C};
+      color: #${colors.base0C};
       font-weight: 900;
     }
 
     #workspaces button.urgent {
-      background-color: @workspaces-urgent-bg;
-      color: @workspaces-urgent-fg;
+      background-color: #${colors.base08};
+      color: #${colors.base00};
     }
 
     /* Module-specific styling */
-    #mode {
-      color: @mode-color;
-      border-bottom-color: @mode-color;
-    }
-
-    #custom-hardware-wrap {
-      color: @group-hardware-color;
-      border-bottom-color: @group-hardware-color;
-    }
-
-    #custom-session-wrap {
-      color: @group-session-color;
-      border-bottom-color: @group-session-color;
-    }
-
-    #clock {
-      color: @clock-color;
-      border-bottom-color: @clock-color;
-    }
-
-    #cpu {
-      color: @cpu-color;
-      border-bottom-color: @cpu-color;
-    }
-
-    #memory {
-      color: @memory-color;
-      border-bottom-color: @memory-color;
-    }
-
-    #temperature {
-      color: @temperature-color;
-      border-bottom-color: @temperature-color;
-    }
-
-    #temperature.critical {
-      color: @temperature-critical-color;
-      border-bottom-color: @temperature-critical-color;
-    }
-
-    #power-profiles-daemon {
-      color: @power-profiles-daemon-color;
-      border-bottom-color: @power-profiles-daemon-color;
-    }
-
-    #power-profiles-daemon.performance {
-      color: @power-profiles-daemon-performance-color;
-      border-bottom-color: @power-profiles-daemon-performance-color;
-    }
-
-    #power-profiles-daemon.balanced {
-      color: @power-profiles-daemon-balanced-color;
-      border-bottom-color: @power-profiles-daemon-balanced-color;
-    }
-
-    #power-profiles-daemon.power-saver {
-      color: @power-profiles-daemon-power-saver-color;
-      border-bottom-color: @power-profiles-daemon-power-saver-color;
-    }
-
-    #battery {
-      color: @battery-color;
-      border-bottom-color: @battery-color;
-    }
-
-    #battery.charging,
-    #battery.plugged {
-      color: @battery-charging-color;
-      border-bottom-color: @battery-charging-color;
-    }
-
-    #battery.warning:not(.charging) {
-      color: @battery-warning-color;
-      border-bottom-color: @battery-warning-color;
-    }
-
-    #battery.critical:not(.charging) {
-      color: @battery-critical-color;
-      border-bottom-color: @battery-critical-color;
-    }
-
-    #network {
-      color: @network-color;
-      border-bottom-color: @network-color;
-    }
-
-    #network.disconnected {
-      color: @network-disconnected-color;
-      border-bottom-color: @network-disconnected-color;
-    }
-
-    #pulseaudio {
-      color: @pulseaudio-color;
-      border-bottom-color: @pulseaudio-color;
-    }
-
-    #pulseaudio.muted {
-      color: @pulseaudio-muted-color;
-      border-bottom-color: @pulseaudio-muted-color;
-    }
-
-    #wireplumber {
-      color: @wireplumber-color;
-      border-bottom-color: @wireplumber-color;
-    }
-
-    #wireplumber.muted {
-      color: @wireplumber-muted-color;
-      border-bottom-color: @wireplumber-muted-color;
-    }
-
-    #backlight {
-      color: @backlight-color;
-      border-bottom-color: @backlight-color;
-    }
-
-    #disk {
-      color: @disk-color;
-      border-bottom-color: @disk-color;
-    }
-
-    #idle_inhibitor {
-      color: @idle-inhibitor-color;
-      border-bottom-color: transparent;
-    }
-
-    #idle_inhibitor.activated {
-      color: @idle-inhibitor-active-color;
-      border-bottom-color: @idle-inhibitor-active-color;
-    }
-
-    #tray {
-      background-color: transparent;
-      padding: 0 10px;
-      margin: 0 2px;
-    }
-
-    #tray>.passive {
-      -gtk-icon-effect: dim;
-    }
-
-    #tray>.needs-attention {
-      -gtk-icon-effect: highlight;
-      color: @red;
-      border-bottom-color: @red;
-    }
+    #mode { color: #${colors.base09}; border-bottom-color: #${colors.base09}; }
+    #custom-hardware-wrap { color: #${colors.base0D}; border-bottom-color: #${colors.base0D}; }
+    #custom-session-wrap { color: #${colors.base08}; border-bottom-color: #${colors.base08}; }
+    #clock { color: #${colors.base0D}; border-bottom-color: #${colors.base0D}; }
+    #cpu { color: #${colors.base0B}; border-bottom-color: #${colors.base0B}; }
+    #memory { color: #${colors.base0E}; border-bottom-color: #${colors.base0E}; }
+    #temperature { color: #${colors.base0A}; border-bottom-color: #${colors.base0A}; }
+    #temperature.critical { color: #${colors.base08}; border-bottom-color: #${colors.base08}; }
+    #power-profiles-daemon { color: #${colors.base0C}; border-bottom-color: #${colors.base0C}; }
+    #power-profiles-daemon.performance { color: #${colors.base08}; border-bottom-color: #${colors.base08}; }
+    #power-profiles-daemon.balanced { color: #${colors.base0A}; border-bottom-color: #${colors.base0A}; }
+    #power-profiles-daemon.power-saver { color: #${colors.base0B}; border-bottom-color: #${colors.base0B}; }
+    #battery { color: #${colors.base0C}; border-bottom-color: #${colors.base0C}; }
+    #battery.charging, #battery.plugged { color: #${colors.base0B}; border-bottom-color: #${colors.base0B}; }
+    #battery.warning:not(.charging) { color: #${colors.base0A}; border-bottom-color: #${colors.base0A}; }
+    #battery.critical:not(.charging) { color: #${colors.base08}; border-bottom-color: #${colors.base08}; }
+    #network { color: #${colors.base0D}; border-bottom-color: #${colors.base0D}; }
+    #network.disconnected { color: #${colors.base08}; border-bottom-color: #${colors.base08}; }
+    #pulseaudio { color: #${colors.base09}; border-bottom-color: #${colors.base09}; }
+    #pulseaudio.muted { color: #${colors.base08}; border-bottom-color: #${colors.base08}; }
+    #wireplumber { color: #${colors.base09}; border-bottom-color: #${colors.base09}; }
+    #wireplumber.muted { color: #${colors.base08}; border-bottom-color: #${colors.base08}; }
+    #backlight { color: #${colors.base0A}; border-bottom-color: #${colors.base0A}; }
+    #disk { color: #${colors.base0C}; border-bottom-color: #${colors.base0C}; }
+    #idle_inhibitor { color: #${colors.base07}; border-bottom-color: transparent; }
+    #idle_inhibitor.activated { color: #${colors.base08}; border-bottom-color: #${colors.base08}; }
+    #tray { background-color: transparent; padding: 0 10px; margin: 0 2px; }
+    #tray>.passive { -gtk-icon-effect: dim; }
+    #tray>.needs-attention { -gtk-icon-effect: highlight; color: #${colors.base08}; border-bottom-color: #${colors.base08}; }
   '';
 }
