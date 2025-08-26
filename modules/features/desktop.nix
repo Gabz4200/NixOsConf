@@ -109,7 +109,7 @@
     cachix
 
     # It isnt working. It installs, but that is it.
-    outputs.packages.x86_64-linux.davinci-resolve
+    # # outputs.packages.x86_64-linux.davinci-resolve
 
     libsecret
     nix-your-shell

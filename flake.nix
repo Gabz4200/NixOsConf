@@ -163,18 +163,15 @@
       inherit inputs outputs system pkgs-stable;
     };
   in {
-    #todo: I tryed to fix Davinci Resolve (It doesnt recognize my GPU), but it didnt work
-    packages."${system}" = let
-      inherit pkgs;
+    # packages."${system}" = let
+    #   inherit pkgs;
 
-      mkNixPak = inputs.nixpak.lib.nixpak {
-        inherit (pkgs) lib;
-        inherit pkgs;
-      };
-    in {
-      #todo: Use this to solve 'Davinci Resolve' not recognizing Intel GPU
-      davinci-resolve = pkgs.davinci-resolve;
-    };
+    #   mkNixPak = inputs.nixpak.lib.nixpak {
+    #     inherit (pkgs) lib;
+    #     inherit pkgs;
+    #   };
+    # in {
+    # };
 
     nixosConfigurations.nixos = nixpkgs.lib.nixosSystem {
       inherit system specialArgs;
@@ -294,21 +291,21 @@
     #todo: Make a backup configuration with the bare minimum and the internet driver. It would help if I ever reformat this computer again.
 
     # Just in case I need it.
-    devShells."${system}".default = let
-      inherit pkgs;
-    in
-      pkgs.mkShell {
-        packages = with pkgs; [
-          vscodium-fhs
-          nixd
-          zsh
-          alejandra
-          just
-        ];
+    # devShells."${system}".default = let
+    #   inherit pkgs;
+    # in
+    #   pkgs.mkShell {
+    #     packages = with pkgs; [
+    #       vscodium-fhs
+    #       nixd
+    #       zsh
+    #       alejandra
+    #       just
+    #     ];
 
-        shellHook = ''
-          echo "hello"
-        '';
-      };
+    #     shellHook = ''
+    #       echo "hello"
+    #     '';
+    #   };
   };
 }
