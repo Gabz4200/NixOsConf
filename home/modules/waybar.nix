@@ -50,7 +50,7 @@
     idle.off = "󰈉 ";
     vpn = "󰌆 ";
 
-    notification.red-badge = "<span foreground='red'><sup></sup></span>";
+    notification.red-badge = "<span foreground='#${config.lib.stylix.colors.base08}'><sup></sup></span>";
     notification.bell = "󰂚";
     notification.bell-badge = "󱅫";
     notification.bell-outline = "󰂜";
@@ -300,14 +300,14 @@ in {
       tooltip = false;
       format = "{icon}";
       format-icons = {
-        notification = "<span foreground='red'><sup></sup></span>";
+        notification = "${icons.notification.red-badge}";
         none = icons.notification.bell-outline;
         none-cc-open = icons.notification.bell;
-        dnd-notification = "<span foreground='red'><sup></sup></span>";
+        dnd-notification = "${icons.notification.red-badge}";
         dnd-none = "";
-        inhibited-notification = "<span foreground='red'><sup></sup></span>";
+        inhibited-notification = "${icons.notification.red-badge}";
         inhibited-none = "";
-        dnd-inhibited-notification = "<span foreground='red'><sup></sup></span>";
+        dnd-inhibited-notification = "${icons.notification.red-badge}";
         dnd-inhibited-none = "";
       };
       return-type = "json";
@@ -412,8 +412,10 @@ in {
     #disk { color: #${colors.base0C}; border-bottom-color: #${colors.base0C}; }
     #idle_inhibitor { color: #${colors.base07}; border-bottom-color: transparent; }
     #idle_inhibitor.activated { color: #${colors.base08}; border-bottom-color: #${colors.base08}; }
-    #tray { background-color: transparent; padding: 0 10px; margin: 0 2px; }
+    #tray { background-color: transparent; padding: 0 10px; margin: 0 2px; color: #${colors.base0D}; border-bottom-color: #${colors.base0D}; }
     #tray>.passive { -gtk-icon-effect: dim; }
     #tray>.needs-attention { -gtk-icon-effect: highlight; color: #${colors.base08}; border-bottom-color: #${colors.base08}; }
+    /* Notifications (swaync) */
+    #custom-swaync { color: #${colors.base09}; border-bottom-color: #${colors.base09}; }
   '';
 }
