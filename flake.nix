@@ -81,8 +81,8 @@
 
     # Segurança
     sandbox = true;
-    trusted-users = ["@wheel" "gabz"];
-    allowed-users = ["@wheel" "gabz"];
+    trusted-users = ["@wheel" "root" "gabz"];
+    allowed-users = ["@wheel" "root" "gabz"];
 
     # Substituters
     substituters = [
@@ -91,6 +91,7 @@
       "https://nix-gaming.cachix.org"
       "https://cache.nixos.org"
       "https://nix-community.cachix.org"
+      "https://catppuccin.cachix.org"
     ];
 
     trusted-public-keys = [
@@ -99,6 +100,7 @@
       "nix-gaming.cachix.org-1:nbjlureqMbRAxR1gJ/f3hxemL9svXaZF/Ees8vCUUs4="
       "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="
       "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
+      "catppuccin.cachix.org-1:noG/4HkbhJb+lUAdKrph6LaozJvAeEEZj4N732IysmU="
     ];
   };
 
@@ -178,6 +180,8 @@
       inherit system specialArgs;
 
       modules = [
+        ./cachix.nix
+
         #todo: Temporary, readOnlyPackages being broken really sucks.
         {
           nixpkgs = {
@@ -189,7 +193,7 @@
             };
 
             # Overlays
-            overlays = [
+            overlays = nixpkgs.lib.mkBefore [
               inputs.niri.overlays.niri
               inputs.chaotic.overlays.default
             ];
@@ -274,6 +278,7 @@
             backupFileExtension = "backup";
 
             sharedModules = [
+              ./cachix.nix
               inputs.nix4nvchad.homeManagerModule
               inputs.catppuccin.homeModules.catppuccin
               inputs.niri.homeModules.niri

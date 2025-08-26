@@ -70,10 +70,9 @@
 
   # ACPI event handling
   services.acpid.enable = true;
-  services.logind = {
-    lidSwitch = "suspend";
-    powerKey = "hibernate";
-  };
+
+  services.logind.settings.Login.HandleLidSwitch = "suspend";
+  services.logind.settings.Login.HandlePowerKey = "hibernate";
 
   # Suspend/Hibernate. Is this correct?
   systemd.sleep.extraConfig = ''

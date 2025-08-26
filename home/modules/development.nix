@@ -3,6 +3,17 @@
 
   # Nix settings (cachix substituters/keys)
   nix.settings = {
+    experimental-features = ["nix-command" "flakes"];
+
+    # Performance
+    auto-optimise-store = true;
+
+    # Segurança
+    sandbox = true;
+    trusted-users = ["@wheel" "root" "gabz"];
+    allowed-users = ["@wheel" "root" "gabz"];
+
+    # Substituters
     substituters = [
       "https://niri.cachix.org"
       "https://chaotic-nyx.cachix.org"
@@ -10,6 +21,7 @@
       "https://cache.nixos.org"
       "https://nix-community.cachix.org"
     ];
+
     trusted-public-keys = [
       "niri.cachix.org-1:Wv0OmO7PsuocRKzfDoJ3mulSl7Z6oezYhGhR+3W2964="
       "chaotic-nyx.cachix.org-1:HfnXSw4pj95iI/n17rIDy40agHj12WfF+Gqk6SonIT8="
