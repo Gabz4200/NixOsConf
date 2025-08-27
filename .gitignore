@@ -2,5 +2,23 @@
 result
 result-*
 
+# Benchmarks and local results
+results/
+
+# Common secret/key material (defense-in-depth; do not store these in repo)
+*.age
+*.key
+*.pem
+*.der
+*.p12
+*.kubeconfig
+*.ovpn
+*.reg
+
+# SOPS safety: any intentionally unencrypted variants
+secrets/*_unencrypted*
+secrets/*-unencrypted*
+secrets/*.plain*
+
 # Ignore automatically generated direnv output
 .direnv

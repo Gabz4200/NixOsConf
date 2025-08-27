@@ -1,5 +1,6 @@
 {
   config,
+  nixosConfig,
   pkgs,
   lib,
   inputs,
@@ -144,23 +145,11 @@
 
   # Syncthing
   services.syncthing = {
-    settings = {
-      devices."celular" = {
-        id = "EIDJBPY-QXNRYHF-HC6Q4ER-O5FVG5A-2BZNK4F-Q6DDQC6-744RYJU-4DHZTQR";
-        name = "celular";
-        autoAcceptFolders = true;
-      };
-      folders."sync" = {
-        enable = true;
-        devices = ["celular"];
-        id = "default";
-        path = "~/Sync";
-      };
-    };
-
     enable = true;
-    tray.enable = false;
+    tray.enable = true;
   };
+
+  home.file.".local/state/syncthing/config.xml".source = nixosConfig.sops.secrets."syncthing-config".path;
 
   programs = {
     # Let home-manager manage itself

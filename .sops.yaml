@@ -5,3 +5,6 @@ creation_rules:
     key_groups:
       - age:
           - *primary
+  - path_regex: secrets/syncthing-config\.xml$
+    key_groups:
+      - age: [*primary]
