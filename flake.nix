@@ -72,13 +72,6 @@
     };
   };
 
-  assertions = [
-    {
-      assertion = builtins.pathExists ./facter.json;
-      message = "facter.json missing. Run: just fac";
-    }
-  ];
-
   # Maybe is a good Idea to centralize Substituters here? I have to be sure it would apply to the whole Flake.
   nixConfig = {
     experimental-features = ["nix-command" "flakes"];
