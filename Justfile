@@ -30,6 +30,12 @@ upp input:
   git add .
   nix flake update {{input}} --commit-lock-file
 
+# Fix ownership problems
+[group('nix')]
+fixo:
+  sudo chown gabz -R .
+  git add .
+
 # List all generations of the system profile
 [group('nix')]
 history:
@@ -286,5 +292,4 @@ bench-all:
   just bench-cpu
   just bench-gpu
   just bench-disk
-  # Run `just bench-net <server>` separately if you have an iperf3 server
   just bench-power

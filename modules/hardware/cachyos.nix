@@ -81,17 +81,6 @@ in {
               echo 0 > /sys/module/snd_hda_intel/parameters/power_save'"
     '';
 
-    # Systemd
-    # systemd.extraConfig = ''
-    #   DefaultTimeoutStartSec=15s
-    #   DefaultTimeoutStopSec=10s
-    #   DefaultLimitNOFILE=2097152
-    # '';
-
-    #todo: Fix broken DNS
-    #services.resolved.enable = true;
-    #networking.networkmanager.dns = "systemd-resolved";
-
     # NTP
     services.timesyncd.servers = [
       "time.cloudflare.com"

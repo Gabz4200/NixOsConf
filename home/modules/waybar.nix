@@ -415,6 +415,6 @@ in {
     #tray>.passive { -gtk-icon-effect: dim; }
     #tray>.needs-attention { -gtk-icon-effect: highlight; color: #${colors.base08}; border-bottom-color: #${colors.base08}; }
     /* Notifications (swaync) */
-    #custom-swaync { color: #${colors.base0D}; border-bottom: 2px solid transparent; border-bottom-color: #${colors.base0D}; margin: 2px 0px; padding: 0 10px; }
+    #custom-swaync { color: #${colors.base0B}; border-bottom: 2px solid transparent; border-bottom-color: #${colors.base0B}; margin: 0 2px; padding: 0 10px; }
   '';
 }

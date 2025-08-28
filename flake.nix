@@ -79,6 +79,7 @@
   };
 
   # Maybe is a good Idea to centralize Substituters here? I have to be sure it would apply to the whole Flake.
+  # I prefer Cachix, but I dont want to have annoyances about adding Cache before adding the pkg
   nixConfig = {
     experimental-features = ["nix-command" "flakes"];
 
