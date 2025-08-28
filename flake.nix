@@ -29,6 +29,12 @@
       flake = false;
     };
 
+    # Secret
+    local = {
+      url = "/home/gabz/NixConf/local";
+      flake = false;
+    };
+
     # Home & System Management
     home-manager = {
       url = "github:nix-community/home-manager";
@@ -251,7 +257,7 @@
         inputs.nixos-hardware.nixosModules.common-pc-laptop-ssd
 
         inputs.nixos-facter-modules.nixosModules.facter
-        {config.facter.reportPath = ./facter.json;}
+        {config.facter.reportPath = "${inputs.local}/facter.json";}
 
         inputs.stylix.nixosModules.stylix
         inputs.chaotic.nixosModules.default

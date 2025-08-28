@@ -93,8 +93,10 @@ up-nix:
 # Gen new facter.json
 [group('nixos')]
 fac:
-  sudo rm ./facter.json
-  sudo nix run --option experimental-features "nix-command flakes" --option extra-substituters https://numtide.cachix.org --option extra-trusted-public-keys numtide.cachix.org-1:2ps1kLBUWjxIneOy1Ik6cQjb41X0iXVXeHigGmycPPE= github:nix-community/nixos-facter -- -o facter.json
+  git add .
+  sudo rm ./local/facter.json
+  sudo nix run --option experimental-features "nix-command flakes" --option extra-substituters https://numtide.cachix.org --option extra-trusted-public-keys numtide.cachix.org-1:2ps1kLBUWjxIneOy1Ik6cQjb41X0iXVXeHigGmycPPE= github:nix-community/nixos-facter -- -o ./local/facter.json
+  sudo chown gabz -R .
   git add .
 
 # Update all the flake inputs

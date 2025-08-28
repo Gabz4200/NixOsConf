@@ -149,8 +149,6 @@
     tray.enable = true;
   };
 
-  home.file.".local/state/syncthing/config.xml".source = nixosConfig.sops.secrets."syncthing-config".path;
-
   programs = {
     # Let home-manager manage itself
     home-manager.enable = true;

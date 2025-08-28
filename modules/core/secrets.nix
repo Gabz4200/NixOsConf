@@ -13,16 +13,17 @@
     age.keyFile = "/home/gabz/.config/sops/age/keys.txt";
 
     secrets = {
-      # Git include file with user-specific config (e.g., signing, email)
       "git" = {
-        # Leave default runtime path (/run/secrets/git) and set owner/mode so git can read it
         owner = "gabz";
-        mode = "0400";
+        path = "/home/gabz/.config/git/user";
+        mode = "777";
+        neededForUsers = true;
       };
-      "syncthing-config" = {
-        sopsFile = ../../secrets/syncthing-config.xml;
+      "sync" = {
         owner = "gabz";
-        mode = "0400";
+        path = "/home/gabz/.local/state/syncthing/config.xml";
+        mode = "777";
+        neededForUsers = true;
       };
     };
   };

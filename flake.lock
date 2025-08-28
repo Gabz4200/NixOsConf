@@ -354,6 +354,19 @@
         "type": "github"
       }
     },
+    "local": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1756385008,
+        "narHash": "sha256-KYp5dse8WBjUgaey9fDFYaI8FOyoqowTlrUCOZeWjOc=",
+        "path": "/home/gabz/NixConf/local",
+        "type": "path"
+      },
+      "original": {
+        "path": "/home/gabz/NixConf/local",
+        "type": "path"
+      }
+    },
     "niri": {
       "inputs": {
         "niri-stable": "niri-stable",
@@ -744,6 +757,7 @@
         "catppuccin": "catppuccin",
         "chaotic": "chaotic",
         "home-manager": "home-manager_2",
+        "local": "local",
         "niri": "niri",
         "nix-alien": "nix-alien",
         "nix-flatpak": "nix-flatpak",

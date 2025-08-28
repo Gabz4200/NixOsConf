@@ -1,8 +1,9 @@
-# Ignore build outputs from performing a nix-build or `nix build` command
-result
-result-*
+local/
+facter.json
 
 # Benchmarks and local results
+result
+result-*
 results/
 
 # Common secret/key material (defense-in-depth; do not store these in repo)
