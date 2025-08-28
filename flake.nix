@@ -35,6 +35,16 @@
       flake = false;
     };
 
+    # Graphic things I am testing
+    nixos-conf-editor = {
+      url = "github:snowfallorg/nixos-conf-editor";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    nix-software-center = {
+      url = "github:snowfallorg/nix-software-center";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     # Home & System Management
     home-manager = {
       url = "github:nix-community/home-manager";
@@ -208,6 +218,16 @@
             };
           };
         }
+
+        # tests that I am testing
+        ({pkgs, ...}: {
+          environment.systemPackages = with pkgs; [
+            inputs.nixos-conf-editor.packages.${system}.nixos-conf-editor
+            inputs.nix-software-center.packages.${system}.nix-software-center
+            devenv
+            devbox
+          ];
+        })
 
         # Hardware & Firmware
         ./hardware-configuration.nix
