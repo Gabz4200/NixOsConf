@@ -70,7 +70,6 @@ in {
     margin = "0px";
 
     modules-left = [
-      "custom/swaync"
       "group/hardware"
       "niri/workspaces"
       "niri/window"
@@ -83,6 +82,7 @@ in {
       "backlight"
       "network"
       "battery"
+      "custom/swaync"
       "group/session"
       "tray"
     ];
@@ -313,7 +313,6 @@ in {
       return-type = "json";
       exec-if = "which swaync-client";
       exec = "swaync-client -swb";
-      # exec = ''swaync-client -swb | jq -c 'if .class | .[]? // . | contains("cc-open") then .alt += "-cc-open" else . end' '';
       on-click = "swaync-client -t -sw";
       on-click-right = "swaync-client -d -sw";
       escape = true;
@@ -412,10 +411,10 @@ in {
     #disk { color: #${colors.base0C}; border-bottom-color: #${colors.base0C}; }
     #idle_inhibitor { color: #${colors.base07}; border-bottom-color: transparent; }
     #idle_inhibitor.activated { color: #${colors.base08}; border-bottom-color: #${colors.base08}; }
-    #tray { background-color: transparent; padding: 0 10px; margin: 0 2px; color: #${colors.base0D}; border-bottom-color: #${colors.base0D}; }
+    #tray { background-color: transparent; padding: 0 10px; margin: 2px 2px; color: #${colors.base0D}; border-bottom-color: #${colors.base0D}; }
     #tray>.passive { -gtk-icon-effect: dim; }
     #tray>.needs-attention { -gtk-icon-effect: highlight; color: #${colors.base08}; border-bottom-color: #${colors.base08}; }
     /* Notifications (swaync) */
-    #custom-swaync { color: #${colors.base0D}; border-bottom: 2px solid transparent; border-bottom-color: #${colors.base0D}; }
+    #custom-swaync { color: #${colors.base0D}; border-bottom: 2px solid transparent; border-bottom-color: #${colors.base0D}; margin: 2px 0px; padding: 0 10px; }
   '';
 }
