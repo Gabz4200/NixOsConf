@@ -1,6 +1,9 @@
-{ config, pkgs, lib, ... }:
-
 {
+  config,
+  pkgs,
+  lib,
+  ...
+}: {
   # Niri window manager configuration
   # Moved from modules/features/desktop.nix
 
@@ -13,7 +16,7 @@
     niri = {
       prettyName = "Niri";
       comment = "Niri compositor managed by UWSM";
-      binPath = "${pkgs.niri-unstable}/bin/niri-session";
+      binPath = "/run/current-system/sw/bin/niri-session";
     };
   };
 

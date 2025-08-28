@@ -210,25 +210,7 @@
   # Niri doesn't use a global menu, so this is not needed.
   # chaotic.appmenu-gtk3-module.enable = true;
 
-  # Network
-  networking.networkmanager.enable = true;
-
-  # DNS
-  networking.nameservers = ["2606:4700:4700::1111" "1.1.1.1"];
-
-  services.resolved = {
-    enable = true;
-    dnsovertls = "true";
-    dnssec = "true";
-    fallbackDns = [
-      "2606:4700:4700::1001"
-      "1.0.0.1"
-      "2001:4860:4860::8888"
-      "8.8.8.8"
-      "2001:4860:4860::8844"
-      "8.8.4.4"
-    ];
-  };
+  # Networking and DNS are centralized in modules/core/networking.nix
 
   # Environment variables (limit to system-safe ones; user XDG vars handled by Home Manager)
   environment.variables = {

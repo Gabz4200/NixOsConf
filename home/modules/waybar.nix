@@ -195,13 +195,13 @@ in {
       format = "󰘚 {usage}%";
       tooltip = true;
       interval = 1;
-      on-click = "alacritty -e htop";
+      on-click = "kitty -e htop";
     };
 
     memory = {
       format = "󰍛 {}%";
       interval = 1;
-      on-click = "alacritty -e htop";
+      on-click = "kitty -e htop";
     };
 
     temperature = {
@@ -246,7 +246,7 @@ in {
       format-disconnected = "󰖪 Disconnected";
       format-alt = "{ifname}: {ipaddr}/{cidr}";
       tooltip-format = "{ifname}: {ipaddr}";
-      on-click-right = "alacritty -e nmtui";
+      on-click-right = "kitty -e nmtui";
     };
 
     "wireplumber#sink" = {

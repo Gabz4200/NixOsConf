@@ -48,15 +48,16 @@
       Environment = {
         XCURSOR_PATH = "/run/host/user-share/icons:/run/host/share/icons";
 
-        GTK_THEME = "Adwaita:dark";
+        # GTK_THEME = "Adwaita:dark";  # Commented: let Stylix/Catppuccin drive GTK theme
       };
     };
-    "org.kde.kdenlive".Context = {
-      filesystems = [
-        # Kdenlive couldnt use some features on NixOS. I think this is what made it work on Flatpak, but I am not sure if it could be handled better.
-        "${pkgs.python3.withPackages (ps: with ps; [pip openai-whisper virtualenv srt opencv4 torch])}/bin:/app/python:rw"
-      ];
-    };
+    # "org.kde.kdenlive".Context = {
+    #   filesystems = [
+    #     # Previously used to expose Python toolchain to Kdenlive Flatpak. Commented to avoid brittle path mappings.
+    #     # If you still need Whisper/SRT inside Kdenlive, we can package them in a Flatpak extension or use a Nix-based workflow.
+    #     "${pkgs.python3.withPackages (ps: with ps; [pip openai-whisper virtualenv srt opencv4 torch])}/bin:/app/python:rw"
+    #   ];
+    # };
   };
 
   home.sessionVariables = {
