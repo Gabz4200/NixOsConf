@@ -183,7 +183,7 @@
       inherit system specialArgs;
 
       modules = [
-        # ./cachix.nix  # Removed to consolidate caches in flake.nix.nixConfig and avoid duplication
+        ./cachix.nix
 
         #todo: Temporary, readOnlyPackages being broken really sucks.
         {
@@ -282,7 +282,7 @@
             backupFileExtension = "backup";
 
             sharedModules = [
-              # ./cachix.nix  # Removed to consolidate caches in flake.nix.nixConfig and avoid duplication
+              ./cachix.nix
               inputs.nix4nvchad.homeManagerModule
               inputs.catppuccin.homeModules.catppuccin
               inputs.niri.homeModules.niri
