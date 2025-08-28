@@ -16,13 +16,14 @@
       "git" = {
         owner = "gabz";
         path = "/home/gabz/.config/git/user";
-        mode = "0440";
+        # git wasnt having permission to read the file
+        mode = "777";
         neededForUsers = true;
       };
       "sync" = {
         owner = "gabz";
         path = "/home/gabz/.local/state/syncthing/config.xml";
-        mode = "0440";
+        mode = "777";
         neededForUsers = true;
       };
     };
