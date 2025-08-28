@@ -16,13 +16,13 @@
       "git" = {
         owner = "gabz";
         path = "/home/gabz/.config/git/user";
-        mode = "777";
+        mode = "0440";
         neededForUsers = true;
       };
       "sync" = {
         owner = "gabz";
         path = "/home/gabz/.local/state/syncthing/config.xml";
-        mode = "777";
+        mode = "0440";
         neededForUsers = true;
       };
     };
