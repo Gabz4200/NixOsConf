@@ -72,6 +72,9 @@
     hyperfine
     tokei
 
+    devenv
+    devbox
+
     # Just
     just
     just-lsp
@@ -169,7 +172,6 @@
     enable = true;
     binfmt = true;
   };
-
 
   # Documentation
   documentation = {

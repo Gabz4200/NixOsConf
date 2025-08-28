@@ -125,6 +125,7 @@
     # Gnome apps
     # I want default desktop apps on my Niri. Gnome was the ones I knew would be good enough.
     # Maybe change a bit?
+    adwaita-icon-theme
     baobab
     decibels
     epiphany
