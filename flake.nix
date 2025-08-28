@@ -119,27 +119,26 @@
     outputs = self;
 
     #Todo: I want to make this pkgs as a "single source of truth", but I know I would need to change things
-    # pkgs
-    pkgs = import nixpkgs {
-      inherit system;
+    # pkgs = import nixpkgs {
+    #   inherit system;
 
-      config = {
-        allowUnfree = true;
-        allowBroken = false;
-      };
+    #   config = {
+    #     allowUnfree = true;
+    #     allowBroken = false;
+    #   };
 
-      # Overlays
-      overlays = [
-        inputs.niri.overlays.niri
-        inputs.chaotic.overlays.default
-      ];
+    #   # Overlays
+    #   overlays = [
+    #     inputs.niri.overlays.niri
+    #     inputs.chaotic.overlays.cache-friendly
+    #   ];
 
-      # Flake settings
-      flake = {
-        setFlakeRegistry = true;
-        setNixPath = true;
-      };
-    };
+    #   # Flake settings
+    #   flake = {
+    #     setFlakeRegistry = true;
+    #     setNixPath = true;
+    #   };
+    # };
 
     # Stable pkgs for downgrade
     pkgs-stable = import inputs.nixpkgs-stable {
@@ -153,7 +152,7 @@
       # Overlays
       overlays = [
         inputs.niri.overlays.niri
-        inputs.chaotic.overlays.default
+        inputs.chaotic.overlays.cache-friendly
       ];
 
       # Flake settings
@@ -198,7 +197,7 @@
             # Overlays
             overlays = nixpkgs.lib.mkBefore [
               inputs.niri.overlays.niri
-              inputs.chaotic.overlays.default
+              inputs.chaotic.overlays.cache-friendly
             ];
 
             # Flake settings
@@ -275,8 +274,6 @@
           home-manager = {
             useGlobalPkgs = true;
             useUserPackages = true;
-
-            # inherit pkgs;
 
             extraSpecialArgs = specialArgs;
             backupFileExtension = "backup";

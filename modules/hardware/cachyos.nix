@@ -121,7 +121,7 @@ in {
     # Scx - A process scheduler for Linux. Instead of Ananicy-Cpp
     services.scx = {
       enable = true;
-      package = pkgs.scx_git.full;
+      #todo: package = pkgs.scx_git.full;
       scheduler = "scx_lavd";
       extraArgs = ["--autopilot"]; # or --autopower
     };
