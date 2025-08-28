@@ -88,8 +88,9 @@ in {
     #   DefaultLimitNOFILE=2097152
     # '';
 
-    services.resolved.enable = true;
-    networking.networkmanager.dns = "systemd-resolved";
+    #todo: Fix broken DNS
+    #services.resolved.enable = true;
+    #networking.networkmanager.dns = "systemd-resolved";
 
     # NTP
     services.timesyncd.servers = [
