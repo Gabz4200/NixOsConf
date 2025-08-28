@@ -256,6 +256,7 @@
         inputs.nixos-hardware.nixosModules.common-pc-laptop
         inputs.nixos-hardware.nixosModules.common-pc-laptop-ssd
 
+        # Para burlar o fato do flake só ver coisas git added e o facter.json não poder estar no Github
         inputs.nixos-facter-modules.nixosModules.facter
         {config.facter.reportPath = "${inputs.local}/facter.json";}
 
