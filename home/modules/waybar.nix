@@ -411,9 +411,9 @@ in {
     #disk { color: #${colors.base0C}; border-bottom-color: #${colors.base0C}; }
     #idle_inhibitor { color: #${colors.base07}; border-bottom-color: transparent; }
     #idle_inhibitor.activated { color: #${colors.base08}; border-bottom-color: #${colors.base08}; }
-    #tray { background-color: transparent; padding: 0 10px; margin: 2px 2px; color: #${colors.base0D}; border-bottom-color: #${colors.base0D}; }
+    #tray { background-color: transparent; border-bottom: 2px solid transparent; border-bottom-color: #${colors.base0D}; margin: 0 2px; padding: 0 10px; }
     #tray>.passive { -gtk-icon-effect: dim; }
-    #tray>.needs-attention { -gtk-icon-effect: highlight; color: #${colors.base08}; border-bottom-color: #${colors.base08}; }
+    #tray>.needs-attention { -gtk-icon-effect: highlight; border-bottom: 2px solid transparent; border-bottom-color: #${colors.base08}; margin: 0 2px; padding: 0 10px; }
     /* Notifications (swaync) */
     #custom-swaync { color: #${colors.base0B}; border-bottom: 2px solid transparent; border-bottom-color: #${colors.base0B}; margin: 0 2px; padding: 0 10px; }
   '';
