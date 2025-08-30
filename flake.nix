@@ -76,6 +76,23 @@
       url = "github:thiagokokada/nix-alien";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    # Utilities and ecosystem
+    nix-index-database = {
+      url = "github:nix-community/nix-index-database";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    nur = {
+      url = "github:nix-community/NUR";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    git-hooks = {
+      url = "github:cachix/git-hooks.nix";
+    };
+    impermanence = {
+      url = "github:nix-community/impermanence";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   # Maybe is a good Idea to centralize Substituters here? I have to be sure it would apply to the whole Flake.
@@ -154,6 +171,7 @@
       overlays = [
         inputs.niri.overlays.niri
         inputs.chaotic.overlays.cache-friendly
+        inputs.nur.overlays.default
       ];
 
       # Flake settings
@@ -199,6 +217,7 @@
             overlays = nixpkgs.lib.mkBefore [
               inputs.niri.overlays.niri
               inputs.chaotic.overlays.cache-friendly
+              inputs.nur.overlays.default
             ];
 
             # Flake settings
@@ -208,6 +227,10 @@
             };
           };
         }
+
+        inputs.nur.modules.nixos.default
+        # todo: NUR modules to import
+        # inputs.nur.legacyPackages."${system}".repos.iopq.modules.xraya
 
         # Hardware & Firmware
         ./hardware-configuration.nix
@@ -267,6 +290,10 @@
         inputs.nix-gaming.nixosModules.platformOptimizations
         inputs.nix-gaming.nixosModules.wine
 
+        # Helpful: enable fast nix-locate with prebuilt DB
+        inputs.nix-index-database.nixosModules.nix-index
+        {programs.nix-index-database.comma.enable = true;}
+
         ./configuration.nix
 
         # Home Manager
@@ -285,6 +312,9 @@
               inputs.catppuccin.homeModules.catppuccin
               inputs.niri.homeModules.niri
               inputs.nix-flatpak.homeManagerModules.nix-flatpak
+              # Helpful: enable fast nix-locate in shells too
+              inputs.nix-index-database.homeModules.nix-index
+              {programs.nix-index.enable = true;}
             ];
 
             users.gabz = import ./home/default.nix;
