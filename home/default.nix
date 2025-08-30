@@ -134,6 +134,8 @@
       sox
       soxr
 
+      (config.lib.nixGL.wrap davinci-resolve)
+
       # --- Gaming ---
       # moved to home/modules/gaming.nix
     ];
