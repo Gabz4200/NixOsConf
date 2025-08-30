@@ -48,10 +48,7 @@
   ];
 
   xdg.autostart.enable = true;
-  xdg.icons.enable = true;
-  xdg.menus.enable = true;
   xdg.mimeApps.enable = true;
-  xdg.sounds.enable = true;
   xdg.terminal-exec.enable = true;
 
   # Desktop services
