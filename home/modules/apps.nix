@@ -26,6 +26,11 @@
     enableSystemdUnit = true;
   };
 
+  home.packages = with pkgs; [
+    boxbuddy
+    bottles
+  ];
+
   # OBS Studio
   programs.obs-studio = {
     enable = true;

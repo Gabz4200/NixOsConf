@@ -318,6 +318,7 @@
               # Helpful: enable fast nix-locate in shells too
               inputs.nix-index-database.homeModules.nix-index
               {programs.nix-index.enable = true;}
+              #({lib, ...}: {imports = lib.attrValues inputs.nur.repos.moredhel.hmModules.rawModules;})
             ];
 
             users.gabz = import ./home/default.nix;

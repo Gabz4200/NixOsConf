@@ -17,13 +17,13 @@
         owner = "gabz";
         path = "/home/gabz/.config/git/user";
         # git wasnt having permission to read the file
-        mode = "777";
+        mode = "644";
         neededForUsers = true;
       };
       "sync" = {
         owner = "gabz";
         path = "/home/gabz/.local/state/syncthing/config.xml";
-        mode = "777";
+        mode = "644";
         neededForUsers = true;
       };
     };
