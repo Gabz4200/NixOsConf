@@ -64,7 +64,6 @@
     "/share/icons"
     "/share/man"
     "/share/info"
-    "/libexec" #<--- Maybe a bad Idea?
     "/share/apparmor"
     "/share/wayland-sessions"
     "/etc/systemd/user"
@@ -80,27 +79,28 @@
     app2unit
     wget
 
-    # Create an FHS environment using the command `fhs`, enabling the execution of non-NixOS packages in NixOS!
-    # Maybe could be better made tho?
-    (let
-      base = pkgs.appimageTools.defaultFhsEnvArgs;
-    in
-      pkgs.buildFHSEnv (base
-        // {
-          name = "fhs";
-          targetPkgs = pkgs:
-            (base.targetPkgs pkgs)
-            ++ (config.programs.nix-ld.libraries)
-            ++ (
-              with pkgs; [
-                bash
-                zsh
-              ]
-            );
-          profile = "export FHS=1";
-          runScript = "zsh";
-          extraOutputsToInstall = ["dev"];
-        }))
+    #todo:
+    # # Create an FHS environment using the command `fhs`, enabling the execution of non-NixOS packages in NixOS!
+    # # Maybe could be better made tho?
+    # (let
+    #   base = pkgs.appimageTools.defaultFhsEnvArgs;
+    # in
+    #   pkgs.buildFHSEnv (base
+    #     // {
+    #       name = "fhs";
+    #       targetPkgs = pkgs:
+    #         (base.targetPkgs pkgs)
+    #         ++ (config.programs.nix-ld.libraries)
+    #         ++ (
+    #           with pkgs; [
+    #             bash
+    #             zsh
+    #           ]
+    #         );
+    #       profile = "export FHS=1";
+    #       runScript = "zsh";
+    #       extraOutputsToInstall = ["dev"];
+    #     }))
 
     # Can it be better than the handmade?
     steam-run

@@ -46,6 +46,11 @@
       GDK_SCALE = 1;
       ELECTRON_OZONE_PLATFORM_HINT = "auto";
 
+      #todo: make it have a if statement with UWSM being enabled
+      # UWSM
+      APP2UNIT_SLICES = "a=app-graphical.slice b=background-graphical.slice s=session-graphical.slice";
+      APP2UNIT_TYPE = "scope";
+
       # Paths
       NIXOS_CONFIG = "$HOME/NixConf";
     };

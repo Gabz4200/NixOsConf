@@ -1,6 +1,4 @@
-{ pkgs, ... }:
-
-{
+{pkgs, ...}: {
   # Desktop environment configs: XDG and session services
 
   # XDG base and user dirs
@@ -48,6 +46,13 @@
   xdg.portal.configPackages = with pkgs; [
     niri-unstable
   ];
+
+  xdg.autostart.enable = true;
+  xdg.icons.enable = true;
+  xdg.menus.enable = true;
+  xdg.mimeApps.enable = true;
+  xdg.sounds.enable = true;
+  xdg.terminal-exec.enable = true;
 
   # Desktop services
   services.gnome-keyring.enable = true;

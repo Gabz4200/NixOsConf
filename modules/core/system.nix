@@ -94,6 +94,8 @@
     # xdg-dbus-proxy # Not needed if using portals correctly
     # wayland-proxy-virtwl # Specific to virt-manager, can be installed with it.
     niri-unstable
+    uwsm
+    app2unit
 
     # Help
     man-pages
@@ -248,6 +250,11 @@
     # Wayland
     NIXOS_OZONE_WL = "1";
     MOZ_ENABLE_WAYLAND = "1";
+
+    #todo: make it have a if statement with UWSM being enabled
+    # UWSM
+    APP2UNIT_SLICES = "a=app-graphical.slice b=background-graphical.slice s=session-graphical.slice";
+    APP2UNIT_TYPE = "scope";
 
     # Qt
     QT_QPA_PLATFORM = "wayland";
