@@ -10,6 +10,9 @@
 
   networking.useNetworkd = lib.mkForce false;
 
+  services.syncthing.enable = true;
+  services.syncthing.openDefaultPorts = lib.mkForce true;
+
   networking.networkmanager.enable = lib.mkForce true;
   networking.nameservers = [
     "2606:4700:4700::1111"
@@ -28,7 +31,7 @@
   services.resolved = {
     enable = lib.mkForce true;
     dnssec = "allow-downgrade";
-    dnsovertls = "true";
+    dnsovertls = "opportunistic";
     fallbackDns = [
       "2606:4700:4700::1111"
       "1.1.1.1"
@@ -49,9 +52,6 @@
   networking.firewall.enable = true;
   networking.firewall.allowPing = false;
   networking.nftables.enable = true;
-
-  networking.firewall.allowedTCPPorts = [];
-  networking.firewall.allowedUDPPorts = [];
 
   networking.enableIPv6 = true;
 
