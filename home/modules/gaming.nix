@@ -13,7 +13,6 @@
   # User-facing gaming apps and tools
   home.packages = with pkgs; [
     # Launchers
-    bottles
     heroic
     (prismlauncher.override {jdks = [zulu8 zulu17 zulu21];})
 

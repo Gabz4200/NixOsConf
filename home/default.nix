@@ -117,6 +117,8 @@
             uv
             nodejs
             python3
+            rustc
+            nix
           ]))
       codeium
 
@@ -131,6 +133,8 @@
 
       krita
       krita-plugin-gmic
+
+      (config.lib.nixGL.wrap pkgs-stable.davinci-resolve)
 
       gimp3-with-plugins
 
