@@ -384,37 +384,104 @@ in {
       color: #${colors.base00};
     }
 
-    /* Module-specific styling */
-    #mode { color: #${colors.base09}; border-bottom-color: #${colors.base09}; }
-    #custom-hardware-wrap { color: #${colors.base0D}; border-bottom-color: #${colors.base0D}; }
-    #custom-session-wrap { color: #${colors.base08}; border-bottom-color: #${colors.base08}; }
-    #clock { color: #${colors.base0D}; border-bottom-color: #${colors.base0D}; }
-    #cpu { color: #${colors.base0B}; border-bottom-color: #${colors.base0B}; }
-    #memory { color: #${colors.base0E}; border-bottom-color: #${colors.base0E}; }
-    #temperature { color: #${colors.base0A}; border-bottom-color: #${colors.base0A}; }
-    #temperature.critical { color: #${colors.base08}; border-bottom-color: #${colors.base08}; }
-    #power-profiles-daemon { color: #${colors.base0C}; border-bottom-color: #${colors.base0C}; }
-    #power-profiles-daemon.performance { color: #${colors.base08}; border-bottom-color: #${colors.base08}; }
-    #power-profiles-daemon.balanced { color: #${colors.base0A}; border-bottom-color: #${colors.base0A}; }
-    #power-profiles-daemon.power-saver { color: #${colors.base0B}; border-bottom-color: #${colors.base0B}; }
-    #battery { color: #${colors.base0C}; border-bottom-color: #${colors.base0C}; }
-    #battery.charging, #battery.plugged { color: #${colors.base0B}; border-bottom-color: #${colors.base0B}; }
-    #battery.warning:not(.charging) { color: #${colors.base0A}; border-bottom-color: #${colors.base0A}; }
-    #battery.critical:not(.charging) { color: #${colors.base08}; border-bottom-color: #${colors.base08}; }
-    #network { color: #${colors.base0D}; border-bottom-color: #${colors.base0D}; }
-    #network.disconnected { color: #${colors.base08}; border-bottom-color: #${colors.base08}; }
-    #pulseaudio { color: #${colors.base09}; border-bottom-color: #${colors.base09}; }
-    #pulseaudio.muted { color: #${colors.base08}; border-bottom-color: #${colors.base08}; }
-    #wireplumber { color: #${colors.base09}; border-bottom-color: #${colors.base09}; }
-    #wireplumber.muted { color: #${colors.base08}; border-bottom-color: #${colors.base08}; }
-    #backlight { color: #${colors.base0A}; border-bottom-color: #${colors.base0A}; }
-    #disk { color: #${colors.base0C}; border-bottom-color: #${colors.base0C}; }
-    #idle_inhibitor { color: #${colors.base07}; border-bottom-color: transparent; }
-    #idle_inhibitor.activated { color: #${colors.base08}; border-bottom-color: #${colors.base08}; }
-    #tray { background-color: transparent; border-bottom: 2px solid transparent; border-bottom-color: #${colors.base0D}; margin: 0 2px; padding: 0 10px; }
-    #tray>.passive { -gtk-icon-effect: dim; }
-    #tray>.needs-attention { -gtk-icon-effect: highlight; border-bottom: 2px solid transparent; border-bottom-color: #${colors.base08}; margin: 0 2px; padding: 0 10px; }
-    /* Notifications (swaync) */
-    #custom-swaync { color: #${colors.base0B}; border-bottom: 2px solid transparent; border-bottom-color: #${colors.base0B}; margin: 0 2px; padding: 0 10px; }
+    /* Module-specific styling with improved color progression */
+    #mode {
+      color: #${colors.base0D};
+      border-bottom-color: #${colors.base0D};
+    }
+    #custom-hardware-wrap {
+      color: #${colors.base0E};
+      border-bottom-color: #${colors.base0E};
+    }
+    #clock {
+      color: #${colors.base0C};
+      border-bottom-color: #${colors.base0C};
+    }
+    #cpu {
+      color: #${colors.base0B};
+      border-bottom-color: #${colors.base0B};
+    }
+    #memory {
+      color: #${colors.base0A};
+      border-bottom-color: #${colors.base0A};
+    }
+    #temperature {
+      color: #${colors.base09};
+      border-bottom-color: #${colors.base09};
+    }
+    #battery {
+      color: #${colors.base08};
+      border-bottom-color: #${colors.base08};
+    }
+    #network {
+      color: #${colors.base0D};
+      border-bottom-color: #${colors.base0D};
+    }
+    #wireplumber {
+      color: #${colors.base0C};
+      border-bottom-color: #${colors.base0C};
+    }
+    #backlight {
+      color: #${colors.base0B};
+      border-bottom-color: #${colors.base0B};
+    }
+    #disk {
+      color: #${colors.base0A};
+      border-bottom-color: #${colors.base0A};
+    }
+    #power-profiles-daemon {
+      color: #${colors.base09};
+      border-bottom-color: #${colors.base09};
+    }
+    #tray {
+      background-color: transparent;
+      padding: 0 10px;
+      margin: 0 2px;
+    }
+    #tray > * {
+      padding: 0 6px;
+    }
+    #custom-swaync {
+      color: #${colors.base0B};
+      border-bottom: 2px solid #${colors.base0B};
+      margin: 0 2px;
+      padding: 0 14px;
+      min-width: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* Keep critical states */
+    .critical,
+    #temperature.critical {
+      color: #${colors.base08};
+      border-bottom-color: #${colors.base08};
+    }
+    .warning {
+      color: #${colors.base0A};
+      border-bottom-color: #${colors.base0A};
+    }
+    #network.disconnected {
+      color: #${colors.base08};
+      border-bottom-color: #${colors.base08};
+    }
+    #wireplumber.muted {
+      color: #${colors.base08};
+      border-bottom-color: #${colors.base08};
+    }
+    #battery.charging,
+    #battery.plugged {
+      color: #${colors.base0B};
+      border-bottom-color: #${colors.base0B};
+    }
+    #battery.warning:not(.charging) {
+      color: #${colors.base0A};
+      border-bottom-color: #${colors.base0A};
+    }
+    #battery.critical:not(.charging) {
+      color: #${colors.base08};
+      border-bottom-color: #${colors.base08};
+    }
   '';
 }
