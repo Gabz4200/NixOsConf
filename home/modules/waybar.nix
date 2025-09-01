@@ -447,7 +447,6 @@ in {
       margin: 0 2px;
       padding: 0 14px;
       min-width: 24px;
-      display: flex;
       align-items: center;
       justify-content: center;
     }
