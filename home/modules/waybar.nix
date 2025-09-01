@@ -358,6 +358,9 @@ in {
       margin: 0 2px;
       border-bottom: 2px solid transparent;
       background-color: transparent;
+      /* align contents vertically using line-height and vertical-align */
+      vertical-align: middle;
+      line-height: 30px;
     }
 
     /* Workspaces styling */
@@ -366,11 +369,15 @@ in {
       background-color: transparent;
       color: #${colors.base07};
       margin: 0;
+      vertical-align: middle;
+      line-height: 30px;
+      text-align: center;
     }
 
     #workspaces button:hover {
       background: #${colors.base01};
-      box-shadow: inherit;
+      /* box-shadow: inherit; -> avoid using inherit which may be unsupported */
+      box-shadow: none;
     }
 
     #workspaces button.focused {
@@ -441,14 +448,17 @@ in {
     #tray > * {
       padding: 0 6px;
     }
+    /* center icon-ish modules using text-align/line-height */
     #custom-swaync {
       color: #${colors.base0B};
       border-bottom: 2px solid #${colors.base0B};
       margin: 0 2px;
       padding: 0 14px;
       min-width: 24px;
-      align-items: center;
-      justify-content: center;
+      /* use text alignment and line-height instead of flexbox */
+      text-align: center;
+      vertical-align: middle;
+      line-height: 30px;
     }
 
     /* Keep critical states */
