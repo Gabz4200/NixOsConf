@@ -23,7 +23,7 @@
   # Containers
   programs.distrobox = {
     enable = true;
-    enableSystemdUnit = true;
+    #todo: enableSystemdUnit = true;
   };
 
   home.packages = with pkgs; [
