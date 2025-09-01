@@ -156,6 +156,7 @@
   services.syncthing = {
     enable = true;
     tray.enable = true;
+    configDir = "/home/gabz/.local/state/syncthing/";
   };
 
   programs = {

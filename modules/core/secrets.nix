@@ -23,7 +23,7 @@
       "sync" = {
         owner = "gabz";
         path = "/home/gabz/.local/state/syncthing/config.xml";
-        mode = "644";
+        mode = "777";
         neededForUsers = true;
       };
     };
