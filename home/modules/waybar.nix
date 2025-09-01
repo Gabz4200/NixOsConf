@@ -322,7 +322,7 @@ in {
   programs.waybar.style = let
     colors = config.lib.stylix.colors;
   in ''
-    /* Base styling */
+    /* Base styling (GTK CSS válido) */
     * {
       border: none;
       border-radius: 0;
@@ -337,7 +337,7 @@ in {
       color: #${colors.base07};
     }
 
-    /* Common module styling with border-bottom */
+    /* Common module styling */
     #mode,
     #custom-hardware-wrap,
     #custom-session-wrap,
@@ -358,25 +358,18 @@ in {
       margin: 0 2px;
       border-bottom: 2px solid transparent;
       background-color: transparent;
-      /* align contents vertically using line-height and vertical-align */
-      vertical-align: middle;
-      line-height: 30px;
     }
 
-    /* Workspaces styling */
+    /* Workspaces */
     #workspaces button {
       padding: 0 10px;
       background-color: transparent;
       color: #${colors.base07};
       margin: 0;
-      vertical-align: middle;
-      line-height: 30px;
-      text-align: center;
     }
 
     #workspaces button:hover {
-      background: #${colors.base01};
-      /* box-shadow: inherit; -> avoid using inherit which may be unsupported */
+      background-color: #${colors.base01}; /* usar background-color, não background */
       box-shadow: none;
     }
 
@@ -391,106 +384,39 @@ in {
       color: #${colors.base00};
     }
 
-    /* Module-specific styling with improved color progression */
-    #mode {
-      color: #${colors.base0D};
-      border-bottom-color: #${colors.base0D};
-    }
-    #custom-hardware-wrap {
-      color: #${colors.base0E};
-      border-bottom-color: #${colors.base0E};
-    }
-    #clock {
-      color: #${colors.base0C};
-      border-bottom-color: #${colors.base0C};
-    }
-    #cpu {
-      color: #${colors.base0B};
-      border-bottom-color: #${colors.base0B};
-    }
-    #memory {
-      color: #${colors.base0A};
-      border-bottom-color: #${colors.base0A};
-    }
-    #temperature {
-      color: #${colors.base09};
-      border-bottom-color: #${colors.base09};
-    }
-    #battery {
-      color: #${colors.base08};
-      border-bottom-color: #${colors.base08};
-    }
-    #network {
-      color: #${colors.base0D};
-      border-bottom-color: #${colors.base0D};
-    }
-    #wireplumber {
-      color: #${colors.base0C};
-      border-bottom-color: #${colors.base0C};
-    }
-    #backlight {
-      color: #${colors.base0B};
-      border-bottom-color: #${colors.base0B};
-    }
-    #disk {
-      color: #${colors.base0A};
-      border-bottom-color: #${colors.base0A};
-    }
-    #power-profiles-daemon {
-      color: #${colors.base09};
-      border-bottom-color: #${colors.base09};
-    }
-    #tray {
-      background-color: transparent;
-      padding: 0 10px;
-      margin: 0 2px;
-    }
-    #tray > * {
-      padding: 0 6px;
-    }
-    /* center icon-ish modules using text-align/line-height */
+    /* Cores por módulo */
+    #mode { color: #${colors.base0D}; border-bottom-color: #${colors.base0D}; }
+    #custom-hardware-wrap { color: #${colors.base0E}; border-bottom-color: #${colors.base0E}; }
+    #clock { color: #${colors.base0C}; border-bottom-color: #${colors.base0C}; }
+    #cpu { color: #${colors.base0B}; border-bottom-color: #${colors.base0B}; }
+    #memory { color: #${colors.base0A}; border-bottom-color: #${colors.base0A}; }
+    #temperature { color: #${colors.base09}; border-bottom-color: #${colors.base09}; }
+    #battery { color: #${colors.base08}; border-bottom-color: #${colors.base08}; }
+    #network { color: #${colors.base0D}; border-bottom-color: #${colors.base0D}; }
+    #wireplumber { color: #${colors.base0C}; border-bottom-color: #${colors.base0C}; }
+    #backlight { color: #${colors.base0B}; border-bottom-color: #${colors.base0B}; }
+    #disk { color: #${colors.base0A}; border-bottom-color: #${colors.base0A}; }
+    #power-profiles-daemon { color: #${colors.base09}; border-bottom-color: #${colors.base09}; }
+
+    #tray { background-color: transparent; padding: 0 10px; margin: 0 2px; }
+    #tray > * { padding: 0 6px; }
+
+    /* Botão do swaync: sem flex/align-items/justify-content (GTK não tem) */
     #custom-swaync {
       color: #${colors.base0B};
       border-bottom: 2px solid #${colors.base0B};
       margin: 0 2px;
       padding: 0 14px;
       min-width: 24px;
-      /* use text alignment and line-height instead of flexbox */
-      text-align: center;
-      vertical-align: middle;
-      line-height: 30px;
     }
 
-    /* Keep critical states */
-    .critical,
-    #temperature.critical {
-      color: #${colors.base08};
-      border-bottom-color: #${colors.base08};
-    }
-    .warning {
-      color: #${colors.base0A};
-      border-bottom-color: #${colors.base0A};
-    }
-    #network.disconnected {
-      color: #${colors.base08};
-      border-bottom-color: #${colors.base08};
-    }
-    #wireplumber.muted {
-      color: #${colors.base08};
-      border-bottom-color: #${colors.base08};
-    }
-    #battery.charging,
-    #battery.plugged {
-      color: #${colors.base0B};
-      border-bottom-color: #${colors.base0B};
-    }
-    #battery.warning:not(.charging) {
-      color: #${colors.base0A};
-      border-bottom-color: #${colors.base0A};
-    }
-    #battery.critical:not(.charging) {
-      color: #${colors.base08};
-      border-bottom-color: #${colors.base08};
-    }
+    /* Estados */
+    .critical, #temperature.critical { color: #${colors.base08}; border-bottom-color: #${colors.base08}; }
+    .warning { color: #${colors.base0A}; border-bottom-color: #${colors.base0A}; }
+    #network.disconnected { color: #${colors.base08}; border-bottom-color: #${colors.base08}; }
+    #wireplumber.muted { color: #${colors.base08}; border-bottom-color: #${colors.base08}; }
+    #battery.charging, #battery.plugged { color: #${colors.base0B}; border-bottom-color: #${colors.base0B}; }
+    #battery.warning:not(.charging) { color: #${colors.base0A}; border-bottom-color: #${colors.base0A}; }
+    #battery.critical:not(.charging) { color: #${colors.base08}; border-bottom-color: #${colors.base08}; }
   '';
 }
