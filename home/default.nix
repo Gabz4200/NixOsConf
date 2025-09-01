@@ -135,7 +135,7 @@
       krita
       krita-plugin-gmic
 
-      (config.lib.nixGL.wrap pkgs-stable.davinci-resolve)
+      #todo: (config.lib.nixGL.wrap pkgs-stable.davinci-resolve)
 
       gimp3-with-plugins
 
