@@ -77,15 +77,12 @@ in {
     modules-center = [
       "clock"
     ];
-    # Módulos da direita reordenados para uma progressão de cores mais suave
     modules-right = [
       "network"
       "wireplumber#sink"
       "backlight"
-      "disk"
-      "custom/swaync"
-      "power-profiles-daemon"
       "battery"
+      "custom/swaync"
       "group/session"
       "tray"
     ];
@@ -120,12 +117,12 @@ in {
         "cpu"
         "memory"
         "temperature"
-        # Módulo 'disk' movido para a direita para melhor fluxo
+        "disk"
       ];
     };
 
     "custom/session-wrap" = {
-      format = "<span color='#${config.lib.stylix.colors.base0F}'>  </span>"; # Cor alterada para Flamingo (rosa/pêssego)
+      format = "<span color='#${config.lib.stylix.colors.base0F}'>  </span>";
       tooltip-format = "Lock, Reboot, Shutdown";
     };
 
@@ -278,17 +275,6 @@ in {
       icon-size = 16;
       spacing = 10;
     };
-    power-profiles-daemon = {
-      format = "{icon}";
-      tooltip-format = "Power profile: {profile}\nDriver: {driver}";
-      tooltip = true;
-      format-icons = {
-        default = "";
-        performance = "";
-        balanced = "";
-        power-saver = "";
-      };
-    };
 
     "custom/swaync" = {
       tooltip = false;
@@ -346,7 +332,6 @@ in {
     #wireplumber,
     #backlight,
     #disk,
-    #power-profiles-daemon,
     #idle_inhibitor,
     #tray {
       padding: 0 10px;
@@ -392,14 +377,12 @@ in {
     #backlight { color: #${colors.base0B}; border-bottom-color: #${colors.base0B}; } /* Green */
     #disk { color: #${colors.base0A}; border-bottom-color: #${colors.base0A}; } /* Yellow */
     #custom-swaync { color: #${colors.base09}; border-bottom-color: #${colors.base09}; } /* Peach */
-    #power-profiles-daemon { color: #${colors.base08}; border-bottom-color: #${colors.base08}; } /* Red */
     #battery { color: #${colors.base0F}; border-bottom-color: #${colors.base0F}; } /* Flamingo */
     #custom-session-wrap { color: #${colors.base0E}; border-bottom-color: #${colors.base0E}; } /* Mauve */
     #tray { border-bottom-color: #${colors.base0D}; } /* Blue */
 
     #tray > * { padding: 0 5px; }
 
-    /* Estados */
     .critical, #temperature.critical { color: #${colors.base08}; border-bottom-color: #${colors.base08}; }
     .warning { color: #${colors.base0A}; border-bottom-color: #${colors.base0A}; }
     #network.disconnected { color: #${colors.base08}; border-bottom-color: #${colors.base08}; }
