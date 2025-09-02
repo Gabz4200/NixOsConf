@@ -150,10 +150,4 @@
   ];
 
   # Moved to modules/core/networking.nix
-
-  services.syncthing.enable = true;
-  services.syncthing.configDir = "/home/gabz/.local/state/syncthing/";
-
-  services.syncthing.openDefaultPorts = true;
-  services.minecraft-server.openFirewall = true;
 }

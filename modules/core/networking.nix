@@ -10,8 +10,8 @@
 
   networking.useNetworkd = lib.mkForce false;
 
-  services.syncthing.enable = true;
   services.syncthing.openDefaultPorts = lib.mkForce true;
+  services.minecraft-server.openFirewall = lib.mkForce true;
 
   networking.networkmanager.enable = lib.mkForce true;
   networking.nameservers = [
