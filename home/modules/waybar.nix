@@ -395,7 +395,7 @@ in {
     #custom-session-wrap { color: #${colors.base0E}; border-bottom-color: #${colors.base0E}; }
 
 
-    #tray { background-color: transparent; padding: 0 10px; margin: 0 2px; }
+    #tray { background-color: transparent; padding: 0 10px; margin: 0 2px; border-bottom-color: #${colors.base0E}; }
     #tray > * { padding: 0 5px; } /* Padding individual dos ícones do tray */
 
     /* Estados */
