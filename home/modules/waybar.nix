@@ -77,10 +77,12 @@ in {
     modules-center = [
       "clock"
     ];
+    # Módulos da direita reordenados para uma progressão de cores mais suave
     modules-right = [
       "network"
       "wireplumber#sink"
       "backlight"
+      "disk"
       "custom/swaync"
       "power-profiles-daemon"
       "battery"
@@ -118,12 +120,12 @@ in {
         "cpu"
         "memory"
         "temperature"
-        "disk"
+        # Módulo 'disk' movido para a direita para melhor fluxo
       ];
     };
 
     "custom/session-wrap" = {
-      format = "<span color='#${config.lib.stylix.colors.base0E}'>  </span>";
+      format = "<span color='#${config.lib.stylix.colors.base0F}'>  </span>"; # Cor alterada para Flamingo (rosa/pêssego)
       tooltip-format = "Lock, Reboot, Shutdown";
     };
 
@@ -377,26 +379,25 @@ in {
       color: #${colors.base00};
     }
 
-    /* Cores por módulo - Reorganizadas para melhor progressão */
-    #custom-hardware-wrap { color: #${colors.base0E}; border-bottom-color: #${colors.base0E}; }
-    #cpu { color: #${colors.base09}; border-bottom-color: #${colors.base09}; }
-    #memory { color: #${colors.base0A}; border-bottom-color: #${colors.base0A}; }
-    #temperature { color: #${colors.base0B}; border-bottom-color: #${colors.base0B}; }
-    #disk { color: #${colors.base0C}; border-bottom-color: #${colors.base0C}; }
+    /* Cores por módulo - Nova progressão de cores "tunada" */
+    #custom-hardware-wrap { color: #${colors.base0E}; border-bottom-color: #${colors.base0E}; } /* Mauve */
+    #cpu { color: #${colors.base0D}; border-bottom-color: #${colors.base0D}; } /* Blue */
+    #memory { color: #${colors.base0C}; border-bottom-color: #${colors.base0C}; } /* Teal */
+    #temperature { color: #${colors.base0B}; border-bottom-color: #${colors.base0B}; } /* Green */
 
-    #clock { color: #${colors.base0C}; border-bottom-color: #${colors.base0C}; }
+    #clock { color: #${colors.base0C}; border-bottom-color: #${colors.base0C}; } /* Teal */
 
-    #network { color: #${colors.base0D}; border-bottom-color: #${colors.base0D}; }
-    #wireplumber { color: #${colors.base0C}; border-bottom-color: #${colors.base0C}; }
-    #backlight { color: #${colors.base0B}; border-bottom-color: #${colors.base0B}; }
-    #custom-swaync { color: #${colors.base0A}; border-bottom-color: #${colors.base0A}; }
-    #power-profiles-daemon { color: #${colors.base09}; border-bottom-color: #${colors.base09}; }
-    #battery { color: #${colors.base08}; border-bottom-color: #${colors.base08}; }
-    #custom-session-wrap { color: #${colors.base0E}; border-bottom-color: #${colors.base0E}; }
+    #network { color: #${colors.base0D}; border-bottom-color: #${colors.base0D}; } /* Blue */
+    #wireplumber { color: #${colors.base0C}; border-bottom-color: #${colors.base0C}; } /* Teal */
+    #backlight { color: #${colors.base0B}; border-bottom-color: #${colors.base0B}; } /* Green */
+    #disk { color: #${colors.base0A}; border-bottom-color: #${colors.base0A}; } /* Yellow */
+    #custom-swaync { color: #${colors.base09}; border-bottom-color: #${colors.base09}; } /* Peach */
+    #power-profiles-daemon { color: #${colors.base08}; border-bottom-color: #${colors.base08}; } /* Red */
+    #battery { color: #${colors.base0F}; border-bottom-color: #${colors.base0F}; } /* Flamingo */
+    #custom-session-wrap { color: #${colors.base0E}; border-bottom-color: #${colors.base0E}; } /* Mauve */
+    #tray { border-bottom-color: #${colors.base0D}; } /* Blue */
 
-
-    #tray { background-color: transparent; padding: 0 10px; margin: 0 2px; border-bottom-color: #${colors.base0E}; }
-    #tray > * { padding: 0 5px; } /* Padding individual dos ícones do tray */
+    #tray > * { padding: 0 5px; }
 
     /* Estados */
     .critical, #temperature.critical { color: #${colors.base08}; border-bottom-color: #${colors.base08}; }
