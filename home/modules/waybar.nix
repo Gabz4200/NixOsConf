@@ -78,15 +78,15 @@ in {
       "clock"
     ];
     modules-right = [
+      "network"
       "wireplumber#sink"
       "backlight"
-      "network"
-      "battery"
       "custom/swaync"
+      "power-profiles-daemon"
+      "battery"
       "group/session"
       "tray"
     ];
-
     "niri/workspaces" = {
       format = "{icon}";
       format-icons = {
@@ -94,7 +94,6 @@ in {
         default = "";
       };
     };
-
     "niri/window" = {
       format = "<span color='#${config.lib.stylix.colors.base0A}'>  {title}</span>";
       rewrite = {
@@ -116,7 +115,6 @@ in {
       };
       modules = [
         "custom/hardware-wrap"
-        "power-profiles-daemon"
         "cpu"
         "memory"
         "temperature"
@@ -125,7 +123,7 @@ in {
     };
 
     "custom/session-wrap" = {
-      format = "<span color='#${config.lib.stylix.colors.base0D}'>  </span>";
+      format = "<span color='#${config.lib.stylix.colors.base0E}'>  </span>";
       tooltip-format = "Lock, Reboot, Shutdown";
     };
 
@@ -156,7 +154,6 @@ in {
       tooltip = true;
       tooltip-format = "Reboot";
     };
-
     "custom/power" = {
       format = "<span color='#${config.lib.stylix.colors.base08}'>  </span>";
       on-click = "systemctl poweroff";
@@ -197,7 +194,6 @@ in {
       interval = 1;
       on-click = "kitty -e htop";
     };
-
     memory = {
       format = "󰍛 {}%";
       interval = 1;
@@ -261,7 +257,6 @@ in {
       on-scroll-down = "wpctl set-volume @DEFAULT_SINK@ 1%-";
       on-scroll-up = "wpctl set-volume @DEFAULT_SINK@ 1%+";
     };
-
     backlight = {
       format = "{icon} {percent}%";
       format-icons = [
@@ -272,18 +267,15 @@ in {
       on-scroll-up = "brightnessctl set +5%";
       on-scroll-down = "brightnessctl set 5%-";
     };
-
     disk = {
       interval = 30;
       format = "󰋊 {percentage_used}%";
       path = "/";
     };
-
     tray = {
       icon-size = 16;
-      spacing = 5;
+      spacing = 10;
     };
-
     power-profiles-daemon = {
       format = "{icon}";
       tooltip-format = "Power profile: {profile}\nDriver: {driver}";
@@ -341,6 +333,7 @@ in {
     #mode,
     #custom-hardware-wrap,
     #custom-session-wrap,
+    #custom-swaync,
     #clock,
     #cpu,
     #memory,
@@ -369,7 +362,7 @@ in {
     }
 
     #workspaces button:hover {
-      background-color: #${colors.base01}; /* usar background-color, não background */
+      background-color: #${colors.base01};
       box-shadow: none;
     }
 
@@ -384,31 +377,26 @@ in {
       color: #${colors.base00};
     }
 
-    /* Cores por módulo */
-    #mode { color: #${colors.base0D}; border-bottom-color: #${colors.base0D}; }
+    /* Cores por módulo - Reorganizadas para melhor progressão */
     #custom-hardware-wrap { color: #${colors.base0E}; border-bottom-color: #${colors.base0E}; }
-    #clock { color: #${colors.base0C}; border-bottom-color: #${colors.base0C}; }
-    #cpu { color: #${colors.base0B}; border-bottom-color: #${colors.base0B}; }
+    #cpu { color: #${colors.base09}; border-bottom-color: #${colors.base09}; }
     #memory { color: #${colors.base0A}; border-bottom-color: #${colors.base0A}; }
-    #temperature { color: #${colors.base09}; border-bottom-color: #${colors.base09}; }
-    #battery { color: #${colors.base08}; border-bottom-color: #${colors.base08}; }
+    #temperature { color: #${colors.base0B}; border-bottom-color: #${colors.base0B}; }
+    #disk { color: #${colors.base0C}; border-bottom-color: #${colors.base0C}; }
+
+    #clock { color: #${colors.base0C}; border-bottom-color: #${colors.base0C}; }
+
     #network { color: #${colors.base0D}; border-bottom-color: #${colors.base0D}; }
     #wireplumber { color: #${colors.base0C}; border-bottom-color: #${colors.base0C}; }
     #backlight { color: #${colors.base0B}; border-bottom-color: #${colors.base0B}; }
-    #disk { color: #${colors.base0A}; border-bottom-color: #${colors.base0A}; }
+    #custom-swaync { color: #${colors.base0A}; border-bottom-color: #${colors.base0A}; }
     #power-profiles-daemon { color: #${colors.base09}; border-bottom-color: #${colors.base09}; }
+    #battery { color: #${colors.base08}; border-bottom-color: #${colors.base08}; }
+    #custom-session-wrap { color: #${colors.base0E}; border-bottom-color: #${colors.base0E}; }
+
 
     #tray { background-color: transparent; padding: 0 10px; margin: 0 2px; }
-    #tray > * { padding: 0 6px; }
-
-    /* Botão do swaync: sem flex/align-items/justify-content (GTK não tem) */
-    #custom-swaync {
-      color: #${colors.base0B};
-      border-bottom: 2px solid #${colors.base0B};
-      margin: 0 2px;
-      padding: 0 14px;
-      min-width: 24px;
-    }
+    #tray > * { padding: 0 5px; } /* Padding individual dos ícones do tray */
 
     /* Estados */
     .critical, #temperature.critical { color: #${colors.base08}; border-bottom-color: #${colors.base08}; }
