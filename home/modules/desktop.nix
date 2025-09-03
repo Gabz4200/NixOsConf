@@ -55,7 +55,6 @@
   services.gnome-keyring.enable = true;
   services.easyeffects.enable = true;
   services.swayosd = {
-    display = "eDP-1";
     enable = true;
   };
   services.swayidle.enable = true;
