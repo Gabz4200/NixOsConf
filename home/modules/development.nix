@@ -41,6 +41,16 @@
   programs.ruff.enable = true;
   programs.pylint.enable = true;
 
+  #todo: Use a custom one
+  programs.ruff.settings = {
+    line-length = 100;
+    per-file-ignores = {"__init__.py" = ["F401"];};
+    lint = {
+      select = ["E4" "E7" "E9" "F"];
+      ignore = [];
+    };
+  };
+
   # Dev tooling packages
   home.packages = with pkgs; [
     # Linters/formatters

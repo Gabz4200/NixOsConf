@@ -64,7 +64,12 @@
   gtk.gtk3.enable = true;
   gtk.gtk2.enable = true;
 
+<<<<<<< HEAD
   stylix.targets.gtk.flatpakSupport = true;
+||||||| parent of f5bc8da (feat: Minor adjustments adding Stylix module and python stuff)
+=======
+  stylix.targets.gtk.flatpakSupport.enable = lib.mkForce true;
+>>>>>>> f5bc8da (feat: Minor adjustments adding Stylix module and python stuff)
 
   # Fonts need to be here on home-manager or Waybar and fuzzel suddenly break
   home.packages = with pkgs; [
