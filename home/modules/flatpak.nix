@@ -48,7 +48,7 @@
       Environment = {
         XCURSOR_PATH = "/run/host/user-share/icons:/run/host/share/icons";
 
-        # GTK_THEME = "Adwaita:dark";  # Commented: let Stylix/Catppuccin drive GTK theme
+        GTK_THEME = "Adwaita:dark";
       };
     };
     # "org.kde.kdenlive".Context = {

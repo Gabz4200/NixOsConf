@@ -37,6 +37,10 @@
     ];
   };
 
+  programs.matplotlib.enable = true;
+  programs.ruff.enable = true;
+  programs.pylint.enable = true;
+
   # Dev tooling packages
   home.packages = with pkgs; [
     # Linters/formatters

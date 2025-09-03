@@ -64,6 +64,8 @@
   gtk.gtk3.enable = true;
   gtk.gtk2.enable = true;
 
+  stylix.targets.gtk.flatpakSupport = true;
+
   # Fonts need to be here on home-manager or Waybar and fuzzel suddenly break
   home.packages = with pkgs; [
     # Nerd Fonts

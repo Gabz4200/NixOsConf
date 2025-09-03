@@ -146,6 +146,8 @@
     snapshot
     totem
     yelp
+    appstream
+    appstream-glib
     gnome-software
   ];
 
