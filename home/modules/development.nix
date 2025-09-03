@@ -61,7 +61,7 @@
     R
 
     # Faculdade: Excel (para Cálculo Numérico tbm, mas eu não sei qual é melhor)
-    libreoffice-bin
+    libreoffice-fresh
     onlyoffice-bin_latest
     gnumeric
   ];
