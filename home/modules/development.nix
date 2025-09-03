@@ -55,7 +55,7 @@
     octave
     scilab-bin
     geogebra6
-    sageWithDoc
+    #todo: sageWithDoc
 
     # Faculdade: Probabilidade e Estatística
     R
