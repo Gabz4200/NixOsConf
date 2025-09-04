@@ -37,7 +37,7 @@
   # # 2- The catppuccin one may have them ordered in a weird way that makes thing that should be bright, be dark.
   stylix.autoEnable = false;
 
-  stylix.icons.package = lib.mkBefore pkgs.colloid-icon-theme.override {
+  stylix.icons.package = pkgs.colloid-icon-theme.override {
     schemeVariants = ["catppuccin"];
     colorVariants = ["pink"];
   };
