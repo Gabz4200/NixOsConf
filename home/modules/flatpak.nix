@@ -45,12 +45,12 @@
     global = {
       Context = {
         sockets = ["wayland" "!x11" "fallback-x11"];
-        filesystems = ["${config.home.homeDirectory}/.themes/${config.gtk.theme.name}:ro"];
+        filesystems = ["${config.home.homeDirectory}/.themes/adw-gtk3:ro"];
       };
 
       Environment = {
         XCURSOR_PATH = "/run/host/user-share/icons:/run/host/share/icons";
-        GTK_THEME = lib.mkAfter config.gtk.theme.name;
+        GTK_THEME = "adw-gtk3";
       };
     };
   };
