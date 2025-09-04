@@ -24,6 +24,7 @@
   catppuccin.fuzzel.enable = false;
 
   gtk.iconTheme.package = lib.mkForce config.stylix.icons.package;
+  gtk.iconTheme.name = lib.mkForce config.stylix.icons.dark;
 
   # Stylix
   stylix.enable = true;
