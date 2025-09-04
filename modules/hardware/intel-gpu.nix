@@ -28,12 +28,13 @@ in {
       enable = true;
       enable32Bit = true;
       extraPackages = with pkgs; [
-        intel-media-driver # Modern VA-API driver
-        intel-vaapi-driver # Older VA-API driver, for compatibility
-        intel-compute-runtime # OpenCL support
+        intel-media-driver
+        intel-vaapi-driver
+        #todo: intel-compute-runtime # OpenCL support
+        intel-ocl
         vulkan-loader
         vulkan-tools
-        libvdpau-va-gl # VDPAU backend for VA-API
+        libvdpau-va-gl
         libva
       ];
       extraPackages32 = with pkgs.driversi686Linux; [

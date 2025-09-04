@@ -157,6 +157,9 @@ in {
         vulkan-loader
         libva
         libvdpau
+        intel-ocl
+        intel-media-driver
+        zluda
 
         # X11 client libraries commonly expected by binaries
         xorg.libX11

@@ -7,6 +7,13 @@
   outputs,
   ...
 }: {
+  musnix.enable = lib.mkForce true;
+  musnix.kernel.realtime = lib.mkForce false;
+  musnix.soundcardPciId = "00:1f.3";
+  musnix.alsaSeq.enable = true;
+  musnix.ffado.enable = true;
+  musnix.das_watchdog.enable = true;
+
   # environment.variables = let
   #   makePluginPath = format:
   #     (lib.makeSearchPath format [
@@ -23,13 +30,6 @@
   #   VST_PATH = makePluginPath "vst";
   #   VST3_PATH = makePluginPath "vst3";
   # };
-
-  musnix.enable = lib.mkForce true;
-  musnix.kernel.realtime = lib.mkForce false;
-  musnix.soundcardPciId = "00:1f.3";
-  musnix.alsaSeq.enable = true;
-  musnix.ffado.enable = true;
-  musnix.das_watchdog.enable = true;
 
   environment.systemPackages = with pkgs; [
     dssi
