@@ -243,6 +243,7 @@
 
   # Ollama
   services.ollama.enable = true;
+  services.ollama.openFirewall = true;
 
   # Session variables (Do i need to set all these?) -> Yes, these are important for ensuring
   # applications (especially those using Qt, Java, or running in XWayland) render correctly on Wayland.
