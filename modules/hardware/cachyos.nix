@@ -22,7 +22,7 @@ in {
 
     # CachyOS sysctl rules
     boot.kernel.sysctl = {
-      "vm.swappiness" = 80;
+      "vm.swappiness" = lib.mkForce 80;
 
       "vm.vfs_cache_pressure" = 50;
 
@@ -33,7 +33,7 @@ in {
 
       "vm.dirty_writeback_centisecs" = 1500;
 
-      "kernel.nmi_watchdog" = 0;
+      # "kernel.nmi_watchdog" = 0;
 
       "kernel.unprivileged_userns_clone" = 1;
 
@@ -47,7 +47,7 @@ in {
 
       "fs.file-max" = 2097152;
 
-      "kernel.sched_rt_runtime_us" = 950000;
+      "kernel.sched_rt_runtime_us" = lib.mkForce 950000;
       "dev.rtc.max-user-freq" = 3072;
 
       "vm.max_ptes_none" = 409;
