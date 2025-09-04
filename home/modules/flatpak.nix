@@ -43,21 +43,16 @@
 
   services.flatpak.overrides = {
     global = {
-      Context.sockets = ["wayland" "!x11" "fallback-x11"];
+      Context = {
+        sockets = ["wayland" "!x11" "fallback-x11"];
+        filesystems = ["${config.home.homeDirectory}/.themes/${config.gtk.theme.name}:ro"];
+      };
 
       Environment = {
         XCURSOR_PATH = "/run/host/user-share/icons:/run/host/share/icons";
-
-        #GTK_THEME = "Adwaita:dark";
+        GTK_THEME = lib.mkAfter config.gtk.theme.name;
       };
     };
-    # "org.kde.kdenlive".Context = {
-    #   filesystems = [
-    #     # Previously used to expose Python toolchain to Kdenlive Flatpak. Commented to avoid brittle path mappings.
-    #     # If you still need Whisper/SRT inside Kdenlive, we can package them in a Flatpak extension or use a Nix-based workflow.
-    #     "${pkgs.python3.withPackages (ps: with ps; [pip openai-whisper virtualenv srt opencv4 torch])}/bin:/app/python:rw"
-    #   ];
-    # };
   };
 
   home.sessionVariables = {

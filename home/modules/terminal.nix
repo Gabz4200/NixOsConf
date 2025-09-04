@@ -1,11 +1,9 @@
-{ ... }:
-
-{
+{...}: {
   # Terminal configuration
 
   # Default terminal handlers
   xdg.terminal-exec.enable = true;
-  xdg.terminal-exec.settings = { default = ["kitty.desktop"]; };
+  xdg.terminal-exec.settings = {default = ["kitty.desktop"];};
   xdg.mimeApps.defaultApplications = {
     "x-scheme-handler/terminal" = "kitty.desktop";
   };

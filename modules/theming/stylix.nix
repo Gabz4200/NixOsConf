@@ -45,6 +45,14 @@
     # # 2- The catppuccin one may have them ordered in a weird way that makes thing that should be bright, be dark.
     autoEnable = false;
 
+    targets = {
+      gtk.enable = true;
+      qt.enable = true;
+      gnome.enable = true;
+      gnome-text-editor.enable = true;
+      nixos-icons.enable = true;
+    };
+
     homeManagerIntegration.autoImport = true;
     homeManagerIntegration.followSystem = true;
   };

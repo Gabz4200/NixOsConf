@@ -280,7 +280,6 @@ in {
     swaylock # Ou outro locker, como 'blurred-locker'
   ];
 
-
   # Kitty configuration moved to home/modules/terminal.nix
 
   systemd.user.startServices = true;
