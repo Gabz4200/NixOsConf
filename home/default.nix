@@ -122,6 +122,7 @@
             nix
           ]))
       codeium
+      lsp-ai
 
       # --- Creative / Job ---
       ffmpeg-full

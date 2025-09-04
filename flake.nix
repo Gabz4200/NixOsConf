@@ -23,6 +23,11 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    # Music
+    musnix = {
+      url = "github:musnix/musnix";
+    };
+
     # Wifi Git Src (the version nixpkgs uses is broken. But master has the fix, so I override it)
     rtl8821ce-src = {
       url = "github:tomaspinho/rtl8821ce/master";
@@ -280,10 +285,13 @@
         ./modules/services/display-manager.nix
         ./modules/services/power.nix
 
+        inputs.musnix.nixosModules.musnix
+
         # Features
         ./modules/features/gaming.nix
         ./modules/features/virtualization.nix
         ./modules/features/development.nix
+        ./modules/features/music.nix
 
         # Theming
         ./modules/theming/stylix.nix
