@@ -48,7 +48,7 @@
 
     magnetophonDSP.VoiceOfFaust
 
-    lmms
+    pkgs-stable.lmms
     ardour
     tenacity
 
