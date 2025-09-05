@@ -57,6 +57,14 @@
     shfmt
     shellcheck
     bash-language-server
+    treefmt
+    nix-linter
+    nixpkgs-lint-community
+    nixpkgs-fmt
+    alejandra
+    nixpkgs-hammering
+    nixpkgs-lint
+    deadnix
 
     # Python
     python3

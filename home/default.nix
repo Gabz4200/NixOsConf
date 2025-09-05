@@ -116,6 +116,8 @@
           pkgs:
             with pkgs; [
               codeium
+              github-copilot-intellij-agent
+              mcp-nixos
               cargo
               uv
               nodejs
@@ -134,10 +136,32 @@
               nix-binary-cache
               just
               nh
+              lsp-ai
+              llm-ls
             ]
         ))
       codeium
       lsp-ai
+      llm-ls
+
+      chatgpt
+      llama-cpp-vulkan
+      llm
+      github-copilot-cli
+      gpt4all
+      lmstudio
+      mcp-nixos
+      mcphost
+      # (python37.pkgs.buildPythonPackage rec {
+      #   pname = "claude";
+      #   version = "0.5.7";
+      #   src = python37.pkgs.fetchPypi {
+      #     inherit pname version;
+      #     sha256 = lib.fakeSha256;
+      #   };
+
+      #   meta = {};
+      # })
 
       # --- Creative / Job ---
       ffmpeg-full

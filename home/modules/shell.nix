@@ -343,6 +343,14 @@
     jq
     yq-go
 
+    # AI
+    gemini-cli
+    geminicommit
+    claude-code
+    codex
+    chatgpt-cli
+    chatgpt-shell-cli
+
     # Network
     httpie
     curlie

@@ -17,6 +17,9 @@
     package = pkgs.vscodium.fhsWithPackages (
       pkgs:
         with pkgs; [
+          codeium
+          github-copilot-intellij-agent
+          mcp-nixos
           cargo
           uv
           nodejs
@@ -35,6 +38,8 @@
           nix-binary-cache
           just
           nh
+          lsp-ai
+          llm-ls
         ]
     );
     mutableExtensionsDir = true;
