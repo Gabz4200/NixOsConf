@@ -14,7 +14,28 @@
   # Editors and IDEs
   programs.vscode = {
     enable = true;
-    package = pkgs.vscodium.fhs;
+    package = pkgs.vscodium.fhsWithPackages (
+      with pkgs; [
+        cargo
+        uv
+        nodejs
+        python3
+        rustc
+        nix
+        nixd
+        nil
+        statix
+        alejandra
+        nixfmt-rfc-style
+        nix-prefetch-git
+        nix-tree
+        nix-diff
+        nix-output-monitor
+        nix-binary-cache
+        just
+        nh
+      ]
+    );
     mutableExtensionsDir = true;
   };
 

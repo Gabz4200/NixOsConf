@@ -11,6 +11,7 @@
     # Nix development
     nixd
     nil
+    statix
     alejandra
     nixfmt-rfc-style
     nix-prefetch-git
@@ -18,6 +19,8 @@
     nix-diff
     nix-output-monitor
     nix-binary-cache
+    just
+    nh
 
     # Language servers
     bash-language-server

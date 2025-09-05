@@ -8,7 +8,8 @@
   ...
 }: {
   musnix.enable = lib.mkForce true;
-  musnix.kernel.realtime = lib.mkForce false;
+  musnix.kernel.realtime = false;
+
   musnix.soundcardPciId = "00:1f.3";
   musnix.alsaSeq.enable = true;
   musnix.ffado.enable = true;
@@ -53,6 +54,7 @@
     tenacity
 
     openutau
+
     voicevox-core
     voicevox-engine
     voicevox
