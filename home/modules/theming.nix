@@ -53,7 +53,8 @@
   stylix.targets.kde.enable = true;
   stylix.targets.nixos-icons.enable = true;
 
-  stylix.targets.gtk.extraCss = "${pkgs.colloid-gtk-theme.override {
+  #todo: Make Colloid-Gtk-Theme be used directly instead of using Stylix to it, but without conflicting with Stylix.
+  stylix.targets.gtk.extraCss = "@import ${pkgs.colloid-gtk-theme.override {
     themeVariants = ["pink"];
     colorVariants = ["dark"];
     tweaks = ["catppuccin" "black" "normal"];
