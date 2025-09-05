@@ -1,4 +1,4 @@
-{...}: {
+_: {
   # Terminal configuration
 
   # Default terminal handlers

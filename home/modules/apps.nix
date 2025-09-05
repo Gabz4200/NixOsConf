@@ -85,7 +85,7 @@
     package = pkgs.gitFull;
     extraConfig = {
       include = {
-        path = nixosConfig.sops.secrets."git".path;
+        inherit (nixosConfig.sops.secrets."git") path;
       };
     };
   };

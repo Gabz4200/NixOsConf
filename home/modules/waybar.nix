@@ -300,7 +300,7 @@ in {
   };
   stylix.targets.waybar.enable = false;
   programs.waybar.style = let
-    colors = config.lib.stylix.colors;
+    inherit (config.lib.stylix) colors;
   in ''
     /* Base styling (GTK CSS válido) */
     * {
