@@ -112,15 +112,30 @@
 
       # --- Special case for faster refactoring ---
       (windsurf.fhsWithPackages
-        (ps:
-          with ps; [
-            cargo
-            uv
-            nodejs
-            python3
-            rustc
-            nix
-          ]))
+        (
+          pkgs:
+            with pkgs; [
+              codeium
+              cargo
+              uv
+              nodejs
+              python3
+              rustc
+              nix
+              nixd
+              nil
+              statix
+              alejandra
+              nixfmt-rfc-style
+              nix-prefetch-git
+              nix-tree
+              nix-diff
+              nix-output-monitor
+              nix-binary-cache
+              just
+              nh
+            ]
+        ))
       codeium
       lsp-ai
 
