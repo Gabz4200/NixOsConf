@@ -58,7 +58,7 @@
     shellcheck
     bash-language-server
     treefmt
-    nix-linter
+    #! broken> nix-linter
     nixpkgs-lint-community
     nixpkgs-fmt
     alejandra

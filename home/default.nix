@@ -175,7 +175,6 @@
       lsp-ai
       llm-ls
 
-      chatgpt
       llama-cpp-vulkan
       llm
       gh-copilot
