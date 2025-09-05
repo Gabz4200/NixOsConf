@@ -63,7 +63,6 @@
     nixpkgs-fmt
     alejandra
     nixpkgs-hammering
-    nixpkgs-lint
     deadnix
 
     # Python
