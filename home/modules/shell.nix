@@ -350,6 +350,7 @@
     codex
     chatgpt-cli
     chatgpt-shell-cli
+    qwen-code
 
     # Network
     httpie

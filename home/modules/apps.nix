@@ -20,6 +20,7 @@
           codeium
           github-copilot-intellij-agent
           mcp-nixos
+          qwen-code
           cargo
           uv
           nodejs

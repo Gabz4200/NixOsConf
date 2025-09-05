@@ -117,6 +117,7 @@
             with pkgs; [
               codeium
               github-copilot-intellij-agent
+              qwen-code
               mcp-nixos
               cargo
               uv
@@ -140,6 +141,36 @@
               llm-ls
             ]
         ))
+      cursor-cli
+      (code-cursor-fhsWithPackages (
+        pkgs:
+          with pkgs; [
+            codeium
+            github-copilot-intellij-agent
+            qwen-code
+            mcp-nixos
+            cargo
+            uv
+            nodejs
+            python3
+            rustc
+            nix
+            nixd
+            nil
+            statix
+            alejandra
+            nixfmt-rfc-style
+            nix-prefetch-git
+            nix-tree
+            nix-diff
+            nix-output-monitor
+            nix-binary-cache
+            just
+            nh
+            lsp-ai
+            llm-ls
+          ]
+      ))
       codeium
       lsp-ai
       llm-ls
@@ -147,11 +178,16 @@
       chatgpt
       llama-cpp-vulkan
       llm
-      github-copilot-cli
+      gh-copilot
+      gh-dash
+      gh
+      alpaca
       gpt4all
       lmstudio
       mcp-nixos
+      obsidian-export
       mcphost
+
       # (python37.pkgs.buildPythonPackage rec {
       #   pname = "claude";
       #   version = "0.5.7";
