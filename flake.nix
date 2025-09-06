@@ -332,11 +332,20 @@
       ];
     };
 
+    # TODO: Adress it. Globally. Fast.
+    # Gloabal TODOs:
+    # # Avoid repetition. DRY as much as possible.
+    # # Keep it modular, but easy to manage, use and undertand.
+    # # Avoid uncessary copying. Like instantiating pkgs twice.
+    # # Keep as much as possible on Home-Manager. But what needs to be on System, should be there.
+    # # Keep a separation between home-manager and nixos modules. But what needs to be shared, should be shared.
+    # # Deep integration is good, but not when it makes one unusable without the other.
+
     # todo: Adress it
     #todo: Make a backup configuration with the bare minimum and the internet driver. It would help if I ever reformat this computer again.
 
     # todo: Adress it
-    # Make a DevShell for development of this Flake, including nixd, statix, etc.
+    # Make a DevShell for development of this Flake, including nixd, statix, etc. Cleaner and easy to use.
     devShells.${system}.default = let
       inherit pkgs;
     in

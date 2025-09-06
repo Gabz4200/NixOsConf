@@ -125,6 +125,8 @@
       eog
       vlc
 
+      # TODO: Adress it
+      # todo: Make the fhsWithPackages pkg list for IDEs a common variable instead of repeating it.
       # --- Special case for faster refactoring ---
       (windsurf.fhsWithPackages
         (
@@ -202,6 +204,8 @@
       obsidian-export
       mcphost
 
+      # TODO: Adress it
+      #todo: Learn how to actually PIP packages as easy as using lib.wrappPip "name", ando no sha256 if possible
       # (python37.pkgs.buildPythonPackage rec {
       #   pname = "claude";
       #   version = "0.5.7";
@@ -225,6 +229,8 @@
       krita
       krita-plugin-gmic
 
+      # TODO: Adress it
+      # Using the line below results in a build failure, dont know why.
       #todo: (config.lib.nixGL.wrap pkgs-stable.davinci-resolve)
 
       gimp3-with-plugins
