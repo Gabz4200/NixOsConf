@@ -2,72 +2,81 @@
   config,
   lib,
   pkgs,
-  inputs,
   ...
-}: {
+}: let
+  cfg = config.features.gaming;
+in {
   # Steam configuration
-  programs.steam = {
-    enable = true;
 
-    # Compatibility tools
-    extraCompatPackages = with pkgs; [
-      proton-ge-custom
-      proton-cachyos_x86_64_v3
-    ];
-
-    # Runtime packages necessários
-    # The drivers are needed here tho?
-    extraPackages = with pkgs; [
-      gamemode
-      gamescope
-
-      # OpenCL/OpenGL para Intel
-      ocl-icd
-      intel-compute-runtime
-
-      # Video decode/encode
-      intel-media-driver
-      libva
-      libvdpau-va-gl
-    ];
-
-    # Features
-    extest.enable = true;
-    gamescopeSession.enable = true;
-    localNetworkGameTransfers.openFirewall = true;
-    protontricks.enable = true;
-
-    # Performance optimizations
-    # Are these great on my Hardware?
-    platformOptimizations.enable = true;
+  options.features.gaming = {
+    enable = lib.mkEnableOption "Enable gaming features and gaming-related configurations";
+    unstable = lib.mkEnableOption "Enable unstable gaming features and experimental configurations";
   };
 
-  # Wine
-  programs.wine = {
-    enable = true;
-    package = pkgs.wineWow64Packages.waylandFull;
-    ntsync = true;
+  config = lib.mkIf cfg.enable {
+    programs.steam = {
+      enable = true;
 
-    # The intention was to be more secure, letting it to bottles. Dont know if needed.
-    binfmt = false;
-  };
+      # Compatibility tools
+      extraCompatPackages = with pkgs; [
+        proton-ge-custom
+        proton-cachyos_x86_64_v3
+      ];
 
-  # Gamemode (Is this a good idea with scx?)
-  programs.gamemode = {
-    enable = true;
-    enableRenice = true;
-  };
+      # Runtime packages necessários
+      # The drivers are needed here tho?
+      extraPackages = with pkgs; [
+        gamemode
+        gamescope
 
-  # Java moved to Home Manager (per-user). Remove system binfmt to avoid duplication.
+        # OpenCL/OpenGL para Intel
+        ocl-icd
+        intel-compute-runtime
 
-  hardware.graphics.enable32Bit = true;
+        # Video decode/encode
+        intel-media-driver
+        libva
+        libvdpau-va-gl
+      ];
 
-  # User-facing gaming apps (launchers/tools) moved to Home Manager.
+      # Features
+      extest.enable = true;
+      gamescopeSession.enable = true;
+      localNetworkGameTransfers.openFirewall = true;
+      protontricks.enable = true;
 
-  # Firewall rules for gaming
-  networking.firewall = {
-    # Minecraft (Firewall messed up my Minecraft gameplay via Lan in older system. May this fix it?)
-    allowedTCPPorts = [25565];
-    allowedUDPPorts = [25565];
+      # Performance optimizations
+      # Are these great on my Hardware?
+      platformOptimizations.enable = true;
+    };
+
+    # Wine
+    programs.wine = {
+      enable = true;
+      package = pkgs.wineWow64Packages.waylandFull;
+      ntsync = true;
+
+      # The intention was to be more secure, letting it to bottles. Dont know if needed.
+      binfmt = false;
+    };
+
+    # Gamemode (Is this a good idea with scx?)
+    programs.gamemode = {
+      enable = true;
+      enableRenice = true;
+    };
+
+    # Java moved to Home Manager (per-user). Remove system binfmt to avoid duplication.
+
+    hardware.graphics.enable32Bit = true;
+
+    # User-facing gaming apps (launchers/tools) moved to Home Manager.
+
+    # Firewall rules for gaming
+    networking.firewall = {
+      # Minecraft (Firewall messed up my Minecraft gameplay via Lan in older system. May this fix it?)
+      allowedTCPPorts = [25565];
+      allowedUDPPorts = [25565];
+    };
   };
 }

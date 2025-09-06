@@ -1,38 +1,26 @@
 {
   config,
-  inputs,
-  pkgs,
   lib,
   ...
-}: {
+}: let
+  cfg = config.core.networking;
+in {
   # Network configuration
   # This module contains network-related settings
 
-  networking.useNetworkd = lib.mkForce false;
+  options.core.networking = {
+    enable = lib.mkEnableOption "Enable networking configuration and network-related settings";
+    unstable = lib.mkEnableOption "Enable unstable networking features and experimental configurations";
+  };
 
-  services.syncthing.openDefaultPorts = lib.mkForce true;
-  services.minecraft-server.openFirewall = lib.mkForce true;
+  config = lib.mkIf cfg.enable {
+    networking.useNetworkd = lib.mkForce false;
 
-  networking.networkmanager.enable = lib.mkForce true;
-  networking.nameservers = [
-    "2606:4700:4700::1111"
-    "1.1.1.1"
-    "2606:4700:4700::1001"
-    "1.0.0.1"
-    "2001:4860:4860::8888"
-    "8.8.8.8"
-    "2001:4860:4860::8844"
-    "8.8.4.4"
-  ];
+    services.syncthing.openDefaultPorts = lib.mkForce true;
+    services.minecraft-server.openFirewall = lib.mkForce true;
 
-  networking.networkmanager.dns = "systemd-resolved";
-
-  # Single source of truth for DNS: systemd-resolved with DoT/DNSSEC
-  services.resolved = {
-    enable = lib.mkForce true;
-    dnssec = "allow-downgrade";
-    dnsovertls = "opportunistic";
-    fallbackDns = [
+    networking.networkmanager.enable = lib.mkForce true;
+    networking.nameservers = [
       "2606:4700:4700::1111"
       "1.1.1.1"
       "2606:4700:4700::1001"
@@ -42,27 +30,46 @@
       "2001:4860:4860::8844"
       "8.8.4.4"
     ];
+
+    networking.networkmanager.dns = "systemd-resolved";
+
+    # Single source of truth for DNS: systemd-resolved with DoT/DNSSEC
+    services.resolved = {
+      enable = lib.mkForce true;
+      dnssec = "allow-downgrade";
+      dnsovertls = "opportunistic";
+      fallbackDns = [
+        "2606:4700:4700::1111"
+        "1.1.1.1"
+        "2606:4700:4700::1001"
+        "1.0.0.1"
+        "2001:4860:4860::8888"
+        "8.8.8.8"
+        "2001:4860:4860::8844"
+        "8.8.4.4"
+      ];
+    };
+
+    networking.useDHCP = lib.mkForce true;
+
+    programs.nm-applet.enable = true;
+
+    # Firewall. Great?
+    networking.firewall.enable = true;
+    networking.firewall.allowPing = false;
+    networking.nftables.enable = true;
+
+    networking.enableIPv6 = true;
+
+    # Fix my WiFI connection:
+    boot.blacklistedKernelModules = ["rtw88_8821ce"];
+    boot.kernelModules = ["8821ce"];
+    boot.extraModulePackages = [
+      config.boot.kernelPackages.rtl8821ce
+      # (config.boot.kernelPackages.rtl8821ce.overrideAttrs (finalAttrs: previousAttrs: {
+      #   src = inputs.rtl8821ce-src;
+      #   meta.broken = false;
+      # }))
+    ];
   };
-
-  networking.useDHCP = lib.mkForce true;
-
-  programs.nm-applet.enable = true;
-
-  # Firewall. Great?
-  networking.firewall.enable = true;
-  networking.firewall.allowPing = false;
-  networking.nftables.enable = true;
-
-  networking.enableIPv6 = true;
-
-  # Fix my WiFI connection:
-  boot.blacklistedKernelModules = ["rtw88_8821ce"];
-  boot.kernelModules = ["8821ce"];
-  boot.extraModulePackages = [
-    config.boot.kernelPackages.rtl8821ce
-    # (config.boot.kernelPackages.rtl8821ce.overrideAttrs (finalAttrs: previousAttrs: {
-    #   src = inputs.rtl8821ce-src;
-    #   meta.broken = false;
-    # }))
-  ];
 }

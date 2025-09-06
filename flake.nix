@@ -142,79 +142,59 @@
     ...
   } @ inputs: let
     system = "x86_64-linux";
-    outputs = self;
 
-    #Todo: I want to make this pkgs as a "single source of truth", but I know I would need to change things
-    # pkgs = import nixpkgs {
-    #   inherit system;
+    # Common package configuration
+    commonPkgsConfig = {
+      allowUnfree = true;
+      allowBroken = false;
+    };
 
-    #   config = {
-    #     allowUnfree = true;
-    #     allowBroken = false;
-    #   };
+    # Common overlays
+    commonOverlays = [
+      inputs.niri.overlays.niri
+      inputs.chaotic.overlays.cache-friendly
+      inputs.nur.overlays.default
+    ];
 
-    #   # Overlays
-    #   overlays = [
-    #     inputs.niri.overlays.niri
-    #     inputs.chaotic.overlays.cache-friendly
-    #   ];
+    # Common substituters and trusted keys
+    commonSubstituters = [
+      "https://niri.cachix.org"
+      "https://chaotic-nyx.cachix.org"
+      "https://nix-gaming.cachix.org"
+      "https://nur.cachix.org"
+      "https://cache.nixos.org"
+      "https://nix-community.cachix.org"
+      "https://pre-commit-hooks.cachix.org"
+      "https://catppuccin.cachix.org"
+    ];
 
-    #   # Flake settings
-    #   flake = {
-    #     setFlakeRegistry = true;
-    #     setNixPath = true;
-    #   };
-    # };
+    commonTrustedKeys = [
+      "niri.cachix.org-1:Wv0OmO7PsuocRKzfDoJ3mulSl7Z6oezYhGhR+3W2964="
+      "chaotic-nyx.cachix.org-1:HfnXSw4pj95iI/n17rIDy40agHj12WfF+Gqk6SonIT8="
+      "nix-gaming.cachix.org-1:nbjlureqMbRAxR1gJ/f3hxemL9svXaZF/Ees8vCUUs4="
+      "nur.cachix.org-1:F8+2oprcHLfsYyZBCsVJZJrPyGHwuE+EZBtukwalV7o="
+      "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="
+      "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
+      "pre-commit-hooks.cachix.org-1:Pkk3Panw5AW24TOv6kz3PvLhlH8puAsJTBbOPmBo7Rc="
+      "catppuccin.cachix.org-1:noG/4HkbhJb+lUAdKrph6LaozJvAeEEZj4N732IysmU="
+    ];
 
     # Stable pkgs for downgrade
     pkgs-stable = import inputs.nixpkgs-stable {
       inherit system;
-
-      config = {
-        allowUnfree = true;
-        allowBroken = false;
-      };
-
-      # Overlays
-      overlays = [
-        inputs.niri.overlays.niri
-        inputs.chaotic.overlays.cache-friendly
-        inputs.nur.overlays.default
-      ];
-
-      substituters = [
-        "https://niri.cachix.org"
-        "https://chaotic-nyx.cachix.org"
-        "https://nix-gaming.cachix.org"
-        "https://nur.cachix.org"
-        "https://cache.nixos.org"
-        "https://nix-community.cachix.org"
-        "https://pre-commit-hooks.cachix.org"
-        "https://catppuccin.cachix.org"
-      ];
-
-      trusted-public-keys = [
-        "niri.cachix.org-1:Wv0OmO7PsuocRKzfDoJ3mulSl7Z6oezYhGhR+3W2964="
-        "chaotic-nyx.cachix.org-1:HfnXSw4pj95iI/n17rIDy40agHj12WfF+Gqk6SonIT8="
-        "nix-gaming.cachix.org-1:nbjlureqMbRAxR1gJ/f3hxemL9svXaZF/Ees8vCUUs4="
-        "nur.cachix.org-1:F8+2oprcHLfsYyZBCsVJZJrPyGHwuE+EZBtukwalV7o="
-        "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="
-        "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
-        "pre-commit-hooks.cachix.org-1:Pkk3Panw5AW24TOv6kz3PvLhlH8puAsJTBbOPmBo7Rc="
-        "catppuccin.cachix.org-1:noG/4HkbhJb+lUAdKrph6LaozJvAeEEZj4N732IysmU="
-      ];
-
-      # Flake settings
+      config = commonPkgsConfig;
+      overlays = commonOverlays;
+      substituters = commonSubstituters;
+      trusted-public-keys = commonTrustedKeys;
       flake = {
         setFlakeRegistry = true;
         setNixPath = true;
       };
     };
 
-    # todo: Insert pkgs here when the changes are done
-    # Special args
+    # Special args for modules
     specialArgs = {
-      inherit inputs outputs system pkgs-stable;
+      inherit inputs system pkgs-stable;
     };
   in {
     # packages."${system}" = let
@@ -231,26 +211,15 @@
       inherit system specialArgs;
 
       modules = [
+        # ===== CACHIX CONFIGURATION =====
         ./cachix.nix
 
-        #todo: Temporary, readOnlyPackages being broken really sucks.
+        # ===== NIXPKGS CONFIGURATION =====
         {
           nixpkgs = {
             inherit system;
-
-            config = {
-              allowUnfree = true;
-              allowBroken = false;
-            };
-
-            # Overlays
-            overlays = nixpkgs.lib.mkBefore [
-              inputs.niri.overlays.niri
-              inputs.chaotic.overlays.cache-friendly
-              inputs.nur.overlays.default
-            ];
-
-            # Flake settings
+            config = commonPkgsConfig;
+            overlays = nixpkgs.lib.mkBefore commonOverlays;
             flake = {
               setFlakeRegistry = true;
               setNixPath = true;
@@ -258,84 +227,68 @@
           };
         }
 
+        # ===== EXTERNAL MODULES =====
         inputs.nur.modules.nixos.default
-        # todo: NUR modules to import
-        # inputs.nur.legacyPackages."${system}".repos.iopq.modules.xraya
+        inputs.sops-nix.nixosModules.sops
+        inputs.stylix.nixosModules.stylix
+        inputs.chaotic.nixosModules.default
+        inputs.musnix.nixosModules.musnix
+        inputs.nix-gaming.nixosModules.pipewireLowLatency
+        inputs.nix-gaming.nixosModules.platformOptimizations
+        inputs.nix-gaming.nixosModules.wine
+        inputs.nix-index-database.nixosModules.nix-index
+        inputs.nixos-facter-modules.nixosModules.facter
 
-        # Hardware & Firmware
+        # ===== HARDWARE MODULES =====
         ./hardware-configuration.nix
         ./modules/hardware/intel-gpu.nix
         ./modules/hardware/cachyos.nix
+        inputs.nixos-hardware.nixosModules.asus-battery
+        inputs.nixos-hardware.nixosModules.common-cpu-intel
+        inputs.nixos-hardware.nixosModules.common-gpu-intel
+        inputs.nixos-hardware.nixosModules.common-pc-laptop
+        inputs.nixos-hardware.nixosModules.common-pc-laptop-ssd
 
-        # Core System
+        # ===== CORE SYSTEM MODULES =====
         ./modules/core/boot.nix
         ./modules/core/networking.nix
         ./modules/core/nix.nix
         ./modules/core/security.nix
         ./modules/core/system.nix
+        ./modules/core/secrets.nix
 
-        # Desktop Environment
+        # ===== DESKTOP ENVIRONMENT MODULES =====
         ./modules/desktop/niri.nix
         ./modules/desktop/wayland.nix
         ./modules/desktop/xdg.nix
-        ./modules/features/desktop.nix
 
-        # Services
+        # ===== SERVICE MODULES =====
         ./modules/services/audio.nix
         ./modules/services/display-manager.nix
         ./modules/services/power.nix
 
-        inputs.musnix.nixosModules.musnix
-
-        # Features
-        ./modules/features/gaming.nix
-        ./modules/features/virtualization.nix
+        # ===== FEATURE MODULES =====
+        ./modules/features/desktop.nix
         ./modules/features/development.nix
+        ./modules/features/gaming.nix
         ./modules/features/music.nix
+        ./modules/features/virtualization.nix
 
-        # Theming
+        # ===== THEMING MODULES =====
         ./modules/theming/stylix.nix
 
-        # Users
+        # ===== USER MODULES =====
         ./modules/users/gabz.nix
 
-        # Secrets
-        inputs.sops-nix.nixosModules.sops
-        ./modules/core/secrets.nix
-
-        # External Modules
-        inputs.nixos-hardware.nixosModules.asus-battery
-
-        inputs.nixos-hardware.nixosModules.common-cpu-intel
-        inputs.nixos-hardware.nixosModules.common-gpu-intel
-
-        inputs.nixos-hardware.nixosModules.common-pc-laptop
-        inputs.nixos-hardware.nixosModules.common-pc-laptop-ssd
-
-        # Para burlar o fato do flake só ver coisas git added e o facter.json não poder estar no Github
-        inputs.nixos-facter-modules.nixosModules.facter
-        {config.facter.reportPath = "${inputs.local}/facter.json";}
-
-        inputs.stylix.nixosModules.stylix
-        inputs.chaotic.nixosModules.default
-
-        inputs.nix-gaming.nixosModules.pipewireLowLatency
-        inputs.nix-gaming.nixosModules.platformOptimizations
-        inputs.nix-gaming.nixosModules.wine
-
-        # Helpful: enable fast nix-locate with prebuilt DB
-        inputs.nix-index-database.nixosModules.nix-index
-        {programs.nix-index-database.comma.enable = true;}
-
+        # ===== SYSTEM CONFIGURATION =====
         ./configuration.nix
 
-        # Home Manager
+        # ===== HOME MANAGER CONFIGURATION =====
         inputs.home-manager.nixosModules.home-manager
         {
           home-manager = {
             useGlobalPkgs = true;
             useUserPackages = true;
-
             extraSpecialArgs = specialArgs;
             backupFileExtension = "backup";
 
@@ -345,15 +298,17 @@
               inputs.catppuccin.homeModules.catppuccin
               inputs.niri.homeModules.niri
               inputs.nix-flatpak.homeManagerModules.nix-flatpak
-              # Helpful: enable fast nix-locate in shells too
               inputs.nix-index-database.homeModules.nix-index
               {programs.nix-index.enable = true;}
-              #({lib, ...}: {imports = lib.attrValues inputs.nur.repos.moredhel.hmModules.rawModules;})
             ];
 
             users.gabz = import ./home/default.nix;
           };
         }
+
+        # ===== ADDITIONAL CONFIGURATIONS =====
+        {programs.nix-index-database.comma.enable = true;}
+        {config.facter.reportPath = "${inputs.local}/facter.json";}
       ];
     };
 

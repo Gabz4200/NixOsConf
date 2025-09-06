@@ -9,19 +9,24 @@ in {
   # Is a Intel Core i5-8250U and Intel UHD Graphics 620
 
   options.hardware.intelGPU = {
-    enablePSR = lib.mkOption {
-      type = lib.types.bool;
-      default = false;
-      description = ''Enable Panel Self Refresh (PSR) for i915. Can improve battery life; disable if you observe flicker.'';
-    };
-    enableGuC = lib.mkOption {
-      type = lib.types.enum [0 1 2];
-      default = 0;
-      description = ''i915 GuC submission: 0=disabled, 1=enable, 2=enable GuC/HuC. Try 2 for power/perf; revert if issues.'';
-    };
+    enable = lib.mkEnableOption "Enable Intel GPU configuration and Intel graphics-related settings";
+    unstable = lib.mkEnableOption "Enable unstable Intel GPU features and experimental configurations";
   };
 
-  config = {
+  config = lib.mkIf cfg.enable {
+    # Intel GPU specific options
+    hardware.intelGPU = {
+      enablePSR = lib.mkOption {
+        type = lib.types.bool;
+        default = false;
+        description = ''Enable Panel Self Refresh (PSR) for i915. Can improve battery life; disable if you observe flicker.'';
+      };
+      enableGuC = lib.mkOption {
+        type = lib.types.enum [0 1 2];
+        default = 0;
+        description = ''i915 GuC submission: 0=disabled, 1=enable, 2=enable GuC/HuC. Try 2 for power/perf; revert if issues.'';
+      };
+    };
     # Is this correct? I have no Idea if the drivers are the expected for my Hardware or not.
     # Do I need any further configuration to use Vulkan and etc?
     hardware.graphics = {

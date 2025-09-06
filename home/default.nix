@@ -20,6 +20,18 @@
     ./modules/flatpak.nix
   ];
 
+  # Home Manager Module Enable Options
+  home.shell.enable = true;
+  home.terminal.enable = true;
+  home.development.enable = true;
+  home.desktop.enable = true;
+  home.apps.enable = true;
+  home.gaming.enable = true;
+  home.theming.enable = true;
+  home.niri.enable = true;
+  home.waybar.enable = true;
+  home.flatpak.enable = true;
+
   home = {
     username = lib.mkForce "gabz";
     homeDirectory = lib.mkForce "/home/gabz";

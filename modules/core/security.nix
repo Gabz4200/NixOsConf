@@ -1,18 +1,26 @@
 {
   config,
-  pkgs,
   lib,
   ...
-}: {
+}: let
+  cfg = config.core.security;
+in {
   # System security configurations
   # This module will contain security-related settings
 
-  # AppArmor
-  security.apparmor = {
-    enable = true;
-    enableCache = true;
-    killUnconfinedConfinables = true;
+  options.core.security = {
+    enable = lib.mkEnableOption "Enable system security configurations and security-related settings";
+    unstable = lib.mkEnableOption "Enable unstable security features and experimental configurations";
   };
 
-  boot.kernelParams = ["lsm=landlock,lockdown,yama,integrity,apparmor,bpf"];
+  config = lib.mkIf cfg.enable {
+    # AppArmor
+    security.apparmor = {
+      enable = true;
+      enableCache = true;
+      killUnconfinedConfinables = true;
+    };
+
+    boot.kernelParams = ["lsm=landlock,lockdown,yama,integrity,apparmor,bpf"];
+  };
 }
