@@ -352,13 +352,14 @@
       pkgs.mkShell {
         buildInputs = with pkgs; [
           mcp-nixos
+          gemini-cli
           qwen-code
           cargo
           uv
           nodejs
           python3
           rustc
-          nix
+
           nixd
           nil
           statix

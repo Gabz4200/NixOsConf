@@ -50,7 +50,7 @@ in {
             nodejs
             python3
             rustc
-            nix
+
             nixd
             nil
             statix

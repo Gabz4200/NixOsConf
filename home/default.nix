@@ -133,6 +133,7 @@
           pkgs:
             with pkgs; [
               codeium
+              gemini-cli
               github-copilot-intellij-agent
               qwen-code
               mcp-nixos
@@ -141,7 +142,7 @@
               nodejs
               python3
               rustc
-              nix
+
               nixd
               nil
               statix
@@ -163,6 +164,7 @@
         pkgs:
           with pkgs; [
             codeium
+            gemini-cli
             github-copilot-intellij-agent
             qwen-code
             mcp-nixos
@@ -171,7 +173,7 @@
             nodejs
             python3
             rustc
-            nix
+
             nixd
             nil
             statix
