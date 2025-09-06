@@ -99,6 +99,7 @@
     };
   };
 
+  # todo: Adress it
   # Maybe is a good Idea to centralize Substituters here? I have to be sure it would apply to the whole Flake.
   # I prefer Cachix, but I dont want to have annoyances about adding Cache before adding the pkg
   nixConfig = {
@@ -142,6 +143,7 @@
     ...
   } @ inputs: let
     system = "x86_64-linux";
+    inherit (self) outputs;
 
     # Common package configuration
     commonPkgsConfig = {
@@ -156,6 +158,9 @@
       inputs.nur.overlays.default
     ];
 
+    # todo: Adress it
+    # Its a great idea to have a common, but it is still repetitive with the nixConfig above
+    # Also, it repeats with cachix. If I can get cachix.nix to add its substituters in a way that I can make sure pkgs-stable uses it, it would be great.
     # Common substituters and trusted keys
     commonSubstituters = [
       "https://niri.cachix.org"
@@ -192,11 +197,26 @@
       };
     };
 
+    # pkgs
+    pkgs = import inputs.nixpkgs {
+      inherit system;
+      config = commonPkgsConfig;
+      overlays = commonOverlays;
+      substituters = commonSubstituters;
+      trusted-public-keys = commonTrustedKeys;
+      flake = {
+        setFlakeRegistry = true;
+        setNixPath = true;
+      };
+    };
+
     # Special args for modules
     specialArgs = {
-      inherit inputs system pkgs-stable;
+      inherit inputs system outputs pkgs-stable;
     };
   in {
+    # todo: Adress it
+    # I want to make packages from ./packages/ to get added to packages."${system}", instead of callPackaging everywhere.
     # packages."${system}" = let
     #   inherit pkgs;
 
@@ -312,24 +332,42 @@
       ];
     };
 
+    # todo: Adress it
     #todo: Make a backup configuration with the bare minimum and the internet driver. It would help if I ever reformat this computer again.
 
-    # Just in case I need it.
-    # devShells."${system}".default = let
-    #   inherit pkgs;
-    # in
-    #   pkgs.mkShell {
-    #     packages = with pkgs; [
-    #       vscodium-fhs
-    #       nixd
-    #       zsh
-    #       alejandra
-    #       just
-    #     ];
+    # todo: Adress it
+    # Make a DevShell for development of this Flake, including nixd, statix, etc.
+    devShells.${system}.default = let
+      inherit pkgs;
+    in
+      pkgs.mkShell {
+        buildInputs = with pkgs; [
+          mcp-nixos
+          qwen-code
+          cargo
+          uv
+          nodejs
+          python3
+          rustc
+          nix
+          nixd
+          nil
+          statix
+          alejandra
+          nixfmt-rfc-style
+          nix-prefetch-git
+          nix-tree
+          nix-diff
+          nix-output-monitor
+          nix-binary-cache
+          just
+          nh
+        ];
 
-    #     shellHook = ''
-    #       echo "hello"
-    #     '';
-    #   };
+        shellHook = ''
+          alejandra .
+          echo "Welcome to the Gabz NixOS configuration development shell!"
+        '';
+      };
   };
 }

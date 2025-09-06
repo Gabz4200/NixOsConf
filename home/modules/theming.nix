@@ -6,7 +6,9 @@
 }: let
   cfg = config.home.theming;
 in {
+  #todo: Adress it. Fast.
   # Managing two config frameworks is messy. How should I adress the problems?
+  # I want a great, uniform, automatic theming system, that works for all apps, libs (Gtk & QT) and DEs on my machine.
 
   options.home.theming = {
     enable = lib.mkEnableOption "Enable theming configuration and theming-related settings";
@@ -36,6 +38,7 @@ in {
     stylix.enable = true;
     stylix.icons.enable = true;
 
+    #todo: Adress it. Fast.
     # I would want it enabled. But some themes are not that great (Namely the zsh-syntax-highlighting),
     # so I use it together with catppuccin.nix flake. Dont know how to make it suck less.
     # I think the main problem are
@@ -59,6 +62,7 @@ in {
     stylix.targets.kde.enable = true;
     stylix.targets.nixos-icons.enable = true;
 
+    #todo: Adress it. Fast.
     #todo: Make Colloid-Gtk-Theme be used directly instead of using Stylix to it, but without conflicting with Stylix.
     stylix.targets.gtk.extraCss = "@import ${pkgs.colloid-gtk-theme.override {
       themeVariants = ["pink"];
@@ -69,6 +73,8 @@ in {
     stylix.targets.gnome.enable = true;
     stylix.targets.gnome-text-editor.enable = true;
 
+    #todo: Adress it.
+    # Somehow, Swaybg is running, when it should be swww...
     services.swww.enable = true;
 
     # Needed?

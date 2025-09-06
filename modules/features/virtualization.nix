@@ -37,6 +37,8 @@ in {
     # KVM/QEMU
     virtualisation.libvirtd = {
       enable = true;
+      # todo: Adress it
+      # Qemu is needed or goodbye? I keep libvirtd here for a fast VM if needed, not using it often
       qemu = {
         package = pkgs.qemu_kvm;
         runAsRoot = false;

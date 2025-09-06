@@ -61,8 +61,10 @@ in {
 
     appstream.enable = true;
 
+    #todo: Adress it.
     # pathsToLink
     # Dont know if all of them are really needed. i think some are not.
+    # Maybe I can get better paths?
     environment.pathsToLink = [
       "/share/zsh"
       "/share/applications"
@@ -86,7 +88,8 @@ in {
       app2unit
       wget
 
-      #todo:
+      #todo: Adress it.
+      # It is better to have this commented thing os nix-ld + steam-run + nix-alien more than enough?
       # # Create an FHS environment using the command `fhs`, enabling the execution of non-NixOS packages in NixOS!
       # # Maybe could be better made tho?
       # (let
@@ -129,6 +132,7 @@ in {
 
       inputs.nix-alien.packages.${system}.nix-alien
 
+      #todo: Adress it.
       # Gnome apps
       # I want default desktop apps on my Niri. Gnome was the ones I knew would be good enough.
       # Maybe change a bit?

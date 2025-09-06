@@ -7,6 +7,7 @@
 }: let
   cfg = config.core.nix;
 in {
+  #todo: Adress it.
   # I am not sure about ANYTHING here. I need help.
 
   options.core.nix = {
@@ -60,9 +61,11 @@ in {
         dates = ["03:00"];
       };
 
-      #todo: Automatic mapping of my flake inputs to here.
+      #todo: Adress it.
+      #todo: Automatic mapping of my flake inputs to here. Like, update the nixPath automatically when I change something in flake.nin inputs
       # Registry and channels
       nixPath = ["nixpkgs=${inputs.nixpkgs}"];
+      # registry too...
 
       channel.enable = false;
     };

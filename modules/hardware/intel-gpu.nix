@@ -27,7 +27,8 @@ in {
         description = ''i915 GuC submission: 0=disabled, 1=enable, 2=enable GuC/HuC. Try 2 for power/perf; revert if issues.'';
       };
     };
-    # Is this correct? I have no Idea if the drivers are the expected for my Hardware or not.
+    # todo: Adress it
+    # Is this correct? I have no Idea if the drivers are the expected for my Hardware or not. it is a Intel UHD 620 (8th Gen)
     # Do I need any further configuration to use Vulkan and etc?
     hardware.graphics = {
       enable = true;

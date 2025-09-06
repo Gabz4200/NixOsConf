@@ -14,6 +14,9 @@ in {
   };
 
   config = lib.mkIf cfg.enable {
+    #todo: Adress it.
+    # Make it use commons from the flake.nix
+
     # Nix settings (cachix substituters/keys)
     nix.settings = {
       experimental-features = ["nix-command" "flakes"];
@@ -54,7 +57,7 @@ in {
     programs.ruff.enable = true;
     programs.pylint.enable = true;
 
-    #todo: Use a custom one
+    #todo: Use a custom config, this is a generic.
     programs.ruff.settings = {
       line-length = 100;
       per-file-ignores = {"__init__.py" = ["F401"];};
@@ -89,7 +92,7 @@ in {
       octave
       scilab-bin
       geogebra6
-      #todo: sageWithDoc
+      #todo: is broken, but not marked as broken > sageWithDoc
 
       # Faculdade: Probabilidade e Estatística
       R

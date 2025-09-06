@@ -6,7 +6,9 @@
 }: let
   cfg = config.home.shell;
 in {
+  #todo: Adress it.
   # I am not sure about ANYTHING here. I need help.
+  # Maybe rewriting it from scratch.
 
   options.home.shell = {
     enable = lib.mkEnableOption "Enable shell configuration and shell-related settings";

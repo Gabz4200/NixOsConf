@@ -148,7 +148,6 @@ in {
         coreutils
         pciutils
         libudev0-shim
-        libudev-zero
 
         # IPC, crypto, misc system libs
         dbus
@@ -164,6 +163,9 @@ in {
         libvdpau
         intel-ocl
         intel-media-driver
+
+        # todo: Adress it
+        # Zlude should be behind unstable
         zluda
 
         # X11 client libraries commonly expected by binaries

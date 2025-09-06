@@ -4,7 +4,7 @@
   ...
 }: let
   cfg = config.home.waybar;
-in let
+
   icons = rec {
     calendar = "󰃭 ";
     clock = " ";
@@ -62,6 +62,9 @@ in {
     enable = lib.mkEnableOption "Enable Waybar configuration and Waybar-related settings";
     unstable = lib.mkEnableOption "Enable unstable Waybar features and experimental configurations";
   };
+
+  #todo: Adress it.
+  # This configuration needs to get a refactor soon..
 
   config = lib.mkIf cfg.enable {
     programs.waybar = {
@@ -306,6 +309,11 @@ in {
       };
     };
     stylix.targets.waybar.enable = false;
+
+    #todo: Adress it. Fast.
+    # I need a way to make it be a separate CSS file, so I can edit it more easily.
+    # But I also want to use the stylix colors and fonts variables somehow
+    # But the ${...} syntax cause errors on css files.
     programs.waybar.style = let
       inherit (config.lib.stylix) colors;
     in ''

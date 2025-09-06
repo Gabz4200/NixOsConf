@@ -41,8 +41,9 @@ in
     in
       listToAttrs (pairs prefixes (prefix: pairs suffixes (suffix: [(format prefix suffix)])));
   in {
-    # This configuration works. And I like it.
-    # BUT IT IS A MESS!!
+    #todo: Adress it.
+    # This configuration works. And I like it!
+    # BUT THE FILE ITSELF... IT IS A MESS!! It is hard to change it and not break.
     #TODO: Organize it!
 
     options.home.niri = {
@@ -241,7 +242,8 @@ in
         ];
         xwayland-satellite.enable = true;
 
-        # This was not working. It wouldnt build the system.
+        #todo: Adress it.
+        # This was not working. Adding xwayland-satellite.path here directly causes a error that wouldnt build the system.
         #xwayland-satellite.path = "/etc/profiles/per-user/gabz/bin/xwayland-satellite";
         #xwayland-satellite.path = "{pkgs.xwayland-satellite-unstable}/bin/xwayland-satellite";
       };
@@ -292,6 +294,7 @@ in
 
       systemd.user.startServices = true;
 
+      #todo: Adress it.
       # Wallpaper setter. Great. But maybe move to somewhere else.
       systemd.user.services = {
         wallpaper_setter = {
@@ -310,11 +313,13 @@ in
         };
       };
 
-      # Fuzzel. (Should I switch with rofi-wayland/wofi? I used rofi on Hyprland)
+      #todo: Adress it.
+      # Fuzzel. (Should I switch with rofi-wayland/wofi? I used rofi on Hyprland, and I liked it)
       programs.fuzzel = {
         enable = true;
         settings = {
           main = {
+            #todo: Adress it.
             # Is this well done? I have no clue.
             launch-prefix = "niri msg action spawn -- app2unit --fuzzel-compat --";
             terminal = "${pkgs.app2unit}/bin/app2unit-term-scope";

@@ -16,6 +16,7 @@ in {
 
   config = lib.mkIf cfg.enable {
     # UWSM
+    #todo: Adress it.
     # Do I really want to use it with Niri?
     # I came from Hyprland, so it was instinct.
     # But look at: https://yalter.github.io/niri/Example-systemd-Setup.html

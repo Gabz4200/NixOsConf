@@ -242,6 +242,8 @@ in {
 
     # SOPS configured in modules/core/secrets.nix
 
+    #todo: Adress it.
+    # Are there better defaults to my hardware SSD wise?
     # Btrfs
     services.btrfs.autoScrub = {
       enable = true;
@@ -249,6 +251,8 @@ in {
       fileSystems = ["/"];
     };
 
+    #todo: Adress it.
+    # Should I move it to other module?
     # Ollama
     services.ollama.enable = true;
     services.ollama.openFirewall = true;
@@ -260,6 +264,7 @@ in {
       NIXOS_OZONE_WL = "1";
       MOZ_ENABLE_WAYLAND = "1";
 
+      #todo: Adress it.
       #todo: make it have a if statement with UWSM being enabled
       # UWSM
       APP2UNIT_SLICES = "a=app-graphical.slice b=background-graphical.slice s=session-graphical.slice";

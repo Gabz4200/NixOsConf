@@ -8,6 +8,11 @@ in {
   # Single-source secrets via sops-nix (NixOS). Home Manager reads via nixosConfig.
   # flake.nix already imports inputs.sops-nix.nixosModules.sops
 
+  #todo: Adress it.
+  # Modules that depend on this functionality to exist should also use a `lib.mkIf` guard
+  # around their configuration, to avoid evaluation errors when this module is disabled.
+  # Example: Using a default alternative when no secrets are defined.
+
   options.core.secrets = {
     enable = lib.mkEnableOption "Enable secrets management via sops-nix";
     unstable = lib.mkEnableOption "Enable unstable secrets features and experimental configurations";

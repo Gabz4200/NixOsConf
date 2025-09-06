@@ -3,6 +3,9 @@
     ./hardware-configuration.nix
   ];
 
+  # todo: Adress it
+  # I want to make a NixOS specialization so I have aways a backup cofig without any unstable option enabled.
+
   # Core System Modules
   core.boot.enable = true;
   core.networking.enable = true;

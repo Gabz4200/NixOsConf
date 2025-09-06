@@ -25,6 +25,7 @@ in {
       jack.enable = true;
       wireplumber.enable = true;
 
+      # todo: Adress it
       # Dont know if really needed. But if dont hurting, can let it.
       lowLatency = {
         enable = true;

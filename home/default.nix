@@ -32,6 +32,9 @@
   home.waybar.enable = true;
   home.flatpak.enable = true;
 
+  #todo: Adress it.
+  # I should move more stuff here to submodules.
+
   home = {
     username = lib.mkForce "gabz";
     homeDirectory = lib.mkForce "/home/gabz";

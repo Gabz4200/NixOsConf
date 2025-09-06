@@ -14,6 +14,9 @@ in {
     unstable = lib.mkEnableOption "Enable unstable Flatpak features and experimental configurations";
   };
 
+  #todo: Adress it.
+  # Nice, but easyness of use and less space consume would be appreciated.
+
   config = lib.mkIf cfg.enable {
     # Great, because some packages are not on nixpkgs or are broke there.
     services.flatpak.enable = true;

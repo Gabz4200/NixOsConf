@@ -51,11 +51,12 @@ in {
     # Thermald (It conflicts with Undervolt)
     services.thermald.enable = false;
 
-    # Undervolt (My laptop was overheating, this helped a lot to reduce it and the early throttling)
+    # Should it be behind the unstable flag?
+    # Undervolt (My laptop was always overheating, this helped a lot to reduce it and the early throttling)
     services.undervolt = {
       enable = true;
 
-      # Works greats
+      # Works greats, but maybe I get more agressive
       coreOffset = -65;
       gpuOffset = -35;
       uncoreOffset = -65;

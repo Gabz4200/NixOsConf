@@ -12,6 +12,12 @@ in {
     unstable = lib.mkEnableOption "Enable unstable music features and experimental audio configurations";
   };
 
+  # todo: Adress it. Fast.
+  # This module should be splited in such a way that
+  # the unstable flag uses musnix module (it makes changes on sysctl and etc)
+  # and the enable flag with unstable disabled just add the pluginPaths so nothing gets erased if musnix is not used
+  # the packages may be added and both cases
+
   config = lib.mkIf cfg.enable {
     musnix.enable = lib.mkForce true;
     musnix.kernel.realtime = false;

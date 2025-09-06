@@ -31,7 +31,7 @@ in {
 
         # OpenCL/OpenGL para Intel
         ocl-icd
-        intel-compute-runtime
+        intel-ocl
 
         # Video decode/encode
         intel-media-driver
@@ -45,8 +45,9 @@ in {
       localNetworkGameTransfers.openFirewall = true;
       protontricks.enable = true;
 
+      #todo: Adress it.
       # Performance optimizations
-      # Are these great on my Hardware?
+      # Are these great on my Hardware? Intel i5 8th gen (Kaby Lake) + Intel UHD Graphics 620
       platformOptimizations.enable = true;
     };
 
@@ -56,7 +57,10 @@ in {
       package = pkgs.wineWow64Packages.waylandFull;
       ntsync = true;
 
-      # The intention was to be more secure, letting it to bottles. Dont know if needed.
+      #todo: Adress it.
+      # Enable binfmt support for Windows executables
+      # The intention was to be more secure, letting it to bottles.
+      # Dont know if needed. Or if it is better enabling.
       binfmt = false;
     };
 

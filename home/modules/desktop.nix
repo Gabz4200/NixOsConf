@@ -33,6 +33,7 @@ in {
         extraConfig = {
           XDG_PROJECTS_DIR = "$HOME/Projects";
           XDG_SCREENSHOTS_DIR = "$HOME/Pictures/Screenshots";
+          XDG_SYNC_DIR = "$HOME/Sync";
         };
       };
 

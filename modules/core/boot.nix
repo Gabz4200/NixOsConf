@@ -40,7 +40,7 @@ in {
 
     # Kernel
     # The Zen kernel is a great choice for desktop performance.
-    # Its expected to be override by CachyOS, if enabled.
+    # Its expected to be override by CachyOS, if the module is enabled.
     boot.kernelPackages = lib.mkDefault pkgs.linuxKernel.packages.linux_zen;
 
     # Kernel Params
