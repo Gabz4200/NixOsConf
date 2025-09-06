@@ -41,6 +41,7 @@ in {
         pkgs:
           with pkgs; [
             codeium
+            gemini-cli
             github-copilot-intellij-agent
             mcp-nixos
             qwen-code
