@@ -1,5 +1,9 @@
 # just is a command runner, Justfile is very similar to Makefile, but simpler.
 
+# todo: Adress it.
+# How can I make it easier to use?
+# Specially as a way to test configurarions, etc.
+
 # Use zsh for recipes
 set shell := ["zsh", "-c"]
 
